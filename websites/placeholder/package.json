@@ -1,0 +1,23 @@
+{
+  "name": "@ethcm/placeholder",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "deploy": "bun run build && bunx wrangler pages deploy ./dist --project-name ethcm"
+  },
+  "devDependencies": {
+    "typescript": "~5.9.3",
+    "vite": "npm:rolldown-vite@7.2.2"
+  },
+  "overrides": {
+    "vite": "npm:rolldown-vite@7.2.2"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.15",
+    "tailwindcss": "^4.1.15"
+  }
+}

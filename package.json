@@ -1,0 +1,21 @@
+{
+  "name": "ethcm",
+  "private": true,
+  "workspaces": [
+    "websites/*"
+  ],
+  "scripts": {
+    "landing": "bun --filter \"@ethcm/landing\"",
+    "placeholder": "bun --filter @ethcm/placeholder"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.17",
+    "@types/bun": "latest",
+    "landing": "^0.0.1",
+    "tailwindcss": "^4.1.17",
+    "wrangler": "^4.45.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}

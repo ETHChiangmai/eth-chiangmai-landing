@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ethcm</title>
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta charset="UTF-8" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="./src/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Kodchasan:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .kodchasan-extralight {
+        font-family: "Kodchasan", sans-serif;
+        font-weight: 200;
+        font-style: normal;
+      }
+
+      .kodchasan-light {
+        font-family: "Kodchasan", sans-serif;
+        font-weight: 300;
+        font-style: normal;
+      }
+
+      .kodchasan-regular {
+        font-family: "Kodchasan", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      .kodchasan-medium {
+        font-family: "Kodchasan", sans-serif;
+        font-weight: 500;
+        font-style: normal;
+      }
+
+      .kodchasan-semibold {
+        font-family: "Kodchasan", sans-serif;
+        font-weight: 600;
+        font-style: normal;
+      }
+
+      .kodchasan-bold {
+        font-family: "Kodchasan", sans-serif;
+        font-weight: 700;
+        font-style: normal;
+      }
+
+      .kodchasan-extralight-italic {
+        font-family: "Kodchasan", sans-serif;
+        font-weight: 200;
+        font-style: italic;
+      }
+
+      .kodchasan-light-italic {
+        font-family: "Kodchasan", sans-serif;
+        font-weight: 300;
+        font-style: italic;
+      }
+
+      .kodchasan-regular-italic {
+        font-family: "Kodchasan", sans-serif;
+        font-weight: 400;
+        font-style: italic;
+      }
+
+      .kodchasan-medium-italic {
+        font-family: "Kodchasan", sans-serif;
+        font-weight: 500;
+        font-style: italic;
+      }
+
+      .kodchasan-semibold-italic {
+        font-family: "Kodchasan", sans-serif;
+        font-weight: 600;
+        font-style: italic;
+      }
+
+      .kodchasan-bold-italic {
+        font-family: "Kodchasan", sans-serif;
+        font-weight: 700;
+        font-style: italic;
+      }
+
+      .outlined-text-shadow {
+        color: white;
+        /* Text color */
+        text-shadow: 0px 0px 9px #7f6cb590;
+      }
+
+      video::-webkit-media-controls {
+        display: none;
+      }
+
+      video::-webkit-media-controls-container {
+        opacity: 0 !important;
+      }
+
+      *::-webkit-media-controls-panel {
+        display: none !important;
+        -webkit-appearance: none;
+      }
+
+      /* Old shadow dom for play button */
+      *::--webkit-media-controls-play-button {
+        display: none !important;
+        -webkit-appearance: none;
+      }
+
+      /* New shadow dom for play button */
+      /* This one works */
+      *::-webkit-media-controls-start-playback-button {
+        display: none !important;
+        -webkit-appearance: none;
+      }
+    </style>
+  </head>
+
+  <body class="h-dvh w-dvw">
+    <div class="absolute inset-0 -z-10 overflow-hidden">
+      <img
+        id="p0"
+        class="absolute inset-0 w-full h-full object-cover blur-xs"
+        src="./assets/bg-horizontal-placeholder-small.webp?inline"
+      />
+      <picture id="p1">
+        <source
+          srcset="./assets/bg-horizontal-placeholder.webp"
+          media="(width >= 485px)"
+        />
+        <source
+          srcset="./assets/bg-vertical-placeholder.webp"
+          media="(width < 485px)"
+        />
+        <img class="absolute inset-0 w-full h-full object-cover" />
+      </picture>
+      <picture id="p2">
+        <source srcset="./assets/bg-horizontal.webp" media="(width >= 485px)" />
+        <source srcset="./assets/bg-vertical.webp" media="(width < 485px)" />
+        <img class="absolute inset-0 w-full h-full object-cover" />
+      </picture>
+
+      <video
+        playsinline
+        autoplay
+        muted
+        loop
+        preload
+        class="absolute inset-0 w-full h-full object-cover duration-500 transition-opacity opacity-0"
+      >
+        <source
+          src="./assets/bg-horizontal-v3.mp4"
+          type="video/mp4"
+          media="(width >= 485px)"
+        />
+        <source
+          src="./assets/bg-vertical-v3.mp4"
+          type="video/mp4"
+          media="(width < 485px)"
+        />
+      </video>
+    </div>
+    <main class="h-full">
+      <div
+        class="container mx-auto h-full flex flex-col items-center justify-center"
+      >
+        <div
+          class="flex flex-col gap-4 text-center kodchasan-medium text-white! outlined-text-shadow"
+        >
+          <div class="w-full mx-auto mt-12">
+            <object
+              type="image/svg+xml"
+              data="./assets/logo-long.svg"
+              class="w-full"
+            ></object>
+          </div>
+          <div class="flex flex-col gap-12">
+            <div class="text-4xl lg:text-8xl">Coming Soon</div>
+            <div class="text-xl lg:text-4xl">
+              8 Dec 2025 - 5 Feb 2026 @ Chiang Mai Thailand
+              <br />
+              <br />
+              Hosted by
+              <a href="https://www.4seas.xyz/" target="_blank">4Seas</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script type="module" src="./src/main.ts"></script>
+  </body>
+</html>

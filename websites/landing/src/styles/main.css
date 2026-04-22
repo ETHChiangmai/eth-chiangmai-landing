@@ -1,0 +1,28 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-kodchasan: 'Kodchasan', sans-serif;
+  --font-inter: 'Inter', sans-serif;
+}
+
+@layer components {
+  .ethcontainer {
+    @apply mx-auto px-6 lg:px-8 w-full max-w-[1280px];
+  }
+  .ethbutton {
+    @apply flex justify-center items-center rounded-[10px] transition-[background-color,box-shadow] duration-300;
+    @apply bg-[#880CAB] hover:bg-[#970ebc] active:bg-[#870ca9];
+    @apply font-inter font-medium text-white;
+    @apply text-[20px] xl:text-[24px];
+    @apply px-2 md:px-3 xl:px-4;
+    @apply h-[50px] xl:h-[60px];
+    @apply shadow-lg hover:shadow-xl;
+  }
+}
+
+html {
+  -webkit-font-smoothing: antialiased; /* Renders text with grayscale anti-aliasing */
+  -moz-osx-font-smoothing: grayscale; /* Renders text with grayscale anti-aliasing */
+  font-smooth: antialiased; /* Renders text with grayscale anti-aliasing */
+  overscroll-behavior-y: none;
+}
