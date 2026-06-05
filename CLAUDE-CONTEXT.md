@@ -1,7 +1,7 @@
 # ETHChiangmai 2026 — Claude 上下文文档
 
 > 把这个文件的全部内容粘贴给 Claude，即可继续开发工作。
-> 最后更新：2026-06-03
+> 最后更新：2026-06-06
 
 ---
 
@@ -21,7 +21,7 @@
 | 主题 | CROPS: The Non-Negotiables of Ethereum |
 | 时间 | Nov 11, 2026 – Jan 5, 2027 |
 | 地点 | Chiang Mai, Thailand |
-| 路由 | `/`（2026 主页）、`/2025`（2025 存档）、`/prototype/c`（Variant C 开发中） |
+| 路由 | `/`（HackathonVariantC，对外主页）、`/2025`（2025 存档）、`/hero`（Home2026 hero 占位槽版） |
 
 ---
 
@@ -135,9 +135,9 @@ websites/landing/
 ### 路由表（router/index.ts）
 
 ```ts
-{ path: '/',           component: Home2026 }         // 2026 主页
-{ path: '/2025',       component: Home2025 }          // 2025 存档
-{ path: '/prototype/c', component: HackathonVariantC } // ★ 当前开发页面
+{ path: '/',      component: HackathonVariantC }  // ★ 对外主页（2026-06-06 对调）
+{ path: '/2025',  component: Home2025 }            // 2025 存档
+{ path: '/hero',  component: Home2026 }            // 2026 hero 版（插画槽位待填）
 ```
 
 ---
@@ -147,32 +147,36 @@ websites/landing/
 ### 2025 页面（`/2025`）— 已完成
 完整的多 section 滚动页面。使用 2025 风格（蓝紫色系）。勿动。
 
-### 2026 主页（`/`）— 待插画素材
-`Home2026.vue` 已有完整 hero 骨架，`<div data-slot="...">` 占位槽等待设计稿资产。资产到位后解注释 `<img>` 标签即可接入。
+### 2026 hero（`/hero`）— 待插画素材
+`Home2026.vue`（Direction B）已有完整 hero 骨架，`<div data-slot="...">` 占位槽等待设计稿资产。资产到位后解注释 `<img>` 标签即可接入。路由已从 `/` 改为 `/hero`。
 
-### Variant C（`/prototype/c`）— ★ 主要开发中
+### HackathonVariantC（`/`）— ★ 当前对外主页
 
 `websites/landing/src/pages/prototype/HackathonVariantC.vue`
 
-**已完成功能：**
+**已完成功能（截至 2026-06-06）：**
 - 背景：暖色渐变 `#FFFBF0 → #FFE8BC → #F5D49A`（165deg）
 - 背景色块光晕：右上紫 / 左中金 / 右下紫（radial-gradient + blur）
 - 动效：20 个 `✦` 星星闪烁（`@keyframes twinkle`，各自错开 delay/duration）
-- Logo：`logo.svg`（与 2025 页面一致，无 filter）
-- 社交图标：Telegram → `t.me/ethchiangmai`，Twitter → `twitter.com/ethchiangmai`，Email → `mailto:info@ethchiangmai.com`（邮件图标尺寸 29px，比其他图标稍大以视觉等大）
-- 大标题："CROPS"，Chonburi 字体，`clamp(72px, 15vw, 210px)`
-- 副标题："The Non-Negotiables of Ethereum"，Kodchasan
+- Logo：`logo.svg`，无 filter
+- 社交图标：Telegram / Twitter / Email，实链接，`logoFilter` 染色
+- Header 文字层级（参考 Home2026.vue 主页文字处理）：
+  - Eyebrow：`ETHChiangmai 2026`（Inter semibold，tracking 0.32em，uppercase，`#9B86C4`）
+  - 大标题：`CROPS`，Chonburi，`clamp(72px, 15vw, 210px)`
+  - 副标题：`THE / NON-NEGOTIABLES / OF ETHEREUM`，Chonburi，`clamp(20px, 2.8vw, 42px)`，`#1A1240`，3 行大写
+  - 日期：Kodchasan semibold，`#5B4A8C`，右对齐
 - 金色分割线（顶部 + 底部 + 双栏中间）
 - Tracks：4 个轨道，金色编号，hover 效果
-- Prize Pool & Timeline → 替换为 "Coming Soon"（font-charm 手写体）
-- CTA 主按钮："Want to Sponsor? Let's Talk →" → `mailto:info@ethchiangmai.com`，紫色圆角按钮
-- CTA 次按钮："View Sponsor Deck" → Google Slides（`https://docs.google.com/presentation/d/1_EoLzmgBGN6eJX8PZYZanHvx6IQWtm5ABQ3PBNTphJw/edit?usp=sharing`）
-- Featured Speakers：20 位演讲者（来自 `usePeople()`），圆形头像，金色 ring，5 列网格
+- Prize Pool & Timeline → "Coming Soon"（font-charm 手写体）
+- CTA 主按钮："Want to Sponsor? Let's Talk →" → `mailto:info@ethchiangmai.com`
+- CTA 次按钮："View Sponsor Deck" → Google Slides
+- Featured Speakers：20 位演讲者（`usePeople()`），圆形头像，金色 ring，5 列网格
+- **Past Sponsors**：10 个 2025 赞助商，`#7C5CBF` 圆角深紫卡片，logo 反白（`brightness(0) invert(1)`），opacity-90
 - Footer：版权 + "CROPS — The Non-Negotiables of Ethereum"
 
 **已删除（清理完毕）：**
 - HackathonVariantA.vue、HackathonVariantB.vue、HackathonPrototype.vue
-- 路由 `/prototype/hackathon`
+- 路由 `/prototype/hackathon`、`/prototype/c`
 
 ---
 
@@ -195,10 +199,10 @@ websites/landing/
 - 待定：文字入场动画、鼠标视差、插画元素动效
 - 已排除：涟漪扩散、花瓣飘落（效果不佳）
 
-### 后续 sections（Variant C 或 Home2026）
+### 后续 sections（HackathonVariantC）
 - 活动概览 / About 2026
 - Hackathon 轨道详情
-- 赞助商招募
+- 2026 赞助商招募（已有 CTA 按钮，待补完整 section）
 - 团队 / 社区
 
 ---
