@@ -16,8 +16,9 @@
     "deploy": "bun run build && bunx wrangler pages deploy ./dist --project-name ethcm"
   },
   "dependencies": {
+    "@vueuse/core": "^14.0.0",
     "vue": "^3.5.22",
-    "@vueuse/core": "^14.0.0"
+    "vue-router": "^5.1.0"
   },
   "devDependencies": {
     "@tsconfig/node22": "^22.0.2",

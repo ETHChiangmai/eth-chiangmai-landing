@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { RouterLink } from 'vue-router'
 import Logo from '@/assets/logo.svg'
 import bgBackSm from '@/assets/top/top-bg-back-sm.webp'
 import bgBack from '@/assets/top/top-bg-back.webp'
@@ -75,7 +76,7 @@ const links = [speaker, sponsor, hackathon, eventList]
           <div>
             <img :src="Logo" alt="ETH Chiang Mai" class="max-w-[320px] 2xl:max-w-[380px]" />
           </div>
-          <nav>
+          <nav class="flex items-center gap-10">
             <ul class="flex flex-row gap-12">
               <li v-for="link in nav" :key="link.name">
                 <a
@@ -86,6 +87,12 @@ const links = [speaker, sponsor, hackathon, eventList]
                 </a>
               </li>
             </ul>
+            <RouterLink
+              to="/"
+              class="font-inter font-semibold text-sm xl:text-base text-white/70 hover:text-white transition-colors border border-white/30 hover:border-white/60 rounded-lg px-3 py-1.5 whitespace-nowrap"
+            >
+              2026 Edition →
+            </RouterLink>
           </nav>
         </div>
         <div
@@ -117,6 +124,12 @@ const links = [speaker, sponsor, hackathon, eventList]
       >
         <div class="w-full px-6 md:px-12 lg:px-20 relative mt-6">
           <img :src="Logo" alt="ETH Chiang Mai" class="w-full max-w-[528px] mx-auto" />
+          <RouterLink
+            to="/"
+            class="absolute top-0 right-6 md:right-12 font-inter font-semibold text-xs text-white/70 hover:text-white transition-colors border border-white/30 hover:border-white/60 rounded-lg px-2.5 py-1"
+          >
+            2026 →
+          </RouterLink>
         </div>
 
         <div class="flex flex-col gap-8 items-center justify-center text-center">

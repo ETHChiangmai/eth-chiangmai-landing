@@ -3,6 +3,8 @@
 @theme {
   --font-kodchasan: 'Kodchasan', sans-serif;
   --font-inter: 'Inter', sans-serif;
+  --font-chonburi: 'Chonburi', serif;
+  --font-charm: 'Charm', cursive;
 }
 
 @layer components {
