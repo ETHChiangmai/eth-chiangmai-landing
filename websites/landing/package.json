@@ -29,6 +29,7 @@
     "prettier": "3.6.2",
     "typescript": "~5.9.0",
     "vite": "npm:rolldown-vite@latest",
+    "@tailwindcss/vite": "^4.0.0",
     "vite-plugin-vue-devtools": "^8.0.3",
     "vue-tsc": "^3.1.1"
   }
