@@ -17,7 +17,7 @@ import ImgFlowerbed from '@/assets/小元素/无白边/花坛.png'
 import ImgLotus1    from '@/assets/小元素/无白边/荷花元素1.png'
 import ImgLotus2    from '@/assets/小元素/无白边/荷花元素2.png'
 
-import LogoEF        from '@/assets/partners/ethereum-foundation.png'
+
 import LogoEthTokyo  from '@/assets/partners/ethtokyo.png'
 import LogoZucity    from '@/assets/partners/zucity.png'
 import LogoEthKL     from '@/assets/partners/ethkl.png'
@@ -46,10 +46,10 @@ const modules = [
 ]
 
 const crops = [
-  { letter: 'C', title: 'Censorship Resistance',           desc: 'Protecting the right to transact and communicate freely, without gatekeepers.' },
-  { letter: 'R', title: 'Open Source & Free as in Freedom', desc: 'Code that anyone can read, fork, and build upon — forever.' },
-  { letter: 'O', title: 'Privacy',                          desc: 'The right to act without being surveilled or tracked.' },
-  { letter: 'P', title: 'Security',                         desc: 'Guarantees that hold even under adversarial conditions.' },
+  { letter: 'CR', title: 'Censorship Resistance',           desc: 'Protecting the right to transact and communicate freely, without gatekeepers.' },
+  { letter: 'O', title: 'Open Source & Free as in Freedom', desc: 'Code that anyone can read, fork, and build upon — forever.' },
+  { letter: 'P', title: 'Privacy',                          desc: 'The right to act without being surveilled or tracked.' },
+  { letter: 'S', title: 'Security',                         desc: 'Guarantees that hold even under adversarial conditions.' },
 ]
 
 const whyItems = [
@@ -72,7 +72,7 @@ const whyItems = [
 ]
 
 const partners = [
-  { name: 'Ethereum Foundation', logo: LogoEF,       dark: false },
+
   { name: 'ETH Tokyo',           logo: LogoEthTokyo, dark: false },
   { name: 'Zucity',              logo: LogoZucity,   dark: true  },
   { name: 'ETHKL',               logo: LogoEthKL,    dark: false },
