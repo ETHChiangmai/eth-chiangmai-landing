@@ -25,6 +25,10 @@ import LogoZuitz     from '@/assets/partners/zuitzerland.png'
 import LogoP6        from '@/assets/partners/partner-6.png'
 import LogoP7        from '@/assets/partners/partner-7.png'
 import LogoHangzhou  from '@/assets/partners/eth-hangzhou.png'
+import LogoEthHubHK  from '@/assets/partners/ethhub-hk.png'
+import LogoEthTao    from '@/assets/partners/ethtao.png'
+import LogoZucityJP  from '@/assets/partners/zucity-japan.png'
+import LogoEthPH     from '@/assets/partners/ethph.png'
 
 const logoFilter = 'invert(13%) sepia(28%) saturate(900%) hue-rotate(230deg) brightness(58%)'
 
@@ -80,6 +84,10 @@ const partners = [
   { name: 'Partner 6',           logo: LogoP6,       dark: true  },
   { name: 'Partner 7',           logo: LogoP7,       dark: true  },
   { name: 'ETH Hangzhou',        logo: LogoHangzhou, dark: false },
+  { name: 'ETH Hub Hong Kong',   logo: LogoEthHubHK, dark: false },
+  { name: 'ETH TAO',             logo: LogoEthTao,   dark: false },
+  { name: 'ZuCity Japan',        logo: LogoZucityJP, dark: false },
+  { name: 'ETH PH',              logo: LogoEthPH,    dark: false },
 ]
 
 const timeline = [
