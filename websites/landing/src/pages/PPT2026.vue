@@ -56,7 +56,7 @@ const whyItems = [
   {
     icon: '🌐',
     title: 'A Permanent Global Node',
-    sub: 'Zuzalu Chiangmai',
+    sub: '4Seas',
     desc: 'Evolved from 4Seas to establish a permanent, on-the-ground anchor. Ensures year-round continuity, embedding Ethereum culture into the daily fabric of the city.',
   },
   {
