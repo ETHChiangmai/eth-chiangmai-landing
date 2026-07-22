@@ -349,9 +349,6 @@ onUnmounted(() => observer?.disconnect())
     ══════════════════════════════════════════ -->
     <section class="relative py-16 sm:py-24 px-4 sm:px-6 overflow-hidden">
 
-      <img :src="ImgElephant" alt="" aria-hidden="true"
-        class="absolute pointer-events-none select-none opacity-[0.07]"
-        style="width: 300px; bottom: 0; right: 0;" />
       <img :src="ImgLantern4" alt="" aria-hidden="true"
         class="absolute pointer-events-none select-none float-slow opacity-15"
         style="width: 80px; top: 30px; left: 50px;" />
