@@ -96,7 +96,7 @@ const timeline = [
   { date: 'Late Nov · 2 Days', label: 'Bazaar Ⅰ',                 note: '4Seas Nimman' },
   { date: 'Late Dec · 2 Days', label: 'Bazaar Ⅱ',                 note: '4Seas Nimman' },
   { date: 'Jan 2, 2027',       label: 'CROPS Summit',             note: 'Chiang Mai, Thailand' },
-  { date: 'Jan 3–5, 2027',     label: 'Hackathon',                note: '$10,000+ prize pool' },
+  { date: 'Dec 30 – Jan 2, 2027', label: 'Hackathon',              note: '$10,000+ prize pool' },
 ]
 
 // scroll-reveal
@@ -122,12 +122,12 @@ onUnmounted(() => observer?.disconnect())
 <template>
   <div
     class="text-[#1A1240] overflow-x-hidden"
-    style="background: linear-gradient(165deg, #FFFBF0 0%, #FFE8BC 55%, #F5D49A 100%)"
+    style="background: linear-gradient(165deg, #FCE2C8 0%, #F9D4AE 55%, #F5C898 100%)"
   >
 
     <!-- ══ NAV (same as main page) ══ -->
     <nav class="sticky top-0 z-50 flex items-center justify-between px-4 sm:px-10 h-14 sm:h-16 max-w-[1440px] mx-auto w-full border-b border-[#C4A858]/35"
-         style="background: rgba(255,251,240,0.85); backdrop-filter: blur(12px);">
+         style="background: rgba(252,226,200,0.80); backdrop-filter: blur(12px);">
       <img :src="Logo" alt="ETHChiangmai" class="h-6 sm:h-7" />
       <div class="flex items-center gap-3 sm:gap-4">
         <a href="https://t.me/ethchiangmai" target="_blank" class="opacity-50 hover:opacity-90 transition-opacity">
@@ -148,7 +148,7 @@ onUnmounted(() => observer?.disconnect())
     <!-- ══════════════════════════════════════════
          HERO
     ══════════════════════════════════════════ -->
-    <section class="relative overflow-hidden" style="min-height: calc(100vh - 64px)">
+    <section class="relative overflow-hidden flex flex-col" style="height: calc(100vh - 56px); max-height: 900px; min-height: 560px;">
 
       <!-- ambient glows -->
       <div aria-hidden="true" class="pointer-events-none absolute inset-0">
@@ -166,15 +166,10 @@ onUnmounted(() => observer?.disconnect())
         >✦</span>
       </div>
 
-      <!-- cloud layer -->
-      <img :src="ImgCloud" alt="" aria-hidden="true"
-        class="absolute top-0 left-0 w-full pointer-events-none select-none"
-        style="opacity: 0.7; mix-blend-mode: multiply; min-width: 100%;" />
-
-      <!-- lanterns — floating -->
+      <!-- lanterns — floating in sky -->
       <img :src="ImgLantern3" alt="" aria-hidden="true"
         class="absolute pointer-events-none select-none float-slow hero-lantern"
-        style="top: 6%; left: 4%; --lw: 120px; --lw-m: 70px;" />
+        style="top: 5%; left: 4%; --lw: 120px; --lw-m: 70px;" />
       <img :src="ImgLantern2" alt="" aria-hidden="true"
         class="absolute pointer-events-none select-none float-medium hero-lantern hidden sm:block"
         style="top: 2%; left: 18%; --lw: 100px;" />
@@ -186,26 +181,29 @@ onUnmounted(() => observer?.disconnect())
         style="top: 1%; right: 20%; --lw: 68px; --lw-m: 40px;" />
       <img :src="ImgLantern2" alt="" aria-hidden="true"
         class="absolute pointer-events-none select-none float-medium hero-lantern hidden sm:block"
-        style="top: 18%; right: 13%; opacity: 0.7; transform: rotate(6deg); --lw: 80px;" />
+        style="top: 15%; right: 13%; opacity: 0.7; transform: rotate(6deg); --lw: 80px;" />
       <img :src="ImgSparkle" alt="" aria-hidden="true"
         class="absolute pointer-events-none select-none sparkle hidden sm:block"
-        style="width: 72px; top: 22%; left: 30%; animation-duration: 4s;" />
+        style="width: 72px; top: 18%; left: 30%; animation-duration: 4s;" />
 
-      <!-- ground illustrations -->
+      <!-- cloud layer — bottom horizon (behind illustrations) -->
+      <img :src="ImgCloud" alt="" aria-hidden="true"
+        class="absolute bottom-0 left-0 w-full pointer-events-none select-none"
+        style="opacity: 0.9; mix-blend-mode: multiply; min-width: 100%; z-index: 1;" />
+
+      <!-- ground illustrations — sit in front of cloud -->
       <img :src="ImgPC" alt="" aria-hidden="true"
-        class="hero-illus absolute pointer-events-none select-none bottom-0 hero-pc" />
+        class="hero-illus absolute pointer-events-none select-none hero-pc" style="z-index: 2;" />
       <img :src="ImgLotus1" alt="" aria-hidden="true"
-        class="hero-illus absolute pointer-events-none select-none hero-lotus1" />
+        class="hero-illus absolute pointer-events-none select-none hero-lotus1" style="z-index: 2;" />
       <img :src="ImgLotus2" alt="" aria-hidden="true"
-        class="hero-illus absolute pointer-events-none select-none hero-lotus2" />
+        class="hero-illus absolute pointer-events-none select-none hero-lotus2" style="z-index: 2;" />
       <img :src="ImgFlowerbed" alt="" aria-hidden="true"
-        class="hero-illus absolute pointer-events-none select-none bottom-0 hero-flowerbed" />
-      <img :src="ImgElephant" alt="" aria-hidden="true"
-        class="hero-illus absolute pointer-events-none select-none bottom-0 hero-elephant" />
+        class="hero-illus absolute pointer-events-none select-none hero-flowerbed" style="z-index: 2;" />
 
       <!-- hero text -->
-      <div class="relative z-10 flex flex-col items-center text-center gap-4 sm:gap-6 px-4 sm:px-6"
-           style="padding-top: clamp(60px, 10vh, 140px); padding-bottom: clamp(160px, 28vw, 380px)">
+      <div class="relative flex flex-col items-center text-center gap-4 sm:gap-6 px-4 sm:px-6"
+           style="z-index: 3; padding-top: clamp(40px, 7vh, 100px); padding-bottom: clamp(120px, 20vw, 280px)">
 
         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#C4A858]/50 bg-white/40 backdrop-blur-sm">
           <span class="w-1.5 h-1.5 rounded-full bg-[#C4A858] animate-pulse"></span>
@@ -225,121 +223,16 @@ onUnmounted(() => observer?.disconnect())
 
         <p class="font-kodchasan font-semibold text-[#5B4A8C]"
            style="font-size: clamp(14px, 1.6vw, 20px)">
-          Chiang Mai, Thailand &nbsp;·&nbsp; Nov 11, 2026 – Jan 5, 2027
+          Chiang Mai, Thailand &nbsp;·&nbsp; Nov 11, 2026 – Jan 2, 2027
         </p>
 
         <div class="flex flex-wrap justify-center gap-2 mt-1">
           <span v-for="m in modules" :key="m.label"
-            class="flex items-center gap-1 sm:gap-1.5 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-white/55 border border-[#C4A858]/35 text-[#5B4A8C] font-semibold text-xs sm:text-sm backdrop-blur-sm shadow-sm">
-            <span>{{ m.icon }}</span>{{ m.label }}
+            class="flex items-center px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-white/55 border border-[#C4A858]/35 text-[#5B4A8C] font-semibold text-xs sm:text-sm backdrop-blur-sm shadow-sm">
+            {{ m.label }}
           </span>
         </div>
 
-        <div class="mt-6 flex flex-col items-center gap-1 text-[#9B86C4]/60 text-xs">
-          <span class="tracking-widest uppercase text-[10px]">scroll</span>
-          <span class="text-base bounce-down">↓</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- gold rule -->
-    <div class="h-[2px] bg-gradient-to-r from-transparent via-[#C4A858] to-transparent" />
-
-    <!-- ══════════════════════════════════════════
-         CROPS
-    ══════════════════════════════════════════ -->
-    <section class="relative py-16 sm:py-28 px-4 sm:px-6 overflow-hidden">
-
-      <img :src="ImgLantern1" alt="" aria-hidden="true"
-        class="absolute pointer-events-none select-none float-slow opacity-10"
-        style="width: 160px; top: -30px; left: -20px;" />
-      <img :src="ImgLotus2" alt="" aria-hidden="true"
-        class="absolute pointer-events-none select-none opacity-10"
-        style="width: 180px; bottom: -20px; right: -10px;" />
-
-      <div class="max-w-[1280px] mx-auto flex flex-col items-center gap-10 sm:gap-14"
-           data-reveal="crops"
-           :class="revealed.has('crops') ? 'reveal-in' : 'reveal-out'">
-
-        <div class="text-center flex flex-col gap-3">
-          <p class="font-inter font-semibold tracking-[0.32em] text-[#9B86C4] text-[10px] uppercase">Fundamental Principle</p>
-          <h2 class="font-chonburi text-[#1A1240]" style="font-size: clamp(36px,5vw,64px)">CROPS</h2>
-          <p class="font-kodchasan font-semibold text-[#5B4A8C] text-sm tracking-widest uppercase">
-            The Non-Negotiables of Ethereum
-          </p>
-        </div>
-
-        <!-- quote -->
-        <div class="max-w-2xl text-center relative px-8">
-          <span class="absolute left-0 top-0 text-[#C4A858] text-5xl leading-none font-serif select-none">"</span>
-          <p class="font-kodchasan font-semibold italic text-[#1A1240] leading-relaxed"
-             style="font-size: clamp(16px,1.8vw,22px)">
-            A user has the final say over their identities, assets, actions, and agents.
-          </p>
-          <span class="absolute right-0 bottom-0 text-[#C4A858] text-5xl leading-none font-serif select-none">"</span>
-        </div>
-        <p class="max-w-lg text-center text-[#7C5CBF] text-sm leading-relaxed">
-          Unstoppable self-sovereignty must become possible for those who choose it, at the scale
-          and in the form that they want it, without violating anyone else's.
-        </p>
-
-        <div class="h-px w-48 bg-gradient-to-r from-transparent via-[#C4A858]/50 to-transparent" />
-
-        <!-- 4 pillars -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-5 w-full max-w-4xl">
-          <div v-for="(c, i) in crops" :key="c.letter"
-            class="group flex flex-row sm:flex-col items-start sm:items-center gap-4 rounded-2xl border border-[#C4A858]/30 bg-white/60 p-4 sm:p-8 text-left sm:text-center hover:bg-white/80 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
-            :style="{ transitionDelay: `${i * 80}ms` }"
-          >
-            <span class="font-chonburi text-[48px] sm:text-[64px] leading-none shrink-0"
-              style="background: linear-gradient(135deg,#C4A858,#E8C870); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">
-              {{ c.letter }}
-            </span>
-            <div class="flex flex-col gap-1 sm:gap-0 sm:items-center">
-              <p class="font-inter font-bold text-[#1A1240] text-sm leading-snug">{{ c.title }}</p>
-              <p class="text-[#7C5CBF] text-xs leading-relaxed sm:mt-1">{{ c.desc }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="h-[2px] bg-gradient-to-r from-transparent via-[#C4A858] to-transparent" />
-
-    <!-- ══════════════════════════════════════════
-         WHY CHIANG MAI
-    ══════════════════════════════════════════ -->
-    <section class="relative py-16 sm:py-28 px-4 sm:px-6 overflow-hidden">
-
-      <img :src="ImgFlowerbed" alt="" aria-hidden="true"
-        class="absolute pointer-events-none select-none opacity-15"
-        style="width: 220px; bottom: 0; left: -10px; transform: scaleX(-1);" />
-      <img :src="ImgLantern3" alt="" aria-hidden="true"
-        class="absolute pointer-events-none select-none float-medium opacity-12"
-        style="width: 100px; top: 20px; right: 40px;" />
-
-      <div class="max-w-[1280px] mx-auto flex flex-col items-center gap-10 sm:gap-14"
-           data-reveal="why"
-           :class="revealed.has('why') ? 'reveal-in' : 'reveal-out'">
-
-        <div class="text-center">
-          <p class="font-inter font-semibold tracking-[0.32em] text-[#9B86C4] text-[10px] uppercase mb-3">Location</p>
-          <h2 class="font-chonburi text-[#1A1240]" style="font-size: clamp(28px,4vw,52px)">Why Chiang Mai?</h2>
-        </div>
-
-        <div class="grid md:grid-cols-3 gap-6 w-full max-w-5xl">
-          <div v-for="(item, i) in whyItems" :key="item.title"
-            class="group rounded-2xl border border-[#C4A858]/25 bg-white/55 p-8 flex flex-col gap-5 hover:bg-white/75 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
-            :style="{ transitionDelay: `${i * 100}ms` }"
-          >
-            <span class="text-3xl">{{ item.icon }}</span>
-            <div>
-              <h3 class="font-chonburi text-[#1A1240] text-xl leading-snug">{{ item.title }}</h3>
-              <p v-if="item.sub" class="font-inter font-semibold text-[#C4A858] text-[10px] tracking-widest mt-1 uppercase">{{ item.sub }}</p>
-            </div>
-            <p class="text-[#5B4A8C] text-sm leading-relaxed">{{ item.desc }}</p>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -356,6 +249,9 @@ onUnmounted(() => observer?.disconnect())
       <img :src="ImgLotus2" alt="" aria-hidden="true"
         class="absolute pointer-events-none select-none opacity-12"
         style="width: 130px; top: 30px; right: 30px; transform: scaleX(-1);" />
+      <img :src="ImgElephant" alt="" aria-hidden="true"
+        class="absolute pointer-events-none select-none"
+        style="width: 280px; bottom: 0; right: 0; opacity: 0.18;" />
 
       <div class="max-w-[1280px] mx-auto flex flex-col items-center gap-10 sm:gap-14"
            data-reveal="timeline"
@@ -373,7 +269,7 @@ onUnmounted(() => observer?.disconnect())
             <div class="absolute left-[7px] top-3 bottom-3 w-px bg-[#C4A858]/40"></div>
             <div v-for="(item, i) in timeline" :key="i"
               class="relative pl-10 pb-10 last:pb-0 group">
-              <div class="absolute left-0 top-1.5 w-[15px] h-[15px] rounded-full border-2 border-[#C4A858] bg-[#FFFBF0] group-hover:bg-[#C4A858] transition-colors duration-300 z-10"></div>
+              <div class="absolute left-0 top-1.5 w-[15px] h-[15px] rounded-full border-2 border-[#C4A858] bg-[#F9D4AE] group-hover:bg-[#C4A858] transition-colors duration-300 z-10"></div>
               <p class="font-inter text-[#C4A858] font-semibold text-[10px] tracking-widest uppercase">{{ item.date }}</p>
               <p class="font-chonburi text-[#1A1240] text-xl mt-0.5">{{ item.label }}</p>
               <p v-if="item.note" class="font-inter text-[#9B86C4] text-xs mt-0.5">{{ item.note }}</p>
@@ -400,9 +296,47 @@ onUnmounted(() => observer?.disconnect())
             <div class="flex items-center gap-2 sm:gap-3 mt-1">
               <span class="w-20 sm:w-24 shrink-0"></span>
               <div class="flex-1 flex justify-between font-inter text-[9px] sm:text-[10px] text-[#9B86C4]">
-                <span>Nov</span><span class="hidden sm:inline">Late Nov</span><span>Dec</span><span class="hidden sm:inline">Late Dec</span><span>Jan</span><span>Jan 5</span>
+                <span>Nov</span><span class="hidden sm:inline">Late Nov</span><span>Dec</span><span class="hidden sm:inline">Late Dec</span><span>Jan</span><span>Jan 2</span>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="h-[2px] bg-gradient-to-r from-transparent via-[#C4A858] to-transparent" />
+
+    <!-- ══════════════════════════════════════════
+         WHY CHIANG MAI
+    ══════════════════════════════════════════ -->
+    <section class="relative py-16 sm:py-28 px-4 sm:px-6 overflow-hidden">
+
+      <img :src="ImgFlowerbed" alt="" aria-hidden="true"
+        class="absolute pointer-events-none select-none opacity-15"
+        style="width: 220px; bottom: 0; left: -10px; transform: scaleX(-1);" />
+      <img :src="ImgLantern3" alt="" aria-hidden="true"
+        class="absolute pointer-events-none select-none float-medium opacity-12"
+        style="width: 100px; top: 20px; right: 40px;" />
+
+      <div class="max-w-[1280px] mx-auto flex flex-col items-center gap-10 sm:gap-14"
+           data-reveal="why"
+           :class="revealed.has('why') ? 'reveal-in' : 'reveal-out'">
+
+        <div class="text-center">
+          <h2 class="font-chonburi text-[#1A1240]" style="font-size: clamp(28px,4vw,52px)">Why Chiang Mai?</h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6 w-full max-w-5xl">
+          <div v-for="(item, i) in whyItems" :key="item.title"
+            class="group rounded-2xl border border-[#C4A858]/25 bg-white/55 p-8 flex flex-col gap-5 hover:bg-white/75 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+            :style="{ transitionDelay: `${i * 100}ms` }"
+          >
+            <span class="text-3xl">{{ item.icon }}</span>
+            <div>
+              <h3 class="font-chonburi text-[#1A1240] text-xl leading-snug">{{ item.title }}</h3>
+              <p v-if="item.sub" class="font-inter font-semibold text-[#C4A858] text-[10px] tracking-widest mt-1 uppercase">{{ item.sub }}</p>
+            </div>
+            <p class="text-[#5B4A8C] text-sm leading-relaxed">{{ item.desc }}</p>
           </div>
         </div>
       </div>
@@ -461,11 +395,10 @@ onUnmounted(() => observer?.disconnect())
 
 <style scoped>
 /* ── hero ground illustrations — desktop defaults ── */
-.hero-elephant  { width: 340px; right: 1%; }
-.hero-pc        { width: 220px; left: 3%; }
-.hero-lotus1    { width: 120px; bottom: 8px; left: 22%; }
-.hero-lotus2    { width: 100px; bottom: 4px; left: 33%; opacity: 0.85; }
-.hero-flowerbed { width: 160px; right: 30%; }
+.hero-pc        { width: 280px; left: 3%;  bottom: 0; }
+.hero-lotus1    { width: 150px; bottom: 0; left: 22%; }
+.hero-lotus2    { width: 125px; bottom: 0; left: 33%; opacity: 0.85; }
+.hero-flowerbed { width: 220px; right: 3%; bottom: 0; }
 
 /* ── hero ground illustrations — mobile ── */
 @media (max-width: 639px) {
