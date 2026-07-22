@@ -198,7 +198,7 @@ onUnmounted(() => observer?.disconnect())
         class="hero-illus absolute pointer-events-none select-none hero-lotus1" style="z-index: 2;" />
       <img :src="ImgLotus2" alt="" aria-hidden="true"
         class="hero-illus absolute pointer-events-none select-none hero-lotus2" style="z-index: 2;" />
-      <img :src="ImgFlowerbed" alt="" aria-hidden="true"
+      <img :src="ImgElephant" alt="" aria-hidden="true"
         class="hero-illus absolute pointer-events-none select-none hero-flowerbed" style="z-index: 2;" />
 
       <!-- hero text -->
@@ -398,7 +398,7 @@ onUnmounted(() => observer?.disconnect())
 .hero-pc        { width: 280px; left: 3%;  bottom: 0; }
 .hero-lotus1    { width: 150px; bottom: 0; left: 22%; }
 .hero-lotus2    { width: 125px; bottom: 0; left: 33%; opacity: 0.85; }
-.hero-flowerbed { width: 220px; right: 3%; bottom: 0; }
+.hero-flowerbed { width: 220px; right: 3%; bottom: 8%; }
 
 /* ── hero ground illustrations — mobile ── */
 @media (max-width: 639px) {
