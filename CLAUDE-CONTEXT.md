@@ -1,7 +1,7 @@
 # ETHChiangmai 2026 — Claude 上下文文档
 
 > 把这个文件的全部内容粘贴给 Claude，即可继续开发工作。
-> 最后更新：2026-07-21
+> 最后更新：2026-07-24
 
 ---
 
@@ -53,17 +53,16 @@ npx pnpm build          # 构建生产版本
 
 | CSS 类名 | 字体 | 用途 |
 |----------|------|------|
-| `font-kodchasan` | Kodchasan | 主标题、副标题 |
-| `font-inter` | Inter | 正文、按钮、标签 |
-| `font-chonburi` | Chonburi | 展示性大标题（如 CROPS）|
-| `font-charm` | Charm | 装饰性手写（如 Coming Soon）|
+| `font-fraunces` | Fraunces | ★ 全站默认字体（html 全局继承） |
+| `font-kodchasan` | Kodchasan | 保留变量（未使用） |
+| `font-inter` | Inter | 保留变量（部分旧组件） |
+| `font-chonburi` | Chonburi | 保留变量（未使用） |
+| `font-charm` | Charm | 保留变量（未使用） |
 
-在 `src/styles/main.css` 的 `@theme` 中定义为 CSS 变量：
+在 `src/styles/main.css` 的 `@theme` 中定义为 CSS 变量，并在 `html {}` 中设置全局默认：
 ```css
---font-kodchasan: 'Kodchasan', sans-serif;
---font-inter: 'Inter', sans-serif;
---font-chonburi: 'Chonburi', serif;
---font-charm: 'Charm', cursive;
+--font-fraunces: 'Fraunces', serif;
+/* html { font-family: 'Fraunces', serif; } */
 ```
 
 ### 2026 色彩系统
@@ -148,13 +147,12 @@ websites/landing/
 
 `websites/landing/src/pages/PPT2026.vue`
 
-**已完成功能（截至 2026-07-21）：**
+**已完成功能（截至 2026-07-24）：**
 
 **视觉 / 背景**
-- 背景：暖色渐变 `#FFFBF0 → #FFE8BC → #F5D49A`（165deg）
-- 背景色块光晕：右上紫 / 左中金（radial-gradient + blur）
-- 动效：6 个 `✦` 星星闪烁（`@keyframes twinkle`，各自错开 delay/duration）
-- 插画元素：云层、灯笼×4（浮动动效）、点缀、电脑、花坛、荷花×2、大象
+- Hero 背景：全图插画 `src/assets/bg-full.jpg`（cover，center）
+- 其余 section 背景：继承页面根节点暖色渐变 `#FCE2C8 → #F9D4AE → #F5C898`
+- ⚠️ 动效/光晕/插画元素已从 Hero 移除（星星、灯笼、云层、地面插画全部去掉）
 
 **导航栏**
 - Logo（`logo.svg`）+ 社交图标（Telegram / Twitter / Email）+ "2025 →" 链接
@@ -162,51 +160,51 @@ websites/landing/
 - 移动端：`px-4`，图标间距收窄，链接文字缩短
 
 **Hero section**
-- Eyebrow pill：`ETHChiangmai 2026`（Inter semibold，金色边框，白色半透明背景）
-- 装饰行：金色横线 + `CROPS` 文字
-- 大标题：`THE NON-NEGOTIABLES OF ETHEREUM`，Chonburi，`clamp(38px, 6vw, 82px)`
-- 日期地点：Kodchasan semibold，`#5B4A8C`
-- 活动模块 pills：Unconference / Coliving / Market / Hackathon / Summit
-- 向下滚动提示箭头（bounce 动效）
+- 布局：`justify-start` + `pt-[8vh]`，文字整体偏上
+- Eyebrow pill：`ETHChiangmai 2026`（Fraunces，金色边框，白色半透明背景）
+- 装饰行：金色横线 + `CROPS` 文字（Fraunces bold）
+- 大标题：`THE NON-NEGOTIABLES OF ETHEREUM`，Fraunces，`clamp(38px, 6vw, 82px)`
+- 日期地点：Fraunces semibold，`#5B4A8C`，`Nov 11, 2026 – Jan 3, 2027`
+- 活动模块 pills：Unconference / Coliving / Market / Hackathon / Summit（Fraunces）
 
-**CROPS section**
-- 引言 + 四柱卡片（CR / O / P / S），金色大字 + 标题 + 描述
-- 移动端：单列、左右排列（字母+文字），桌面端：2列→4列
+**Section 顺序（从上到下）**
+1. Hero
+2. Timeline
+3. CROPS
+4. Why Chiang Mai
+5. Ecosystem Partners
+
+**Timeline section**
+- 竖向时间线（6 个节点）+ Gantt 甘特图（Program Overview）
+- ★ 日期已更新：Hackathon → Dec 26–28, 2026；CROPS Summit → Jan 3, 2027
+- Gantt 位置已对应更新（Hackathon: l:85% w:6%；Summit: l:98% w:2%）
+- 移动端 Gantt：label 宽度收窄，日期标签隐藏"Late Nov"/"Late Dec"
+
+**CROPS section（第三页）**
+- 标题 `CROPS` + Our Pillars 标签
+- 标题下方加引言两句（斜体，金色细线分隔）：
+  - "A user has the final say over their identities, assets, actions, and agents."
+  - "Unstoppable self-sovereignty must become possible for those who choose it…"
+- 四柱卡片（CR / O / P / S），金色大字 + 标题 + 描述
+- 移动端：单列、左右排列；桌面：2列→4列
 
 **Why Chiang Mai section**
 - 三张卡片：Permanent Global Node / Talent Density / Local Synergy
 
-**Timeline section**
-- 竖向时间线（6 个节点）+ Gantt 甘特图（Program Overview）
-- 移动端 Gantt：label 宽度收窄，日期标签隐藏"Late Nov"/"Late Dec"
-
 **Ecosystem Partners section**
-- 7 个生态伙伴 logo 网格（深色/浅色背景自适应）
+- 11 个生态伙伴 logo 网格（深色/浅色背景自适应）
 - "Become a Partner →" 按钮 → Google Slides
 
 **通用**
 - scroll-reveal 动效（IntersectionObserver，threshold 0.12）
 - 金色分割线（`via-[#C4A858]`）贯穿各 section
-- ✅ **移动端适配**（2026-07-21 完成）
-
-**移动端适配详情（<640px）：**
-
-| 区域 | 调整内容 |
-|------|---------|
-| 导航栏 | `px-4`，链接缩短为"2025 →"，图标间距收窄 |
-| Hero 灯笼 | 部分 `hidden sm:block`，保留者缩小 30~40% |
-| Hero 底部插图 | 大象 340px→180px，电脑 220px→120px，荷花/花坛等同比缩小 |
-| Hero 文字区 | 底部 padding 从 `clamp(260px,32vh)` 改为 `clamp(160px,28vw)` |
-| 活动模块 pills | `text-xs`，`px-3 py-1` |
-| CROPS 四柱 | 单列，左右排列（字母+文字），`p-4` |
-| 各 Section | `py-16 sm:py-28`，`px-4 sm:px-6` |
-| Gantt 日期 | 小屏隐藏"Late Nov"/"Late Dec"，字号 9px |
-| Footer | `flex-col sm:flex-row`，居中对齐 |
+- ✅ **全站字体**：Fraunces（Google Fonts CDN，html 全局继承）
 
 **已删除（清理完毕）：**
 - HackathonVariantA.vue、HackathonVariantB.vue、HackathonPrototype.vue、HackathonVariantC.vue
 - Home2026.vue（`/hero` 路由）
 - 路由 `/prototype/hackathon`、`/prototype/c`、`/hero`
+- Hero section 的所有动效/装饰元素（星星闪烁、灯笼浮动、云层、地面插画）
 
 ---
 
@@ -218,8 +216,8 @@ websites/landing/
 - 团队 / 社区介绍
 
 ### 动效方向（待定）
-- ✅ 星星闪烁（已上线）
-- ✅ 灯笼浮动（已上线）
+- ~~星星闪烁~~（Hero 改版后已移除）
+- ~~灯笼浮动~~（Hero 改版后已移除）
 - ✅ Scroll reveal（已上线）
 - 待定：文字入场动画、鼠标视差
 
@@ -250,3 +248,5 @@ websites/landing/
 | `websites/landing/src/pages/PPT2026.vue` | ★ 当前主要开发页面 |
 | `websites/landing/src/styles/main.css` | Tailwind 主题变量 + 全局组件 |
 | `websites/landing/src/composables/links.ts` | 所有外部链接 |
+| `websites/landing/src/assets/bg-full.jpg` | Hero 背景全图插画（当前使用） |
+| `websites/landing/src/assets/bg-blank.jpg` | 备用纯色背景（未使用） |

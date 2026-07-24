@@ -16,6 +16,7 @@ import ImgPC        from '@/assets/小元素/无白边/电脑.png'
 import ImgFlowerbed from '@/assets/小元素/无白边/花坛.png'
 import ImgLotus1    from '@/assets/小元素/无白边/荷花元素1.png'
 import ImgLotus2    from '@/assets/小元素/无白边/荷花元素2.png'
+import BgFull       from '@/assets/bg-full.jpg'
 
 
 import LogoEthTokyo  from '@/assets/partners/ethtokyo.png'
@@ -95,8 +96,8 @@ const timeline = [
   { date: 'Nov 11, 2026',      label: 'Opening / Co-Live',        note: 'Unconference & Coliving begins' },
   { date: 'Late Nov · 2 Days', label: 'Bazaar Ⅰ',                 note: '4Seas Nimman' },
   { date: 'Late Dec · 2 Days', label: 'Bazaar Ⅱ',                 note: '4Seas Nimman' },
-  { date: 'Jan 2, 2027',       label: 'CROPS Summit',             note: 'Chiang Mai, Thailand' },
-  { date: 'Dec 30 – Jan 2, 2027', label: 'Hackathon',              note: '$10,000+ prize pool' },
+  { date: 'Dec 26 – 28, 2026', label: 'Hackathon',                note: '$10,000+ prize pool' },
+  { date: 'Jan 3, 2027',       label: 'CROPS Summit',             note: 'Chiang Mai, Thailand' },
 ]
 
 // scroll-reveal
@@ -148,87 +149,38 @@ onUnmounted(() => observer?.disconnect())
     <!-- ══════════════════════════════════════════
          HERO
     ══════════════════════════════════════════ -->
-    <section class="relative overflow-hidden flex flex-col" style="height: calc(100vh - 56px); max-height: 900px; min-height: 560px;">
-
-      <!-- ambient glows -->
-      <div aria-hidden="true" class="pointer-events-none absolute inset-0">
-        <div class="absolute -top-20 right-0 w-[500px] h-[500px] rounded-full opacity-[0.12]"
-             style="background: radial-gradient(circle, #9B86C4 0%, transparent 70%); filter: blur(50px)" />
-        <div class="absolute top-1/2 -left-20 w-[380px] h-[380px] rounded-full opacity-[0.10]"
-             style="background: radial-gradient(circle, #C4A858 0%, transparent 70%); filter: blur(50px)" />
-      </div>
-
-      <!-- sparkles -->
-      <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
-        <span v-for="(s, i) in sparkles" :key="i"
-          class="absolute select-none leading-none sparkle"
-          :style="{ top: s.top, left: s.left, fontSize: s.size, color: s.color, animationDelay: s.delay, animationDuration: s.dur }"
-        >✦</span>
-      </div>
-
-      <!-- lanterns — floating in sky -->
-      <img :src="ImgLantern3" alt="" aria-hidden="true"
-        class="absolute pointer-events-none select-none float-slow hero-lantern"
-        style="top: 5%; left: 4%; --lw: 120px; --lw-m: 70px;" />
-      <img :src="ImgLantern2" alt="" aria-hidden="true"
-        class="absolute pointer-events-none select-none float-medium hero-lantern hidden sm:block"
-        style="top: 2%; left: 18%; --lw: 100px;" />
-      <img :src="ImgLantern1" alt="" aria-hidden="true"
-        class="absolute pointer-events-none select-none float-fast hero-lantern"
-        style="top: 3%; right: 5%; --lw: 140px; --lw-m: 80px;" />
-      <img :src="ImgLantern4" alt="" aria-hidden="true"
-        class="absolute pointer-events-none select-none float-slow hero-lantern"
-        style="top: 1%; right: 20%; --lw: 68px; --lw-m: 40px;" />
-      <img :src="ImgLantern2" alt="" aria-hidden="true"
-        class="absolute pointer-events-none select-none float-medium hero-lantern hidden sm:block"
-        style="top: 15%; right: 13%; opacity: 0.7; transform: rotate(6deg); --lw: 80px;" />
-      <img :src="ImgSparkle" alt="" aria-hidden="true"
-        class="absolute pointer-events-none select-none sparkle hidden sm:block"
-        style="width: 72px; top: 18%; left: 30%; animation-duration: 4s;" />
-
-      <!-- cloud layer — bottom horizon (behind illustrations) -->
-      <img :src="ImgCloud" alt="" aria-hidden="true"
-        class="absolute bottom-0 left-0 w-full pointer-events-none select-none"
-        style="opacity: 0.9; mix-blend-mode: multiply; min-width: 100%; z-index: 1;" />
-
-      <!-- ground illustrations — sit in front of cloud -->
-      <img :src="ImgPC" alt="" aria-hidden="true"
-        class="hero-illus absolute pointer-events-none select-none hero-pc" style="z-index: 2;" />
-      <img :src="ImgLotus1" alt="" aria-hidden="true"
-        class="hero-illus absolute pointer-events-none select-none hero-lotus1" style="z-index: 2;" />
-      <img :src="ImgLotus2" alt="" aria-hidden="true"
-        class="hero-illus absolute pointer-events-none select-none hero-lotus2" style="z-index: 2;" />
-      <img :src="ImgElephant" alt="" aria-hidden="true"
-        class="hero-illus absolute pointer-events-none select-none hero-flowerbed" style="z-index: 2;" />
+    <section
+      class="flex flex-col items-center justify-start text-center px-4 sm:px-6 pt-[8vh]"
+      :style="`height: calc(100vh - 56px); max-height: 900px; min-height: 560px; background: url(${BgFull}) center center / cover no-repeat;`"
+    >
 
       <!-- hero text -->
-      <div class="relative flex flex-col items-center text-center gap-4 sm:gap-6 px-4 sm:px-6"
-           style="z-index: 3; padding-top: clamp(40px, 7vh, 100px); padding-bottom: clamp(120px, 20vw, 280px)">
+      <div class="flex flex-col items-center gap-4 sm:gap-6">
 
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#C4A858]/50 bg-white/40 backdrop-blur-sm">
-          <span class="w-1.5 h-1.5 rounded-full bg-[#C4A858] animate-pulse"></span>
-          <span class="font-inter font-semibold text-[#7C5CBF] text-xs tracking-[0.25em] uppercase">ETHChiangmai 2026</span>
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#C4A858]/50 bg-white/40">
+          <span class="w-1.5 h-1.5 rounded-full bg-[#C4A858]"></span>
+          <span class="font-fraunces font-semibold text-[#7C5CBF] text-xs tracking-[0.25em] uppercase">ETHChiangmai 2026</span>
         </div>
 
         <div class="flex items-center gap-4">
           <div class="w-12 h-px bg-[#C4A858]/60"></div>
-          <span class="font-inter font-bold text-[#C4A858] tracking-[0.5em] text-xs uppercase">CROPS</span>
+          <span class="font-fraunces font-bold text-[#C4A858] tracking-[0.5em] text-xs uppercase">CROPS</span>
           <div class="w-12 h-px bg-[#C4A858]/60"></div>
         </div>
 
-        <h1 class="font-chonburi text-[#1A1240] leading-[1.05]"
-            style="font-size: clamp(38px, 6vw, 82px); text-shadow: 0 2px 20px rgba(255,251,240,0.8)">
+        <h1 class="font-fraunces text-[#1A1240] leading-[1.05]"
+            style="font-size: clamp(38px, 6vw, 82px)">
           THE NON-NEGOTIABLES<br/>OF ETHEREUM
         </h1>
 
-        <p class="font-kodchasan font-semibold text-[#5B4A8C]"
+        <p class="font-fraunces font-semibold text-[#5B4A8C]"
            style="font-size: clamp(14px, 1.6vw, 20px)">
-          Chiang Mai, Thailand &nbsp;·&nbsp; Nov 11, 2026 – Jan 2, 2027
+          Chiang Mai, Thailand &nbsp;·&nbsp; Nov 11, 2026 – Jan 3, 2027
         </p>
 
         <div class="flex flex-wrap justify-center gap-2 mt-1">
           <span v-for="m in modules" :key="m.label"
-            class="flex items-center px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-white/55 border border-[#C4A858]/35 text-[#5B4A8C] font-semibold text-xs sm:text-sm backdrop-blur-sm shadow-sm">
+            class="flex items-center px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-white/55 border border-[#C4A858]/35 text-[#5B4A8C] font-fraunces font-semibold text-xs sm:text-sm shadow-sm">
             {{ m.label }}
           </span>
         </div>
@@ -284,8 +236,8 @@ onUnmounted(() => observer?.disconnect())
               { label: 'Co-Living',    color: '#C4A858', w: '100%', l: '0%'  },
               { label: 'Bazaar Ⅰ',    color: '#7C5CBF', w: '10%',  l: '8%'  },
               { label: 'Bazaar Ⅱ',    color: '#7C5CBF', w: '10%',  l: '72%' },
-              { label: 'Summit',       color: '#5B4A8C', w: '5%',   l: '88%' },
-              { label: 'Hackathon',    color: '#1A1240', w: '8%',   l: '92%' },
+              { label: 'Hackathon',    color: '#1A1240', w: '6%',   l: '85%' },
+              { label: 'Summit',       color: '#5B4A8C', w: '2%',   l: '98%' },
             ]" :key="bar.label" class="flex items-center gap-2 sm:gap-3">
               <span class="w-20 sm:w-24 text-right font-inter text-[#5B4A8C] text-[10px] sm:text-xs font-semibold shrink-0">{{ bar.label }}</span>
               <div class="relative flex-1 h-3 sm:h-4 rounded-full bg-black/8">
@@ -296,11 +248,50 @@ onUnmounted(() => observer?.disconnect())
             <div class="flex items-center gap-2 sm:gap-3 mt-1">
               <span class="w-20 sm:w-24 shrink-0"></span>
               <div class="flex-1 flex justify-between font-inter text-[9px] sm:text-[10px] text-[#9B86C4]">
-                <span>Nov</span><span class="hidden sm:inline">Late Nov</span><span>Dec</span><span class="hidden sm:inline">Late Dec</span><span>Jan</span><span>Jan 2</span>
+                <span>Nov</span><span class="hidden sm:inline">Late Nov</span><span>Dec</span><span class="hidden sm:inline">Late Dec</span><span>Jan</span><span>Jan 3</span>
               </div>
             </div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <div class="h-[2px] bg-gradient-to-r from-transparent via-[#C4A858] to-transparent" />
+
+    <!-- ══════════════════════════════════════════
+         CROPS
+    ══════════════════════════════════════════ -->
+    <section class="relative pt-14 pb-16 sm:pt-16 sm:pb-28 px-4 sm:px-6">
+      <div class="max-w-[1280px] mx-auto flex flex-col items-center gap-10 sm:gap-14"
+           data-reveal="crops"
+           :class="revealed.has('crops') ? 'reveal-in' : 'reveal-out'">
+
+        <div class="text-center max-w-3xl flex flex-col items-center gap-4">
+          <p class="font-fraunces font-semibold tracking-[0.32em] text-[#9B86C4] text-[10px] uppercase">Our Pillars</p>
+          <h2 class="font-fraunces text-[#1A1240]" style="font-size: clamp(28px,4vw,52px)">CROPS</h2>
+          <div class="flex flex-col gap-2 mt-2 border-t border-[#C4A858]/30 pt-4 max-w-2xl">
+<p class="font-fraunces text-[#1A1240] text-sm sm:text-base leading-relaxed italic">
+              "A user has the final say over their identities, assets, actions, and agents."
+            </p>
+            <p class="font-fraunces text-[#5B4A8C] text-sm sm:text-base leading-relaxed italic">
+              "Unstoppable self-sovereignty must become possible for those who choose it, at the scale and in the form that they want it, without violating anyone else's."
+            </p>
+          </div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 w-full">
+          <div v-for="(c, i) in crops" :key="c.letter"
+            class="rounded-2xl border border-[#C4A858]/25 bg-white/55 p-6 sm:p-8 flex flex-row sm:flex-col gap-5 hover:bg-white/75 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+            :style="{ transitionDelay: `${i * 80}ms` }"
+          >
+            <div class="font-fraunces text-[#C4A858] leading-none shrink-0" style="font-size: clamp(40px, 5vw, 64px)">{{ c.letter }}</div>
+            <div class="flex flex-col gap-2">
+              <h3 class="font-fraunces text-[#1A1240] font-semibold text-base leading-snug">{{ c.title }}</h3>
+              <p class="font-fraunces text-[#5B4A8C] text-sm leading-relaxed">{{ c.desc }}</p>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
 

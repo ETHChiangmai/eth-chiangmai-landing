@@ -5,6 +5,7 @@
   --font-inter: 'Inter', sans-serif;
   --font-chonburi: 'Chonburi', serif;
   --font-charm: 'Charm', cursive;
+  --font-fraunces: 'Fraunces', serif;
 }
 
 @layer components {
@@ -23,8 +24,9 @@
 }
 
 html {
-  -webkit-font-smoothing: antialiased; /* Renders text with grayscale anti-aliasing */
-  -moz-osx-font-smoothing: grayscale; /* Renders text with grayscale anti-aliasing */
-  font-smooth: antialiased; /* Renders text with grayscale anti-aliasing */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-smooth: antialiased;
   overscroll-behavior-y: none;
+  font-family: 'Fraunces', serif;
 }
