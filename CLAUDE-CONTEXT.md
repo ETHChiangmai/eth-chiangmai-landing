@@ -1,7 +1,7 @@
 # ETHChiangmai 2026 — Claude 上下文文档
 
 > 把这个文件的全部内容粘贴给 Claude，即可继续开发工作。
-> 最后更新：2026-07-24
+> 最后更新：2026-07-24（二次更新）
 
 ---
 
@@ -194,6 +194,8 @@ websites/landing/
 **Ecosystem Partners section**
 - 11 个生态伙伴 logo 网格（深色/浅色背景自适应）
 - "Become a Partner →" 按钮 → Google Slides
+- 部分 logo 放大（`large: true`）：ETHKL、ETH Hub HK、ETH TAO、ETH PH → `max-h-16`（其余 `max-h-12`）
+- Zucity logo 已替换为官网版（图标 + 文字完整版），加 `noFilter: true` 跳过 brightness 滤镜以保留渐变图标色彩
 
 **通用**
 - scroll-reveal 动效（IntersectionObserver，threshold 0.12）

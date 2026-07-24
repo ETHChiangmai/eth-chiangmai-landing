@@ -79,16 +79,16 @@ const whyItems = [
 const partners = [
 
   { name: 'ETH Tokyo',           logo: LogoEthTokyo, dark: false },
-  { name: 'Zucity',              logo: LogoZucity,   dark: true  },
-  { name: 'ETHKL',               logo: LogoEthKL,    dark: false },
+  { name: 'Zucity',              logo: LogoZucity,   dark: true, noFilter: true },
+  { name: 'ETHKL',               logo: LogoEthKL,    dark: false, large: true },
   { name: 'Zuitzerland',         logo: LogoZuitz,    dark: false },
   { name: 'Partner 6',           logo: LogoP6,       dark: true  },
   { name: 'Partner 7',           logo: LogoP7,       dark: true  },
   { name: 'ETH Hangzhou',        logo: LogoHangzhou, dark: false },
-  { name: 'ETH Hub Hong Kong',   logo: LogoEthHubHK, dark: false },
-  { name: 'ETH TAO',             logo: LogoEthTao,   dark: false },
+  { name: 'ETH Hub Hong Kong',   logo: LogoEthHubHK, dark: false, large: true },
+  { name: 'ETH TAO',             logo: LogoEthTao,   dark: false, large: true },
   { name: 'ZuCity Japan',        logo: LogoZucityJP, dark: false },
-  { name: 'ETH PH',              logo: LogoEthPH,    dark: false },
+  { name: 'ETH PH',              logo: LogoEthPH,    dark: false, large: true },
 ]
 
 const timeline = [
@@ -359,8 +359,9 @@ onUnmounted(() => observer?.disconnect())
             :class="p.dark ? 'bg-[#1A1240]' : 'bg-white/70'"
           >
             <img :src="p.logo" :alt="p.name"
-              class="max-h-12 max-w-full object-contain"
-              :style="p.dark ? 'filter: brightness(0) invert(1)' : 'mix-blend-mode: multiply'" />
+              class="max-w-full object-contain"
+              :class="p.large ? 'max-h-16' : 'max-h-12'"
+              :style="p.noFilter ? '' : p.dark ? 'filter: brightness(0) invert(1)' : 'mix-blend-mode: multiply'" />
           </div>
         </div>
 
