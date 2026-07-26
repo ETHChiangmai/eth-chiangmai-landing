@@ -1,9 +1,13 @@
 <script lang="ts" setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import Logo         from '@/assets/logo.svg'
+import Logo         from '@/assets/logo-full.svg'
 import TelegramIcon from '@/assets/social/social-telegram.svg'
 import TwitterIcon  from '@/assets/social/social-twitter.svg'
 import EmailIcon    from '@/assets/social/social-email.svg'
+
+import StickerNode    from '@/assets/sticker-node.png'
+import StickerTalent  from '@/assets/sticker-talent.png'
+import StickerSynergy from '@/assets/sticker-synergy.png'
 
 import ImgCloud     from '@/assets/小元素/无白边/云层.png'
 import ImgElephant  from '@/assets/小元素/无白边/大象.png'
@@ -59,18 +63,18 @@ const crops = [
 
 const whyItems = [
   {
-    icon: '🌐',
+    img: StickerNode,
     title: 'A Permanent Global Node',
     sub: '4Seas',
     desc: 'Evolved from 4Seas to establish a permanent, on-the-ground anchor. Ensures year-round continuity, embedding Ethereum culture into the daily fabric of the city.',
   },
   {
-    icon: '👥',
+    img: StickerTalent,
     title: 'Unmatched Density of Talent',
     desc: "One of Southeast Asia's highest concentrations of digital nomads and Web3 builders — a living laboratory with dozens of active builder tribes, researchers, and creators.",
   },
   {
-    icon: '🤝',
+    img: StickerSynergy,
     title: 'Deep Local & Institutional Synergy',
     desc: 'Strategic partnerships with Chiang Mai University and local civic institutions, bridging on-chain innovation with local arts, humanities, and community resilience.',
   },
@@ -322,7 +326,7 @@ onUnmounted(() => observer?.disconnect())
             class="group rounded-2xl border border-[#C4A858]/25 bg-white/55 p-8 flex flex-col gap-5 hover:bg-white/75 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
             :style="{ transitionDelay: `${i * 100}ms` }"
           >
-            <span class="text-3xl">{{ item.icon }}</span>
+            <img :src="item.img" :alt="item.title" class="w-24 h-24 object-contain" />
             <div>
               <h3 class="font-chonburi text-[#1A1240] text-xl leading-snug">{{ item.title }}</h3>
               <p v-if="item.sub" class="font-inter font-semibold text-[#C4A858] text-[10px] tracking-widest mt-1 uppercase">{{ item.sub }}</p>
