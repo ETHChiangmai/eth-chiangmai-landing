@@ -27,7 +27,7 @@ import LogoEthTokyo  from '@/assets/partners/ethtokyo.png'
 import LogoZucity    from '@/assets/partners/zucity.png'
 import LogoEthKL     from '@/assets/partners/ethkl.png'
 import LogoZuitz     from '@/assets/partners/zuitzerland.png'
-import LogoP6        from '@/assets/partners/partner-6.png'
+import LogoEthSingapore from '@/assets/partners/eth-singapore.png'
 import LogoP7        from '@/assets/partners/partner-7.png'
 import LogoHangzhou  from '@/assets/partners/eth-hangzhou.png'
 import LogoEthHubHK  from '@/assets/partners/ethhub-hk.png'
@@ -36,9 +36,8 @@ import LogoZucityJP  from '@/assets/partners/zucity-japan.png'
 import LogoEthPH     from '@/assets/partners/ethph.png'
 import LogoEcfNetwork  from '@/assets/partners/ecf-network.png'
 import LogoEthNS      from '@/assets/partners/eth-ns.svg'
-import LogoEthShenzhen from '@/assets/partners/eth-shenzhen.png'
 import LogoGCC        from '@/assets/partners/gcc.png'
-import LogoSNZ        from '@/assets/partners/snz.png'
+import LogoSNZ        from '@/assets/partners/snz.svg'
 
 const logoFilter = 'invert(13%) sepia(28%) saturate(900%) hue-rotate(230deg) brightness(58%)'
 
@@ -87,22 +86,28 @@ const whyItems = [
 
 const partners = [
 
-  { name: 'ETH Tokyo',           logo: LogoEthTokyo, dark: false },
-  { name: 'Zucity',              logo: LogoZucity,   dark: true, noFilter: true },
-  { name: 'ETHKL',               logo: LogoEthKL,    dark: false, large: true },
-  { name: 'Zuitzerland',         logo: LogoZuitz,    dark: false },
-  { name: 'Partner 6',           logo: LogoP6,       dark: true  },
-  { name: 'Partner 7',           logo: LogoP7,       dark: true  },
-  { name: 'ETH Hangzhou',        logo: LogoHangzhou, dark: false },
-  { name: 'ETH Hub Hong Kong',   logo: LogoEthHubHK, dark: false, large: true },
-  { name: 'ETH TAO',             logo: LogoEthTao,   dark: false, large: true },
-  { name: 'ZuCity Japan',        logo: LogoZucityJP, dark: false },
-  { name: 'ETH PH',              logo: LogoEthPH,    dark: false, large: true },
-  { name: 'ECF Network',         logo: LogoEcfNetwork,  dark: false, noFilter: true },
-  { name: 'ETH NS',              logo: LogoEthNS,       dark: false },
-  { name: 'ETH Shenzhen',        logo: LogoEthShenzhen, dark: false, noFilter: true },
-  { name: 'GCC',                 logo: LogoGCC,         dark: false },
-  { name: 'SNZ',                 logo: LogoSNZ,         dark: true,  noFilter: true },
+  // 1. ECF
+  { name: 'ECF Network',         logo: LogoEcfNetwork,   dark: false, noFilter: true },
+  // 2. ETH Hangzhou
+  { name: 'ETH Hangzhou',        logo: LogoHangzhou,     dark: false },
+  // 3. ETH NS, ETHKL
+  { name: 'ETH NS',              logo: LogoEthNS,        dark: false },
+  { name: 'ETHKL',               logo: LogoEthKL,        dark: false, large: true },
+  // 4. ETH Hub HK
+  { name: 'ETH Hub Hong Kong',   logo: LogoEthHubHK,     dark: false, large: true },
+  // 5. ETH Tokyo, TAO, PH, Singapore, Shenzhen
+  { name: 'ETH Tokyo',           logo: LogoEthTokyo,     dark: false },
+  { name: 'ETH TAO',             logo: LogoEthTao,       dark: false, large: true },
+  { name: 'ETH PH',              logo: LogoEthPH,        dark: false, large: true },
+  { name: 'ETH Singapore',       logo: LogoEthSingapore, dark: true },
+  { name: 'ETH Shenzhen',        logo: LogoP7,           dark: true },
+  // 6. Zu*
+  { name: 'Zucity',              logo: LogoZucity,       dark: false, noFilter: true },
+  { name: 'Zuitzerland',         logo: LogoZuitz,        dark: false },
+  { name: 'ZuCity Japan',        logo: LogoZucityJP,     dark: false },
+  // 7. GCC & SNZ
+  { name: 'GCC',                 logo: LogoGCC,          dark: false },
+  { name: 'SNZ',                 logo: LogoSNZ,          dark: false },
 ]
 
 const timeline = [
