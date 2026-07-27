@@ -6,6 +6,7 @@
   --font-chonburi: 'Chonburi', serif;
   --font-charm: 'Charm', cursive;
   --font-fraunces: 'Fraunces', serif;
+  --font-black-ops: 'Black Ops One', serif;
 }
 
 @layer components {
@@ -15,7 +16,7 @@
   .ethbutton {
     @apply flex justify-center items-center rounded-[10px] transition-[background-color,box-shadow] duration-300;
     @apply bg-[#880CAB] hover:bg-[#970ebc] active:bg-[#870ca9];
-    @apply font-inter font-medium text-white;
+    @apply font-fraunces font-medium text-white;
     @apply text-[20px] xl:text-[24px];
     @apply px-2 md:px-3 xl:px-4;
     @apply h-[50px] xl:h-[60px];

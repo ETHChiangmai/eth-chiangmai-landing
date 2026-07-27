@@ -34,6 +34,11 @@ import LogoEthHubHK  from '@/assets/partners/ethhub-hk.png'
 import LogoEthTao    from '@/assets/partners/ethtao.png'
 import LogoZucityJP  from '@/assets/partners/zucity-japan.png'
 import LogoEthPH     from '@/assets/partners/ethph.png'
+import LogoEcfNetwork  from '@/assets/partners/ecf-network.png'
+import LogoEthNS      from '@/assets/partners/eth-ns.svg'
+import LogoEthShenzhen from '@/assets/partners/eth-shenzhen.png'
+import LogoGCC        from '@/assets/partners/gcc.png'
+import LogoSNZ        from '@/assets/partners/snz.png'
 
 const logoFilter = 'invert(13%) sepia(28%) saturate(900%) hue-rotate(230deg) brightness(58%)'
 
@@ -49,7 +54,7 @@ const sparkles = [
 const modules = [
   { icon: '🎙️', label: 'Unconference' },
   { icon: '🏠', label: 'Coliving' },
-  { icon: '🛍️', label: 'Market' },
+  { icon: '🛍️', label: 'Nomad Market' },
   { icon: '💻', label: 'Hackathon' },
   { icon: '🏔️', label: 'Summit' },
 ]
@@ -93,13 +98,18 @@ const partners = [
   { name: 'ETH TAO',             logo: LogoEthTao,   dark: false, large: true },
   { name: 'ZuCity Japan',        logo: LogoZucityJP, dark: false },
   { name: 'ETH PH',              logo: LogoEthPH,    dark: false, large: true },
+  { name: 'ECF Network',         logo: LogoEcfNetwork,  dark: false, noFilter: true },
+  { name: 'ETH NS',              logo: LogoEthNS,       dark: false },
+  { name: 'ETH Shenzhen',        logo: LogoEthShenzhen, dark: false, noFilter: true },
+  { name: 'GCC',                 logo: LogoGCC,         dark: false },
+  { name: 'SNZ',                 logo: LogoSNZ,         dark: true,  noFilter: true },
 ]
 
 const timeline = [
   { date: 'Nov 1, 2026',       label: 'Application Start',        note: '' },
   { date: 'Nov 11, 2026',      label: 'Opening / Co-Live',        note: 'Unconference & Coliving begins' },
-  { date: 'Late Nov · 2 Days', label: 'Bazaar Ⅰ',                 note: '4Seas Nimman' },
-  { date: 'Late Dec · 2 Days', label: 'Bazaar Ⅱ',                 note: '4Seas Nimman' },
+  { date: 'Mid Nov · 2 Days',  label: 'Nomad Market Ⅰ',            note: '4Seas Nimman' },
+  { date: 'Mid Dec · 2 Days',  label: 'Nomad Market Ⅱ',            note: '4Seas Nimman' },
   { date: 'Dec 26 – 28, 2026', label: 'Hackathon',                note: '$10,000+ prize pool' },
   { date: 'Jan 3, 2027',       label: 'CROPS Summit',             note: 'Chiang Mai, Thailand' },
 ]
@@ -144,7 +154,7 @@ onUnmounted(() => observer?.disconnect())
         <a href="mailto:info@ethchiangmai.com" class="opacity-50 hover:opacity-90 transition-opacity">
           <img :src="EmailIcon" alt="Email" class="h-6 w-6 sm:h-[29px] sm:w-[29px]" :style="{ filter: logoFilter }" />
         </a>
-        <a href="/2025" class="font-inter text-[#5B4A8C]/60 hover:text-[#5B4A8C] transition-colors text-xs sm:text-sm ml-1 border-l border-[#C4A858]/35 pl-3 sm:pl-4 whitespace-nowrap">
+        <a href="/2025" class="font-fraunces text-[#5B4A8C]/60 hover:text-[#5B4A8C] transition-colors text-xs sm:text-sm ml-1 border-l border-[#C4A858]/35 pl-3 sm:pl-4 whitespace-nowrap">
           2025 →
         </a>
       </div>
@@ -172,7 +182,7 @@ onUnmounted(() => observer?.disconnect())
           <div class="w-12 h-px bg-[#C4A858]/60"></div>
         </div>
 
-        <h1 class="font-fraunces text-[#1A1240] leading-[1.05]"
+        <h1 class="font-black-ops text-[#1A1240] leading-[1.05]"
             style="font-size: clamp(38px, 6vw, 82px)">
           THE NON-NEGOTIABLES<br/>OF ETHEREUM
         </h1>
@@ -214,8 +224,8 @@ onUnmounted(() => observer?.disconnect())
            :class="revealed.has('timeline') ? 'reveal-in' : 'reveal-out'">
 
         <div class="text-center">
-          <p class="font-inter font-semibold tracking-[0.32em] text-[#9B86C4] text-[10px] uppercase mb-3">Schedule</p>
-          <h2 class="font-chonburi text-[#1A1240]" style="font-size: clamp(28px,4vw,52px)">ETHChiangmai 2026 Timeline</h2>
+          <p class="font-fraunces font-semibold tracking-[0.32em] text-[#9B86C4] text-[10px] uppercase mb-3">Schedule</p>
+          <h2 class="font-fraunces text-[#1A1240]" style="font-size: clamp(28px,4vw,52px)">ETHChiangmai 2026 Timeline</h2>
         </div>
 
         <div class="grid lg:grid-cols-2 gap-16 w-full max-w-5xl items-start">
@@ -224,26 +234,26 @@ onUnmounted(() => observer?.disconnect())
           <div class="relative flex flex-col">
             <div class="absolute left-[7px] top-3 bottom-3 w-px bg-[#C4A858]/40"></div>
             <div v-for="(item, i) in timeline" :key="i"
-              class="relative pl-10 pb-10 last:pb-0 group">
+              class="relative pl-10 pb-5 last:pb-0 group">
               <div class="absolute left-0 top-1.5 w-[15px] h-[15px] rounded-full border-2 border-[#C4A858] bg-[#F9D4AE] group-hover:bg-[#C4A858] transition-colors duration-300 z-10"></div>
-              <p class="font-inter text-[#C4A858] font-semibold text-[10px] tracking-widest uppercase">{{ item.date }}</p>
-              <p class="font-chonburi text-[#1A1240] text-xl mt-0.5">{{ item.label }}</p>
-              <p v-if="item.note" class="font-inter text-[#9B86C4] text-xs mt-0.5">{{ item.note }}</p>
+              <p class="font-fraunces text-[#C4A858] font-semibold text-[10px] tracking-widest uppercase">{{ item.date }}</p>
+              <p class="font-fraunces text-[#1A1240] text-xl mt-0.5">{{ item.label }}</p>
+              <p v-if="item.note" class="font-fraunces text-[#9B86C4] text-xs mt-0.5">{{ item.note }}</p>
             </div>
           </div>
 
           <!-- gantt -->
           <div class="flex flex-col gap-3 sm:gap-4">
-            <p class="font-inter font-semibold tracking-[0.32em] text-[#9B86C4] text-[10px] uppercase mb-2">Program Overview</p>
+            <p class="font-fraunces font-semibold tracking-[0.32em] text-[#9B86C4] text-[10px] uppercase mb-2">Program Overview</p>
             <div v-for="bar in [
               { label: 'Unconference', color: '#9B86C4', w: '100%', l: '0%'  },
               { label: 'Co-Living',    color: '#C4A858', w: '100%', l: '0%'  },
-              { label: 'Bazaar Ⅰ',    color: '#7C5CBF', w: '10%',  l: '8%'  },
-              { label: 'Bazaar Ⅱ',    color: '#7C5CBF', w: '10%',  l: '72%' },
+              { label: 'Nomad Market Ⅰ', color: '#7C5CBF', w: '10%',  l: '20%' },
+              { label: 'Nomad Market Ⅱ', color: '#7C5CBF', w: '10%',  l: '56%' },
               { label: 'Hackathon',    color: '#1A1240', w: '6%',   l: '85%' },
               { label: 'Summit',       color: '#5B4A8C', w: '2%',   l: '98%' },
             ]" :key="bar.label" class="flex items-center gap-2 sm:gap-3">
-              <span class="w-20 sm:w-24 text-right font-inter text-[#5B4A8C] text-[10px] sm:text-xs font-semibold shrink-0">{{ bar.label }}</span>
+              <span class="w-20 sm:w-24 text-right font-fraunces text-[#5B4A8C] text-[10px] sm:text-xs font-semibold shrink-0">{{ bar.label }}</span>
               <div class="relative flex-1 h-3 sm:h-4 rounded-full bg-black/8">
                 <div class="absolute top-0 h-full rounded-full transition-all duration-700"
                      :style="{ background: bar.color, width: bar.w, left: bar.l, opacity: '0.7' }"></div>
@@ -251,8 +261,8 @@ onUnmounted(() => observer?.disconnect())
             </div>
             <div class="flex items-center gap-2 sm:gap-3 mt-1">
               <span class="w-20 sm:w-24 shrink-0"></span>
-              <div class="flex-1 flex justify-between font-inter text-[9px] sm:text-[10px] text-[#9B86C4]">
-                <span>Nov</span><span class="hidden sm:inline">Late Nov</span><span>Dec</span><span class="hidden sm:inline">Late Dec</span><span>Jan</span><span>Jan 3</span>
+              <div class="flex-1 flex justify-between font-fraunces text-[9px] sm:text-[10px] text-[#9B86C4]">
+                <span>Nov</span><span class="hidden sm:inline">Mid Nov</span><span>Dec</span><span class="hidden sm:inline">Mid Dec</span><span>Jan</span><span>Jan 3</span>
               </div>
             </div>
           </div>
@@ -318,7 +328,7 @@ onUnmounted(() => observer?.disconnect())
            :class="revealed.has('why') ? 'reveal-in' : 'reveal-out'">
 
         <div class="text-center">
-          <h2 class="font-chonburi text-[#1A1240]" style="font-size: clamp(28px,4vw,52px)">Why Chiang Mai?</h2>
+          <h2 class="font-fraunces text-[#1A1240]" style="font-size: clamp(28px,4vw,52px)">Why Chiang Mai?</h2>
         </div>
 
         <div class="grid md:grid-cols-3 gap-6 w-full max-w-5xl">
@@ -328,10 +338,10 @@ onUnmounted(() => observer?.disconnect())
           >
             <img :src="item.img" :alt="item.title" class="w-24 h-24 object-contain" />
             <div>
-              <h3 class="font-chonburi text-[#1A1240] text-xl leading-snug">{{ item.title }}</h3>
-              <p v-if="item.sub" class="font-inter font-semibold text-[#C4A858] text-[10px] tracking-widest mt-1 uppercase">{{ item.sub }}</p>
+              <h3 class="font-fraunces text-[#1A1240] text-xl leading-snug">{{ item.title }}</h3>
+              <p v-if="item.sub" class="font-fraunces font-semibold text-[#C4A858] text-[10px] tracking-widest mt-1 uppercase">{{ item.sub }}</p>
             </div>
-            <p class="text-[#5B4A8C] text-sm leading-relaxed">{{ item.desc }}</p>
+            <p class="font-fraunces text-[#5B4A8C] text-sm leading-relaxed">{{ item.desc }}</p>
           </div>
         </div>
       </div>
@@ -353,8 +363,8 @@ onUnmounted(() => observer?.disconnect())
            :class="revealed.has('partners') ? 'reveal-in' : 'reveal-out'">
 
         <div class="text-center">
-          <p class="font-inter font-semibold tracking-[0.32em] text-[#9B86C4] text-[10px] uppercase mb-3">Supported By</p>
-          <h2 class="font-chonburi text-[#1A1240]" style="font-size: clamp(22px,3vw,40px)">Ecosystem Partners</h2>
+          <p class="font-fraunces font-semibold tracking-[0.32em] text-[#9B86C4] text-[10px] uppercase mb-3">Supported By</p>
+          <h2 class="font-fraunces text-[#1A1240]" style="font-size: clamp(22px,3vw,40px)">Ecosystem Partners</h2>
         </div>
 
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 w-full max-w-4xl">
@@ -371,7 +381,7 @@ onUnmounted(() => observer?.disconnect())
 
         <a href="https://docs.google.com/presentation/d/1h1aeW7KVTYSrYiolCDyjgP8vAozK6zBAl46wwVQFlgE/edit?usp=sharing"
           target="_blank"
-          class="inline-flex items-center justify-center h-12 px-8 font-inter font-bold text-white text-sm bg-[#7C5CBF] hover:bg-[#6B4DAF] active:bg-[#5A3D9E] transition-colors rounded-xl shadow-[0_8px_20px_-6px_rgba(124,92,191,0.50)]">
+          class="inline-flex items-center justify-center h-12 px-8 font-fraunces font-bold text-white text-sm bg-[#7C5CBF] hover:bg-[#6B4DAF] active:bg-[#5A3D9E] transition-colors rounded-xl shadow-[0_8px_20px_-6px_rgba(124,92,191,0.50)]">
           Become a Partner →
         </a>
       </div>
@@ -379,8 +389,8 @@ onUnmounted(() => observer?.disconnect())
 
     <!-- footer -->
     <footer class="px-4 sm:px-10 py-6 sm:py-7 max-w-[1440px] mx-auto flex flex-col sm:flex-row items-center gap-2 sm:justify-between border-t border-[#C4A858]/30 text-center sm:text-left">
-      <p class="font-inter text-[#5B4A8C]/40 text-xs">© 2026 ETHChiangmai · ethchiangmai.com</p>
-      <p class="font-inter text-[#9B86C4] text-xs font-medium tracking-wide">CROPS — The Non-Negotiables of Ethereum</p>
+      <p class="font-fraunces text-[#5B4A8C]/40 text-xs">© 2026 ETHChiangmai · ethchiangmai.com</p>
+      <p class="font-fraunces text-[#9B86C4] text-xs font-medium tracking-wide">CROPS — The Non-Negotiables of Ethereum</p>
     </footer>
 
   </div>
