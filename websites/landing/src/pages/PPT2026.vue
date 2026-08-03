@@ -112,7 +112,7 @@ const partners = [
 
 const timeline = [
   { date: 'Nov 1, 2026',       label: 'Application Start',        note: '' },
-  { date: 'Nov 11, 2026',      label: 'Opening / Colving',        note: 'Unconference & Coliving begins' },
+  { date: 'Nov 11, 2026',      label: 'Opening / Coliving',        note: 'Unconference & Coliving begins' },
   { date: 'Mid Nov · 2 Days',  label: 'Nomad Market Ⅰ',            note: '4Seas Nimman' },
   { date: 'Mid Dec · 2 Days',  label: 'Nomad Market Ⅱ',            note: '4Seas Nimman' },
   { date: 'Dec 26 – 28, 2026', label: 'Hackathon',                note: '$10,000+ prize pool' },
@@ -252,7 +252,7 @@ onUnmounted(() => observer?.disconnect())
             <p class="font-fraunces font-semibold tracking-[0.32em] text-[#9B86C4] text-[10px] uppercase mb-2">Program Overview</p>
             <div v-for="bar in [
               { label: 'Unconference', color: '#9B86C4', w: '100%', l: '0%'  },
-              { label: 'Colving',      color: '#C4A858', w: '100%', l: '0%'  },
+              { label: 'Coliving',      color: '#C4A858', w: '100%', l: '0%'  },
               { label: 'Nomad Market Ⅰ', color: '#7C5CBF', w: '10%',  l: '20%' },
               { label: 'Nomad Market Ⅱ', color: '#7C5CBF', w: '10%',  l: '56%' },
               { label: 'Hackathon',    color: '#1A1240', w: '6%',   l: '85%' },
