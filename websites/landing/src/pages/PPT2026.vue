@@ -2,8 +2,8 @@
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import LogoDark from '@/assets/logo-figma.png'
 import LogoLight from '@/assets/logo-long.svg'
-import BgFull from '@/assets/bg-full.png'
-import ImgLantern from '@/assets/小元素/无白边/灯笼元素3.png'
+import BgFull from '@/assets/bg-full.webp'
+import ImgLantern from '@/assets/小元素/无白边/灯笼元素3.webp'
 import ImgLotus1 from '@/assets/小元素/无白边/荷花元素1.png'
 import ImgLotus2 from '@/assets/小元素/无白边/荷花元素2.png'
 import StickerCensorship from '@/assets/sticker-censorship.png'
@@ -308,13 +308,20 @@ onUnmounted(() => {
     </header>
 
     <!-- HERO -->
-    <section id="about" class="relative min-h-screen flex items-center justify-center overflow-hidden"
-      :style="{ backgroundImage: `url(${BgFull})`, backgroundSize: 'cover', backgroundPosition: 'center 15%' }">
+    <section id="about" class="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0d0918]">
+      <img
+        :src="BgFull"
+        alt=""
+        aria-hidden="true"
+        fetchpriority="high"
+        decoding="async"
+        class="absolute inset-0 w-full h-full object-cover object-[center_15%] pointer-events-none select-none"
+      />
       <div class="absolute inset-0 bg-gradient-to-t from-[#FAF0E8] via-[#FAF0E8]/25 to-transparent pointer-events-none" />
-      <img :src="ImgLantern" alt="" aria-hidden="true"
+      <img :src="ImgLantern" alt="" aria-hidden="true" loading="lazy" decoding="async"
         class="absolute top-20 right-[7%] w-28 md:w-40 pointer-events-none select-none lantern-multiply"
         style="animation: float 7s ease-in-out infinite" />
-      <img :src="ImgLantern" alt="" aria-hidden="true"
+      <img :src="ImgLantern" alt="" aria-hidden="true" loading="lazy" decoding="async"
         class="absolute top-44 right-[23%] w-20 md:w-28 pointer-events-none select-none lantern-multiply"
         style="opacity: 0.65; animation: float-slow 9s ease-in-out infinite 2s" />
       <div class="relative z-10 max-w-7xl mx-auto px-6 pt-28 pb-32 w-full flex justify-center">
@@ -589,15 +596,20 @@ onUnmounted(() => {
     </section>
 
     <!-- NEWSLETTER -->
-    <section
-      class="py-20 relative overflow-hidden"
-      :style="{ backgroundImage: `url(${BgFull})`, backgroundSize: 'cover', backgroundPosition: 'center 55%' }"
-    >
+    <section class="py-20 relative overflow-hidden bg-[#faf0e8]">
+      <img
+        :src="BgFull"
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+        class="absolute inset-0 w-full h-full object-cover object-[center_55%] pointer-events-none select-none"
+      />
       <div class="absolute inset-0 bg-[#faf0e8]/55 pointer-events-none" />
-      <img :src="ImgLantern" alt="" aria-hidden="true"
+      <img :src="ImgLantern" alt="" aria-hidden="true" loading="lazy" decoding="async"
         class="absolute right-6 top-1/2 -translate-y-1/2 w-40 md:w-56 pointer-events-none hidden md:block opacity-55 lantern-multiply"
         style="animation: float-slow 8s ease-in-out infinite" />
-      <img :src="ImgLotus1" alt="" aria-hidden="true"
+      <img :src="ImgLotus1" alt="" aria-hidden="true" loading="lazy" decoding="async"
         class="absolute left-6 top-1/2 -translate-y-1/2 w-32 md:w-44 pointer-events-none hidden md:block opacity-30 lantern-multiply" />
       <div class="max-w-xl mx-auto px-6 text-center relative z-10">
         <p class="text-xs font-bold tracking-[0.22em] uppercase mb-4 gradient-text-cool inline-block">✦ Stay in the Loop</p>
