@@ -137,7 +137,7 @@ const tint = '[filter:invert(33%)_sepia(18%)_saturate(1400%)_hue-rotate(222deg)_
         </h1>
 
         <p class="font-kodchasan font-semibold text-[#5B4A8C] text-[clamp(16px,1.6vw,23px)]">
-          Nov 11, 2026 – Jan 5, 2027 · Chiang Mai, Thailand
+          Nov 11, 2026 – Jan 5, 2027 · Chiangmai, Thailand
         </p>
 
         <div class="flex items-center gap-8 mt-1.5">

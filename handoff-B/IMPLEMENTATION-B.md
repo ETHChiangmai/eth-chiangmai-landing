@@ -54,7 +54,7 @@
 
 - 主题 / Theme：`CROPS: The Non-Negotiables of Ethereum`
 - 大标题：`THE NON-NEGOTIABLES OF ETHEREUM`
-- 日期：`Nov 11, 2026 – Jan 5, 2027 · Chiang Mai, Thailand`
+- 日期：`Nov 11, 2026 – Jan 5, 2027 · Chiangmai, Thailand`
 - CTA：`Coming Soon` + `Deck` 按钮（链接到现有 deck Google Slides）
 
 ### 社交图标着色

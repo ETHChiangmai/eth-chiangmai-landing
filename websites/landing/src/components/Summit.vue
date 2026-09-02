@@ -15,7 +15,7 @@ import bg from '@/assets/backgrounds/summit.webp'
         <div class="font-inter text-xl mt-10">
           As the grand finale of the ETHChiangmai series, this Summit brings together global
           builders, researchers, and community leaders to chart the future blueprint of the Ethereum
-          ecosystem. The event will feature over 10+ international speakers in Chiang Mai, where the
+          ecosystem. The event will feature over 10+ international speakers in Chiangmai, where the
           ancient city will ignite sparks of collaboration and innovation.
         </div>
         <div class="font-inter font-bold text-xl mt-10">

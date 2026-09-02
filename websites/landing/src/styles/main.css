@@ -9,6 +9,7 @@
   --font-black-ops: 'Black Ops One', serif;
   --font-jakarta: 'Plus Jakarta Sans', sans-serif;
   --font-mono: 'DM Mono', monospace;
+  --font-space-mono: 'Space Mono', monospace;
   --color-night: #0d0918;
   --color-pink: #c8366b;
   --color-lavender: #c2a8e0;
@@ -68,6 +69,16 @@ html {
 }
 .font-display {
   font-family: 'Fraunces', Georgia, serif;
+}
+.font-hero {
+  font-family: 'Space Mono', 'DM Mono', ui-monospace, monospace;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  font-style: normal;
+}
+.font-hero em {
+  font-style: normal;
+  font-weight: 700;
 }
 
 @keyframes float {

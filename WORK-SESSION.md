@@ -33,7 +33,7 @@ bun landing dev      # 启动开发服务器
 |---------|------|------------|
 | Hero | 主标题、日期、5大模块徽章、插画素材 | Slide 1+2 |
 | CROPS | 核心理念引言 + 四大支柱卡片（C/R/O/P/S） | Slide 3 |
-| Why Chiang Mai | 三个选择清迈的理由 | Slide 4 |
+| Why Chiangmai | 三个选择清迈的理由 | Slide 4 |
 | Timeline | 竖向时间轴 + 甘特图 | Slide 5 |
 | Ecosystem Partners | 合作伙伴 Logo 展示 | Slide 2 右侧 |
 
@@ -51,7 +51,7 @@ const modules = [...]
 // CROPS 四大支柱
 const crops = [...]
 
-// Why Chiang Mai
+// Why Chiangmai
 const whyItems = [...]
 
 // 时间轴节点
