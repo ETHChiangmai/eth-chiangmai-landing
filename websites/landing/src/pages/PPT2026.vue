@@ -10,6 +10,9 @@ import StickerCensorship from '@/assets/sticker-censorship.png'
 import StickerNode from '@/assets/sticker-node.png'
 import StickerTalent from '@/assets/sticker-talent.png'
 import StickerSynergy from '@/assets/sticker-synergy.png'
+import ImgPermanentOutpost from '@/assets/permanent-outpost.png'
+import ImgUnmatchedCostQuality from '@/assets/unmatched-cost-quality.png'
+import ImgDeepLocalRoots from '@/assets/deep-local-roots.jpg'
 
 import LogoEcfNetwork from '@/assets/partners/ecf-network.png'
 import LogoHangzhou from '@/assets/partners/eth-hangzhou.png'
@@ -25,6 +28,10 @@ import LogoZucity from '@/assets/partners/zucity.png'
 import LogoZuitz from '@/assets/partners/zuitzerland.png'
 import LogoGCC from '@/assets/partners/gcc.png'
 import LogoSNZ from '@/assets/partners/snz.svg'
+import IconX from '@/assets/social/social-twitter.svg'
+import IconTelegram from '@/assets/social/social-telegram.svg'
+import ImgTeamZik from '@/assets/team-zik.png'
+import ImgTeamTakShire from '@/assets/team-tak-shire.png'
 
 const navScrolled = ref(false)
 const menuOpen = ref(false)
@@ -84,15 +91,15 @@ const timeline = [
 ]
 
 const speakers = [
-  { name: 'Aya Miyaguchi', role: 'Ethereum Foundation', tag: 'Keynote', img: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&auto=format' },
-  { name: 'Juan Benet', role: 'Protocol Labs', tag: 'Speaker', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&auto=format' },
-  { name: 'Evin McMullen', role: 'Privado ID', tag: 'Speaker', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&auto=format' },
-  { name: 'TBA', role: 'More speakers coming soon', tag: 'Soon', img: '' },
+  { name: 'TBA', role: 'Speaker', tag: 'Soon', img: '' },
+  { name: 'TBA', role: 'Speaker', tag: 'Soon', img: '' },
+  { name: 'TBA', role: 'Speaker', tag: 'Soon', img: '' },
+  { name: 'TBA', role: 'Speaker', tag: 'Soon', img: '' },
 ]
 
 const residents = [
-  { name: 'Alex Masmej', role: 'Independent Builder', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&auto=format' },
-  { name: 'Stani Kulechov', role: 'Aave Protocol', img: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&auto=format' },
+  { name: 'TBA', role: 'Resident Builder', img: '' },
+  { name: 'TBA', role: 'Resident Builder', img: '' },
   { name: 'TBA', role: 'Resident Builder', img: '' },
   { name: 'TBA', role: 'Resident Builder', img: '' },
 ]
@@ -106,20 +113,20 @@ const crops = [
 
 const whyItems = [
   {
-    url: 'https://images.unsplash.com/photo-1635076005218-221958877938?w=700&h=480&fit=crop&auto=format',
-    alt: 'Community gathering',
+    url: ImgPermanentOutpost,
+    alt: 'Zuzalu Library Chiang Mai',
     title: 'A Permanent Outpost',
     desc: "Chiangmai is not just a backdrop — it's the world's most established long-term Ethereum outpost. The community never fully left.",
   },
   {
-    url: 'https://images.unsplash.com/photo-1702118700058-7fe48f7135e0?w=700&h=480&fit=crop&auto=format',
-    alt: 'Chiangmai street café',
+    url: ImgUnmatchedCostQuality,
+    alt: '4SEAS coworking space',
     title: 'Unmatched Cost & Quality',
     desc: 'World-class infrastructure at a fraction of the cost. Fast fiber, great food, affordable coliving, and a city that knows how to host.',
   },
   {
-    url: 'https://images.unsplash.com/photo-1524189791114-9781ece3d3ed?w=700&h=480&fit=crop&auto=format',
-    alt: 'Thai temple',
+    url: ImgDeepLocalRoots,
+    alt: 'Wat Phra That Doi Suthep, Chiang Mai',
     title: 'Deep Local Roots',
     desc: "Four years of relationships with local venues, vendors, and neighbors. ETHChiangMai gives back to the city that gives us so much.",
   },
@@ -128,9 +135,9 @@ const whyItems = [
 const partners = [
   { name: 'Zucity', logo: LogoZucity },
   { name: 'GCC', logo: LogoGCC },
-  { name: 'ETH PH', logo: LogoEthPH },
-  { name: 'ECF Network', logo: LogoEcfNetwork },
   { name: 'ETH Hangzhou', logo: LogoHangzhou },
+  { name: 'ECF Network', logo: LogoEcfNetwork },
+  { name: 'ETH PH', logo: LogoEthPH },
   { name: 'ETH NS', logo: LogoEthNS },
   { name: 'ETHKL', logo: LogoEthKL },
   { name: 'ETH Hub HK', logo: LogoEthHubHK },
@@ -143,12 +150,24 @@ const partners = [
 ]
 
 const team = [
-  { name: 'Jarrad Hope', role: 'Co-Founder', img: 'https://images.unsplash.com/photo-1542178243-bc20204b769f?w=400&h=400&fit=crop&auto=format' },
-  { name: 'Nadia Asparouhova', role: 'Community Lead', img: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=400&h=400&fit=crop&auto=format' },
-  { name: 'Josh Stark', role: 'Ethereum Foundation', img: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=400&fit=crop&auto=format' },
-  { name: 'Yalor Mewn', role: 'Operations', img: 'https://images.unsplash.com/photo-1463453091185-61582044d556?w=400&h=400&fit=crop&auto=format' },
-  { name: 'TBA', role: 'Team Member', img: '' },
-  { name: 'TBA', role: 'Team Member', img: '' },
+  {
+    name: 'Zik',
+    role: 'Core Contributor of 4Seas, Main organizer of ETHChiangmai',
+    img: ImgTeamZik,
+    x: 'https://x.com/muziknozik',
+    telegram: 'https://t.me/muziknozik',
+  },
+  {
+    name: 'Tak Shire',
+    role: 'Storyteller, producer, marketing lead in crypto',
+    img: ImgTeamTakShire,
+    x: 'https://x.com/tak_shire',
+    telegram: 'https://t.me/takshire',
+  },
+  { name: 'TBA', role: 'Team Member', img: '', x: '', telegram: '' },
+  { name: 'TBA', role: 'Team Member', img: '', x: '', telegram: '' },
+  { name: 'TBA', role: 'Team Member', img: '', x: '', telegram: '' },
+  { name: 'TBA', role: 'Team Member', img: '', x: '', telegram: '' },
 ]
 
 function onScroll() {
@@ -589,6 +608,34 @@ onUnmounted(() => {
             <div class="p-4">
               <p class="font-semibold text-sm text-[#0d0918] font-display">{{ person.name }}</p>
               <p class="text-xs mt-0.5 text-[#0d0918]/50">{{ person.role }}</p>
+              <div class="flex items-center gap-2.5 mt-3">
+                <a
+                  v-if="person.x"
+                  :href="person.x"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="team-social"
+                  :aria-label="`${person.name} on X`"
+                >
+                  <img :src="IconX" alt="" class="w-3.5 h-3.5" />
+                </a>
+                <span v-else class="team-social team-social--muted" aria-hidden="true">
+                  <img :src="IconX" alt="" class="w-3.5 h-3.5" />
+                </span>
+                <a
+                  v-if="person.telegram"
+                  :href="person.telegram"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="team-social"
+                  :aria-label="`${person.name} on Telegram`"
+                >
+                  <img :src="IconTelegram" alt="" class="w-3.5 h-3.5" />
+                </a>
+                <span v-else class="team-social team-social--muted" aria-hidden="true">
+                  <img :src="IconTelegram" alt="" class="w-3.5 h-3.5" />
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -715,6 +762,31 @@ onUnmounted(() => {
 .person-card--dark {
   border-color: rgba(255, 255, 255, 0.1);
   background: rgba(255, 255, 255, 0.05);
+}
+.team-social {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 9999px;
+  background: rgba(13, 9, 24, 0.08);
+  transition: background 0.2s, transform 0.2s;
+}
+.team-social img {
+  filter: brightness(0);
+  opacity: 0.65;
+}
+.team-social:hover {
+  background: rgba(13, 9, 24, 0.16);
+  transform: scale(1.08);
+}
+.team-social:hover img {
+  opacity: 1;
+}
+.team-social--muted {
+  opacity: 0.35;
+  pointer-events: none;
 }
 .crops-card {
   background: rgba(255, 255, 255, 0.04);
