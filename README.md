@@ -1,6 +1,6 @@
-# ETH Chiang Mai
+# ETHChiangmai
 
-Monorepo for the ETH Chiang Mai websites.
+Monorepo for the ETHChiangmai websites.
 
 ## Prerequisites
 

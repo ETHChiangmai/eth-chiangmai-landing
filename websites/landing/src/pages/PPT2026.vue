@@ -1,463 +1,812 @@
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted } from 'vue'
-import Logo         from '@/assets/logo-full.svg'
-import TelegramIcon from '@/assets/social/social-telegram.svg'
-import TwitterIcon  from '@/assets/social/social-twitter.svg'
-import EmailIcon    from '@/assets/social/social-email.svg'
-
-import StickerNode    from '@/assets/sticker-node.png'
-import StickerTalent  from '@/assets/sticker-talent.png'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
+import LogoDark from '@/assets/logo-figma.png'
+import LogoLight from '@/assets/logo-long.svg'
+import BgFull from '@/assets/bg-full.webp'
+import ImgLantern from '@/assets/小元素/无白边/灯笼元素3.webp'
+import ImgLotus1 from '@/assets/小元素/无白边/荷花元素1.png'
+import ImgLotus2 from '@/assets/小元素/无白边/荷花元素2.png'
+import StickerCensorship from '@/assets/sticker-censorship.png'
+import StickerNode from '@/assets/sticker-node.png'
+import StickerTalent from '@/assets/sticker-talent.png'
 import StickerSynergy from '@/assets/sticker-synergy.png'
+import ImgPermanentOutpost from '@/assets/permanent-outpost.png'
+import ImgUnmatchedCostQuality from '@/assets/unmatched-cost-quality.png'
+import ImgDeepLocalRoots from '@/assets/deep-local-roots.jpg'
 
-import ImgCloud     from '@/assets/小元素/无白边/云层.png'
-import ImgElephant  from '@/assets/小元素/无白边/大象.png'
-import ImgLantern1  from '@/assets/小元素/无白边/灯笼元素1.png'
-import ImgLantern2  from '@/assets/小元素/无白边/灯笼元素2.png'
-import ImgLantern3  from '@/assets/小元素/无白边/灯笼元素3.png'
-import ImgLantern4  from '@/assets/小元素/无白边/灯笼元素4.png'
-import ImgSparkle   from '@/assets/小元素/无白边/点缀.png'
-import ImgPC        from '@/assets/小元素/无白边/电脑.png'
-import ImgFlowerbed from '@/assets/小元素/无白边/花坛.png'
-import ImgLotus1    from '@/assets/小元素/无白边/荷花元素1.png'
-import ImgLotus2    from '@/assets/小元素/无白边/荷花元素2.png'
-import BgFull       from '@/assets/bg-full.jpg'
-
-
-import LogoEthTokyo  from '@/assets/partners/ethtokyo.png'
-import LogoZucity    from '@/assets/partners/zucity.png'
-import LogoEthKL     from '@/assets/partners/ethkl.png'
-import LogoZuitz     from '@/assets/partners/zuitzerland.png'
+import LogoEcfNetwork from '@/assets/partners/ecf-network.png'
+import LogoHangzhou from '@/assets/partners/eth-hangzhou.png'
+import LogoEthNS from '@/assets/partners/eth-ns.svg'
+import LogoEthKL from '@/assets/partners/ethkl.png'
+import LogoEthHubHK from '@/assets/partners/ethhub-hk.png'
+import LogoEthTokyo from '@/assets/partners/ethtokyo.png'
+import LogoEthTao from '@/assets/partners/ethtao.png'
+import LogoEthPH from '@/assets/partners/ethph.png'
 import LogoEthSingapore from '@/assets/partners/eth-singapore.png'
-import LogoP7        from '@/assets/partners/partner-7.png'
-import LogoHangzhou  from '@/assets/partners/eth-hangzhou.png'
-import LogoEthHubHK  from '@/assets/partners/ethhub-hk.png'
-import LogoEthTao    from '@/assets/partners/ethtao.png'
-import LogoZucityJP  from '@/assets/partners/zucity-japan.png'
-import LogoEthPH     from '@/assets/partners/ethph.png'
-import LogoEcfNetwork  from '@/assets/partners/ecf-network.png'
-import LogoEthNS      from '@/assets/partners/eth-ns.svg'
-import LogoGCC        from '@/assets/partners/gcc.png'
-import LogoSNZ        from '@/assets/partners/snz.svg'
+import LogoP7 from '@/assets/partners/partner-7.png'
+import LogoZucity from '@/assets/partners/zucity.png'
+import LogoZuitz from '@/assets/partners/zuitzerland.png'
+import LogoGCC from '@/assets/partners/gcc.png'
+import LogoSNZ from '@/assets/partners/snz.svg'
+import IconX from '@/assets/social/social-twitter.svg'
+import IconTelegram from '@/assets/social/social-telegram.svg'
+import ImgTeamZik from '@/assets/team-zik.png'
+import ImgTeamTakShire from '@/assets/team-tak-shire.png'
 
-const logoFilter = 'invert(13%) sepia(28%) saturate(900%) hue-rotate(230deg) brightness(58%)'
+const navScrolled = ref(false)
+const menuOpen = ref(false)
+const email = ref('')
+const subscribed = ref(false)
+const subscribePending = ref(false)
+const subscribeError = ref('')
+const carouselIndex = ref(4)
+const carouselAnimating = ref(true)
+const timelineRef = ref<HTMLElement | null>(null)
+const lanternY = ref(0)
+let carouselTimer: ReturnType<typeof setInterval> | null = null
+let carouselLocked = false
 
-const sparkles = [
-  { top: '4%',  left: '52%', size: '18px', color: '#C4A858', delay: '0s',   dur: '3.2s' },
-  { top: '2%',  left: '70%', size: '12px', color: '#9B86C4', delay: '1.4s', dur: '2.6s' },
-  { top: '9%',  left: '82%', size: '22px', color: '#C4A858', delay: '2.8s', dur: '3.8s' },
-  { top: '7%',  left: '38%', size: '14px', color: '#9B86C4', delay: '0.6s', dur: '2.9s' },
-  { top: '13%', left: '61%', size: '10px', color: '#9B86C4', delay: '1.9s', dur: '3.3s' },
-  { top: '20%', left: '45%', size: '16px', color: '#C4A858', delay: '0.3s', dur: '2.7s' },
+const navLinks = [
+  { label: 'About', href: '#about' },
+  { label: 'Schedule', href: '#schedule' },
+  { label: 'CROPS', href: '#crops' },
+  { label: 'Chiangmai', href: '#chiangmai' },
+  { label: 'Partners', href: '#partners' },
 ]
 
-const modules = [
-  { icon: '🎙️', label: 'Unconference' },
-  { icon: '🏠', label: 'Coliving' },
-  { icon: '🛍️', label: 'Nomad Market' },
-  { icon: '💻', label: 'Hackathon' },
-  { icon: '🏔️', label: 'Summit' },
+const lookbackSlides = [
+  {
+    url: 'https://images.unsplash.com/photo-1725107179577-27983a9de258?w=1400&h=800&fit=crop&auto=format',
+    alt: 'ETHChiangmai 2025 community gathering',
+    caption: 'Community Night — CROPS Summit 2025',
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1568543021136-65aba7793fec?w=1400&h=800&fit=crop&auto=format',
+    alt: 'Yi Peng lanterns above Chiangmai',
+    caption: 'Yi Peng Lantern Festival, November 2025',
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1524189791114-9781ece3d3ed?w=1400&h=800&fit=crop&auto=format',
+    alt: 'Chiangmai temple at dusk',
+    caption: 'Doi Suthep — Our Spiritual Home Base',
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1622790698141-94e30457ef12?w=1400&h=800&fit=crop&auto=format',
+    alt: 'Ethereum token',
+    caption: 'Hackathon 2025 — 72 Hours of Pure Building',
+  },
+]
+
+const SLIDE_COUNT = lookbackSlides.length
+const lookbackLoop = computed(() => [...lookbackSlides, ...lookbackSlides, ...lookbackSlides])
+carouselIndex.value = SLIDE_COUNT
+
+const timeline = [
+  { period: 'October 2026', event: 'Applications Open', detail: 'Apply to join as a builder, coliver, or contributor.', multiDay: false, dotColor: '#DCA524' },
+  { period: 'November 11', event: 'Opening of Coliving', detail: 'Doors open at the Chiangmai base. Community settles in.', multiDay: false, dotColor: '#C8366B' },
+  { period: 'Mid November', event: 'Nomad Market I', detail: 'First open market for Web3 projects, art, and local makers.', multiDay: true, dotColor: '#7632C8', gradient: 'linear-gradient(180deg,#7632C8,#C8366B)' },
+  { period: 'Mid December', event: 'Nomad Market II', detail: 'Second edition — larger, with ecosystem speakers and demos.', multiDay: true, dotColor: '#C8366B', gradient: 'linear-gradient(180deg,#C8366B,#7632C8)' },
+  { period: 'December', event: 'Hackathon', detail: "72 hours of pure building around Ethereum's core values.", multiDay: true, dotColor: '#F0A030', gradient: 'linear-gradient(180deg,#F0A030,#C8366B)' },
+  { period: 'December', event: 'CROPS Summit', detail: 'The flagship multi-day conference. Invite-only + open sessions.', multiDay: true, dotColor: '#DCA524', gradient: 'linear-gradient(180deg,#DCA524,#C8366B 50%,#7632C8)' },
+]
+
+const speakers = [
+  { name: 'TBA', role: 'Speaker', tag: 'Soon', img: '' },
+  { name: 'TBA', role: 'Speaker', tag: 'Soon', img: '' },
+  { name: 'TBA', role: 'Speaker', tag: 'Soon', img: '' },
+  { name: 'TBA', role: 'Speaker', tag: 'Soon', img: '' },
+]
+
+const residents = [
+  { name: 'TBA', role: 'Resident Builder', img: '' },
+  { name: 'TBA', role: 'Resident Builder', img: '' },
+  { name: 'TBA', role: 'Resident Builder', img: '' },
+  { name: 'TBA', role: 'Resident Builder', img: '' },
 ]
 
 const crops = [
-  { letter: 'CR', title: 'Censorship Resistance',           desc: 'Protecting the right to transact and communicate freely, without gatekeepers.' },
-  { letter: 'O', title: 'Open Source & Free as in Freedom', desc: 'Code that anyone can read, fork, and build upon — forever.' },
-  { letter: 'P', title: 'Privacy',                          desc: 'The right to act without being surveilled or tracked.' },
-  { letter: 'S', title: 'Security',                         desc: 'Guarantees that hold even under adversarial conditions.' },
+  { abbr: 'CR', title: 'Censorship\nResistance', desc: 'Building systems that no authority can shut down. Code as the final frontier of free expression.', sticker: StickerCensorship, accentColor: '#C8366B' },
+  { abbr: 'O', title: 'Openness', desc: 'Open-source at the core. Every protocol, every tool — transparent and forever forkable.', sticker: StickerNode, accentColor: '#7632C8' },
+  { abbr: 'P', title: 'Permissionless', desc: 'No gatekeepers. No borders. Anyone, anywhere can build, participate, and contribute equally.', sticker: StickerTalent, accentColor: '#DCA524' },
+  { abbr: 'S', title: 'Self-\nSovereignty', desc: 'Your keys, your rules. True ownership of identity, assets, and data — no intermediaries.', sticker: StickerSynergy, accentColor: '#C2A8E0' },
 ]
 
 const whyItems = [
   {
-    img: StickerNode,
-    title: 'A Permanent Global Node',
-    sub: '4Seas',
-    desc: 'Evolved from 4Seas to establish a permanent, on-the-ground anchor. Ensures year-round continuity, embedding Ethereum culture into the daily fabric of the city.',
+    url: ImgPermanentOutpost,
+    alt: 'Zuzalu Library Chiang Mai',
+    title: 'A Permanent Outpost',
+    desc: "Chiangmai is not just a backdrop — it's the world's most established long-term Ethereum outpost. The community never fully left.",
   },
   {
-    img: StickerTalent,
-    title: 'Unmatched Density of Talent',
-    desc: "One of Southeast Asia's highest concentrations of digital nomads and Web3 builders — a living laboratory with dozens of active builder tribes, researchers, and creators.",
+    url: ImgUnmatchedCostQuality,
+    alt: '4SEAS coworking space',
+    title: 'Unmatched Cost & Quality',
+    desc: 'World-class infrastructure at a fraction of the cost. Fast fiber, great food, affordable coliving, and a city that knows how to host.',
   },
   {
-    img: StickerSynergy,
-    title: 'Deep Local & Institutional Synergy',
-    desc: 'Strategic partnerships with Chiang Mai University and local civic institutions, bridging on-chain innovation with local arts, humanities, and community resilience.',
+    url: ImgDeepLocalRoots,
+    alt: 'Wat Phra That Doi Suthep, Chiang Mai',
+    title: 'Deep Local Roots',
+    desc: "Four years of relationships with local venues, vendors, and neighbors. ETHChiangMai gives back to the city that gives us so much.",
   },
 ]
 
 const partners = [
-
-  // 1. ECF
-  { name: 'ECF Network',         logo: LogoEcfNetwork,   dark: false, noFilter: true },
-  // 2. ETH Hangzhou
-  { name: 'ETH Hangzhou',        logo: LogoHangzhou,     dark: false },
-  // 3. ETH NS, ETHKL
-  { name: 'ETH NS',              logo: LogoEthNS,        dark: false },
-  { name: 'ETHKL',               logo: LogoEthKL,        dark: false, large: true },
-  // 4. ETH Hub HK
-  { name: 'ETH Hub Hong Kong',   logo: LogoEthHubHK,     dark: false, large: true },
-  // 5. ETH Tokyo, TAO, PH, Singapore, Shenzhen
-  { name: 'ETH Tokyo',           logo: LogoEthTokyo,     dark: false },
-  { name: 'ETH TAO',             logo: LogoEthTao,       dark: false, large: true },
-  { name: 'ETH PH',              logo: LogoEthPH,        dark: false, large: true },
-  { name: 'ETH Singapore',       logo: LogoEthSingapore, dark: true },
-  { name: 'ETH Shenzhen',        logo: LogoP7,           dark: true },
-  // 6. Zu*
-  { name: 'Zucity',              logo: LogoZucity,       dark: false, noFilter: true },
-  { name: 'Zuitzerland',         logo: LogoZuitz,        dark: false },
-  { name: 'ZuCity Japan',        logo: LogoZucityJP,     dark: false },
-  // 7. GCC & SNZ
-  { name: 'GCC',                 logo: LogoGCC,          dark: false },
-  { name: 'SNZ',                 logo: LogoSNZ,          dark: false },
+  { name: 'Zucity', logo: LogoZucity },
+  { name: 'GCC', logo: LogoGCC },
+  { name: 'ETH Hangzhou', logo: LogoHangzhou },
+  { name: 'ECF Network', logo: LogoEcfNetwork },
+  { name: 'ETH PH', logo: LogoEthPH },
+  { name: 'ETH NS', logo: LogoEthNS },
+  { name: 'ETHKL', logo: LogoEthKL },
+  { name: 'ETH Hub HK', logo: LogoEthHubHK },
+  { name: 'ETH Tokyo', logo: LogoEthTokyo },
+  { name: 'ETH TAO', logo: LogoEthTao },
+  { name: 'ETH Singapore', logo: LogoEthSingapore },
+  { name: 'ETH Shenzhen', logo: LogoP7 },
+  { name: 'Zuitzerland', logo: LogoZuitz },
+  { name: 'SNZ', logo: LogoSNZ },
 ]
 
-const timeline = [
-  { date: 'Nov 1, 2026',       label: 'Application Start',        note: '' },
-  { date: 'Nov 11, 2026',      label: 'Opening / Coliving',        note: 'Unconference & Coliving begins' },
-  { date: 'Mid Nov · 2 Days',  label: 'Nomad Market Ⅰ',            note: '4Seas Nimman' },
-  { date: 'Mid Dec · 2 Days',  label: 'Nomad Market Ⅱ',            note: '4Seas Nimman' },
-  { date: 'Dec 26 – 28, 2026', label: 'Hackathon',                note: '$10,000+ prize pool' },
-  { date: 'Jan 3, 2027',       label: 'CROPS Summit',             note: 'Chiang Mai, Thailand' },
+const team = [
+  {
+    name: 'Zik',
+    role: 'Core Contributor of 4Seas, Main organizer of ETHChiangmai',
+    img: ImgTeamZik,
+    x: 'https://x.com/muziknozik',
+    telegram: 'https://t.me/muziknozik',
+  },
+  {
+    name: 'Tak Shire',
+    role: 'Storyteller, producer, marketing lead in crypto',
+    img: ImgTeamTakShire,
+    x: 'https://x.com/tak_shire',
+    telegram: 'https://t.me/takshire',
+  },
+  { name: 'TBA', role: 'Team Member', img: '', x: '', telegram: '' },
+  { name: 'TBA', role: 'Team Member', img: '', x: '', telegram: '' },
+  { name: 'TBA', role: 'Team Member', img: '', x: '', telegram: '' },
+  { name: 'TBA', role: 'Team Member', img: '', x: '', telegram: '' },
 ]
 
-// scroll-reveal
-const revealed = ref<Set<string>>(new Set())
-let observer: IntersectionObserver | null = null
+function onScroll() {
+  navScrolled.value = window.scrollY > 80
+  if (!timelineRef.value) return
+  const rect = timelineRef.value.getBoundingClientRect()
+  const viewH = window.innerHeight || 1
+  // Float lanterns upward as the section scrolls through the viewport
+  const progress = (viewH - rect.top) / (viewH + rect.height)
+  lanternY.value = Math.max(-180, Math.min(120, (0.5 - progress) * 280))
+}
+
+async function jumpCarousel(to: number) {
+  carouselAnimating.value = false
+  carouselIndex.value = to
+  await nextTick()
+  requestAnimationFrame(() => {
+    carouselAnimating.value = true
+    carouselLocked = false
+  })
+}
+
+function prevSlide() {
+  if (carouselLocked || !carouselAnimating.value) return
+  carouselIndex.value -= 1
+  if (carouselIndex.value < SLIDE_COUNT) {
+    carouselLocked = true
+    setTimeout(() => jumpCarousel(carouselIndex.value + SLIDE_COUNT), 500)
+  }
+}
+
+function nextSlide() {
+  if (carouselLocked || !carouselAnimating.value) return
+  carouselIndex.value += 1
+  if (carouselIndex.value >= SLIDE_COUNT * 2) {
+    carouselLocked = true
+    setTimeout(() => jumpCarousel(carouselIndex.value - SLIDE_COUNT), 500)
+  }
+}
+
+function activeCaption(i: number) {
+  return lookbackSlides[i % SLIDE_COUNT]?.caption ?? ''
+}
+function closeMenu() {
+  menuOpen.value = false
+}
+async function onSubscribe(e: Event) {
+  e.preventDefault()
+  const value = email.value.trim()
+  if (!value || subscribePending.value) return
+
+  const endpoint = import.meta.env.VITE_SUBSCRIBE_URL
+  if (!endpoint) {
+    subscribeError.value = 'Subscribe is not configured yet. Add VITE_SUBSCRIBE_URL to .env'
+    return
+  }
+
+  subscribePending.value = true
+  subscribeError.value = ''
+  try {
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({ email: value }),
+    })
+    if (!res.ok) {
+      throw new Error(`Subscribe failed (${res.status})`)
+    }
+    subscribed.value = true
+  } catch {
+    subscribeError.value = 'Something went wrong. Please try again in a moment.'
+  } finally {
+    subscribePending.value = false
+  }
+}
+
+function startCarousel() {
+  stopCarousel()
+  carouselTimer = setInterval(() => nextSlide(), 4500)
+}
+function stopCarousel() {
+  if (carouselTimer) {
+    clearInterval(carouselTimer)
+    carouselTimer = null
+  }
+}
 
 onMounted(() => {
-  observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting && e.target instanceof HTMLElement && e.target.dataset.reveal) {
-          revealed.value = new Set([...revealed.value, e.target.dataset.reveal])
-        }
-      })
-    },
-    { threshold: 0.12 }
-  )
-  document.querySelectorAll('[data-reveal]').forEach((el) => observer!.observe(el))
+  window.addEventListener('scroll', onScroll, { passive: true })
+  onScroll()
+  startCarousel()
 })
-onUnmounted(() => observer?.disconnect())
+onUnmounted(() => {
+  window.removeEventListener('scroll', onScroll)
+  stopCarousel()
+})
 </script>
 
 <template>
-  <div
-    class="text-[#1A1240] overflow-x-hidden"
-    style="background: linear-gradient(165deg, #FCE2C8 0%, #F9D4AE 55%, #F5C898 100%)"
-  >
+  <div class="text-[#0d0918] overflow-x-hidden bg-[#faf0e8]">
 
-    <!-- ══ NAV (same as main page) ══ -->
-    <nav class="sticky top-0 z-50 flex items-center justify-between px-4 sm:px-10 h-14 sm:h-16 max-w-[1440px] mx-auto w-full border-b border-[#C4A858]/35"
-         style="background: rgba(252,226,200,0.80); backdrop-filter: blur(12px);">
-      <img :src="Logo" alt="ETHChiangmai" class="h-6 sm:h-7" />
-      <div class="flex items-center gap-3 sm:gap-4">
-        <a href="https://t.me/ethchiangmai" target="_blank" class="opacity-50 hover:opacity-90 transition-opacity">
-          <img :src="TelegramIcon" alt="Telegram" class="h-5 w-5" :style="{ filter: logoFilter }" />
-        </a>
-        <a href="https://twitter.com/ethchiangmai" target="_blank" class="opacity-50 hover:opacity-90 transition-opacity">
-          <img :src="TwitterIcon" alt="Twitter" class="h-5 w-5" :style="{ filter: logoFilter }" />
-        </a>
-        <a href="mailto:info@ethchiangmai.com" class="opacity-50 hover:opacity-90 transition-opacity">
-          <img :src="EmailIcon" alt="Email" class="h-6 w-6 sm:h-[29px] sm:w-[29px]" :style="{ filter: logoFilter }" />
-        </a>
-        <a href="/2025" class="font-fraunces text-[#5B4A8C]/60 hover:text-[#5B4A8C] transition-colors text-xs sm:text-sm ml-1 border-l border-[#C4A858]/35 pl-3 sm:pl-4 whitespace-nowrap">
-          2025 →
-        </a>
-      </div>
-    </nav>
-
-    <!-- ══════════════════════════════════════════
-         HERO
-    ══════════════════════════════════════════ -->
-    <section
-      class="flex flex-col items-center justify-start text-center px-4 sm:px-6 pt-[8vh]"
-      :style="`height: calc(100vh - 56px); max-height: 900px; min-height: 560px; background: url(${BgFull}) center center / cover no-repeat;`"
+    <!-- NAV -->
+    <header
+      class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+      :class="navScrolled ? 'bg-[#faf0e8]/95 backdrop-blur-md shadow-sm' : 'bg-transparent'"
     >
-
-      <!-- hero text -->
-      <div class="flex flex-col items-center gap-4 sm:gap-6">
-
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#C4A858]/50 bg-white/40">
-          <span class="w-1.5 h-1.5 rounded-full bg-[#C4A858]"></span>
-          <span class="font-fraunces font-semibold text-[#7C5CBF] text-xs tracking-[0.25em] uppercase">ETHChiangmai 2026</span>
-        </div>
-
-        <div class="flex items-center gap-4">
-          <div class="w-12 h-px bg-[#C4A858]/60"></div>
-          <span class="font-fraunces font-bold text-[#C4A858] tracking-[0.5em] text-xs uppercase">CROPS</span>
-          <div class="w-12 h-px bg-[#C4A858]/60"></div>
-        </div>
-
-        <h1 class="font-black-ops text-[#1A1240] leading-[1.05]"
-            style="font-size: clamp(38px, 6vw, 82px)">
-          THE NON-NEGOTIABLES<br/>OF ETHEREUM
-        </h1>
-
-        <p class="font-fraunces font-semibold text-[#5B4A8C]"
-           style="font-size: clamp(14px, 1.6vw, 20px)">
-          Chiang Mai, Thailand &nbsp;·&nbsp; Nov 11, 2026 – Jan 3, 2027
-        </p>
-
-        <div class="flex flex-wrap justify-center gap-2 mt-1">
-          <span v-for="m in modules" :key="m.label"
-            class="flex items-center px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-white/55 border border-[#C4A858]/35 text-[#5B4A8C] font-fraunces font-semibold text-xs sm:text-sm shadow-sm">
-            {{ m.label }}
-          </span>
-        </div>
-
-      </div>
-    </section>
-
-    <div class="h-[2px] bg-gradient-to-r from-transparent via-[#C4A858] to-transparent" />
-
-    <!-- ══════════════════════════════════════════
-         TIMELINE
-    ══════════════════════════════════════════ -->
-    <section class="relative py-16 sm:py-28 px-4 sm:px-6 overflow-hidden">
-
-      <img :src="ImgLotus1" alt="" aria-hidden="true"
-        class="absolute pointer-events-none select-none opacity-15"
-        style="width: 160px; bottom: 20px; left: 20px;" />
-      <img :src="ImgLotus2" alt="" aria-hidden="true"
-        class="absolute pointer-events-none select-none opacity-12"
-        style="width: 130px; top: 30px; right: 30px; transform: scaleX(-1);" />
-      <img :src="ImgElephant" alt="" aria-hidden="true"
-        class="absolute pointer-events-none select-none"
-        style="width: 280px; bottom: 0; right: 0; opacity: 0.18;" />
-
-      <div class="max-w-[1280px] mx-auto flex flex-col items-center gap-10 sm:gap-14"
-           data-reveal="timeline"
-           :class="revealed.has('timeline') ? 'reveal-in' : 'reveal-out'">
-
-        <div class="text-center">
-          <p class="font-fraunces font-semibold tracking-[0.32em] text-[#9B86C4] text-[10px] uppercase mb-3">Schedule</p>
-          <h2 class="font-fraunces text-[#1A1240]" style="font-size: clamp(28px,4vw,52px)">ETHChiangmai 2026 Timeline</h2>
-        </div>
-
-        <div class="grid lg:grid-cols-2 gap-16 w-full max-w-5xl items-start">
-
-          <!-- vertical timeline -->
-          <div class="relative flex flex-col">
-            <div class="absolute left-[7px] top-3 bottom-3 w-px bg-[#C4A858]/40"></div>
-            <div v-for="(item, i) in timeline" :key="i"
-              class="relative pl-10 pb-5 last:pb-0 group">
-              <div class="absolute left-0 top-1.5 w-[15px] h-[15px] rounded-full border-2 border-[#C4A858] bg-[#F9D4AE] group-hover:bg-[#C4A858] transition-colors duration-300 z-10"></div>
-              <p class="font-fraunces text-[#C4A858] font-semibold text-[10px] tracking-widest uppercase">{{ item.date }}</p>
-              <p class="font-fraunces text-[#1A1240] text-xl mt-0.5">{{ item.label }}</p>
-              <p v-if="item.note" class="font-fraunces text-[#9B86C4] text-xs mt-0.5">{{ item.note }}</p>
-            </div>
-          </div>
-
-          <!-- gantt -->
-          <div class="flex flex-col gap-3 sm:gap-4">
-            <p class="font-fraunces font-semibold tracking-[0.32em] text-[#9B86C4] text-[10px] uppercase mb-2">Program Overview</p>
-            <div v-for="bar in [
-              { label: 'Unconference', color: '#9B86C4', w: '100%', l: '0%'  },
-              { label: 'Coliving',      color: '#C4A858', w: '100%', l: '0%'  },
-              { label: 'Nomad Market Ⅰ', color: '#7C5CBF', w: '10%',  l: '20%' },
-              { label: 'Nomad Market Ⅱ', color: '#7C5CBF', w: '10%',  l: '56%' },
-              { label: 'Hackathon',    color: '#1A1240', w: '6%',   l: '85%' },
-              { label: 'Summit',       color: '#5B4A8C', w: '2%',   l: '98%' },
-            ]" :key="bar.label" class="flex items-center gap-2 sm:gap-3">
-              <span class="w-20 sm:w-24 text-right font-fraunces text-[#5B4A8C] text-[10px] sm:text-xs font-semibold shrink-0">{{ bar.label }}</span>
-              <div class="relative flex-1 h-3 sm:h-4 rounded-full bg-black/8">
-                <div class="absolute top-0 h-full rounded-full transition-all duration-700"
-                     :style="{ background: bar.color, width: bar.w, left: bar.l, opacity: '0.7' }"></div>
-              </div>
-            </div>
-            <div class="flex items-center gap-2 sm:gap-3 mt-1">
-              <span class="w-20 sm:w-24 shrink-0"></span>
-              <div class="flex-1 flex justify-between font-fraunces text-[9px] sm:text-[10px] text-[#9B86C4]">
-                <span>Nov</span><span class="hidden sm:inline">Mid Nov</span><span>Dec</span><span class="hidden sm:inline">Mid Dec</span><span>Jan</span><span>Jan 3</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="h-[2px] bg-gradient-to-r from-transparent via-[#C4A858] to-transparent" />
-
-    <!-- ══════════════════════════════════════════
-         CROPS
-    ══════════════════════════════════════════ -->
-    <section class="relative pt-14 pb-16 sm:pt-16 sm:pb-28 px-4 sm:px-6">
-      <div class="max-w-[1280px] mx-auto flex flex-col items-center gap-10 sm:gap-14"
-           data-reveal="crops"
-           :class="revealed.has('crops') ? 'reveal-in' : 'reveal-out'">
-
-        <div class="text-center max-w-3xl flex flex-col items-center gap-4">
-          <p class="font-fraunces font-semibold tracking-[0.32em] text-[#9B86C4] text-[10px] uppercase">Our Pillars</p>
-          <h2 class="font-fraunces text-[#1A1240]" style="font-size: clamp(28px,4vw,52px)">CROPS</h2>
-          <div class="flex flex-col gap-2 mt-2 border-t border-[#C4A858]/30 pt-4 max-w-2xl">
-<p class="font-fraunces text-[#1A1240] text-sm sm:text-base leading-relaxed italic">
-              "A user has the final say over their identities, assets, actions, and agents."
-            </p>
-            <p class="font-fraunces text-[#5B4A8C] text-sm sm:text-base leading-relaxed italic">
-              "Unstoppable self-sovereignty must become possible for those who choose it, at the scale and in the form that they want it, without violating anyone else's."
-            </p>
-          </div>
-        </div>
-
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 w-full">
-          <div v-for="(c, i) in crops" :key="c.letter"
-            class="rounded-2xl border border-[#C4A858]/25 bg-white/55 p-6 sm:p-8 flex flex-row sm:flex-col gap-5 hover:bg-white/75 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
-            :style="{ transitionDelay: `${i * 80}ms` }"
-          >
-            <div class="font-fraunces text-[#C4A858] leading-none shrink-0" style="font-size: clamp(40px, 5vw, 64px)">{{ c.letter }}</div>
-            <div class="flex flex-col gap-2">
-              <h3 class="font-fraunces text-[#1A1240] font-semibold text-base leading-snug">{{ c.title }}</h3>
-              <p class="font-fraunces text-[#5B4A8C] text-sm leading-relaxed">{{ c.desc }}</p>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <div class="h-[2px] bg-gradient-to-r from-transparent via-[#C4A858] to-transparent" />
-
-    <!-- ══════════════════════════════════════════
-         WHY CHIANG MAI
-    ══════════════════════════════════════════ -->
-    <section class="relative py-16 sm:py-28 px-4 sm:px-6 overflow-hidden">
-
-      <img :src="ImgFlowerbed" alt="" aria-hidden="true"
-        class="absolute pointer-events-none select-none opacity-15"
-        style="width: 220px; bottom: 0; left: -10px; transform: scaleX(-1);" />
-      <img :src="ImgLantern3" alt="" aria-hidden="true"
-        class="absolute pointer-events-none select-none float-medium opacity-12"
-        style="width: 100px; top: 20px; right: 40px;" />
-
-      <div class="max-w-[1280px] mx-auto flex flex-col items-center gap-10 sm:gap-14"
-           data-reveal="why"
-           :class="revealed.has('why') ? 'reveal-in' : 'reveal-out'">
-
-        <div class="text-center">
-          <h2 class="font-fraunces text-[#1A1240]" style="font-size: clamp(28px,4vw,52px)">Why Chiang Mai?</h2>
-        </div>
-
-        <div class="grid md:grid-cols-3 gap-6 w-full max-w-5xl">
-          <div v-for="(item, i) in whyItems" :key="item.title"
-            class="group rounded-2xl border border-[#C4A858]/25 bg-white/55 p-8 flex flex-col gap-5 hover:bg-white/75 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
-            :style="{ transitionDelay: `${i * 100}ms` }"
-          >
-            <img :src="item.img" :alt="item.title" class="w-24 h-24 object-contain" />
-            <div>
-              <h3 class="font-fraunces text-[#1A1240] text-xl leading-snug">{{ item.title }}</h3>
-              <p v-if="item.sub" class="font-fraunces font-semibold text-[#C4A858] text-[10px] tracking-widest mt-1 uppercase">{{ item.sub }}</p>
-            </div>
-            <p class="font-fraunces text-[#5B4A8C] text-sm leading-relaxed">{{ item.desc }}</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="h-[2px] bg-gradient-to-r from-transparent via-[#C4A858] to-transparent" />
-
-    <!-- ══════════════════════════════════════════
-         ECOSYSTEM PARTNERS
-    ══════════════════════════════════════════ -->
-    <section class="relative py-16 sm:py-24 px-4 sm:px-6 overflow-hidden">
-
-      <img :src="ImgLantern4" alt="" aria-hidden="true"
-        class="absolute pointer-events-none select-none float-slow opacity-15"
-        style="width: 80px; top: 30px; left: 50px;" />
-
-      <div class="max-w-[1280px] mx-auto flex flex-col items-center gap-10"
-           data-reveal="partners"
-           :class="revealed.has('partners') ? 'reveal-in' : 'reveal-out'">
-
-        <div class="text-center">
-          <p class="font-fraunces font-semibold tracking-[0.32em] text-[#9B86C4] text-[10px] uppercase mb-3">Supported By</p>
-          <h2 class="font-fraunces text-[#1A1240]" style="font-size: clamp(22px,3vw,40px)">Ecosystem Partners</h2>
-        </div>
-
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 w-full max-w-4xl">
-          <div v-for="p in partners" :key="p.name"
-            class="rounded-xl border border-[#C4A858]/25 h-24 flex items-center justify-center px-5 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
-            :class="p.dark ? 'bg-[#1A1240]' : 'bg-white/70'"
-          >
-            <img :src="p.logo" :alt="p.name"
-              class="max-w-full object-contain"
-              :class="p.large ? 'max-h-16' : 'max-h-12'"
-              :style="p.noFilter ? '' : p.dark ? 'filter: brightness(0) invert(1)' : 'mix-blend-mode: multiply'" />
-          </div>
-        </div>
-
-        <a href="https://docs.google.com/presentation/d/1h1aeW7KVTYSrYiolCDyjgP8vAozK6zBAl46wwVQFlgE/edit?usp=sharing"
-          target="_blank"
-          class="inline-flex items-center justify-center h-12 px-8 font-fraunces font-bold text-white text-sm bg-[#7C5CBF] hover:bg-[#6B4DAF] active:bg-[#5A3D9E] transition-colors rounded-xl shadow-[0_8px_20px_-6px_rgba(124,92,191,0.50)]">
-          Become a Partner →
+      <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <a href="#about">
+          <img
+            :src="navScrolled ? LogoDark : LogoLight"
+            alt="ETHChiangmai"
+            class="h-8 w-auto object-contain transition-opacity duration-300"
+          />
         </a>
+        <nav class="hidden md:flex items-center gap-8">
+          <a
+            v-for="link in navLinks"
+            :key="link.href"
+            :href="link.href"
+            class="text-sm font-medium transition-colors"
+            :class="navScrolled ? 'text-[#0d0918]/60 hover:text-[#0d0918]' : 'text-white/75 hover:text-white'"
+          >{{ link.label }}</a>
+        </nav>
+        <div class="hidden md:block w-[88px]" />
+        <button class="md:hidden flex flex-col gap-1.5 p-1" aria-label="Toggle menu" @click="menuOpen = !menuOpen">
+          <span
+            class="w-6 h-0.5 block transition-all"
+            :class="[
+              navScrolled ? 'bg-[#0d0918]' : 'bg-white',
+              menuOpen ? 'rotate-45 translate-y-2' : '',
+            ]"
+          />
+          <span
+            class="w-6 h-0.5 block transition-all"
+            :class="[
+              navScrolled ? 'bg-[#0d0918]' : 'bg-white',
+              menuOpen ? 'opacity-0' : '',
+            ]"
+          />
+          <span
+            class="w-5 h-0.5 block transition-all"
+            :class="[
+              navScrolled ? 'bg-[#0d0918]' : 'bg-white',
+              menuOpen ? '-rotate-45 -translate-y-2' : '',
+            ]"
+          />
+        </button>
+      </div>
+      <div v-if="menuOpen" class="md:hidden bg-[#faf0e8]/98 backdrop-blur-md border-t border-[#0d0918]/8 px-6 py-6 flex flex-col gap-5">
+        <a v-for="link in navLinks" :key="link.href" :href="link.href"
+          class="text-base font-medium text-[#0d0918]/70 hover:text-[#0d0918]" @click="closeMenu">{{ link.label }}</a>
+        <a href="#partners" class="mt-2 inline-flex items-center justify-center text-white text-sm font-semibold px-5 py-3 rounded-full gradient-primary" @click="closeMenu">Participate →</a>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section id="about" class="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0d0918]">
+      <img
+        :src="BgFull"
+        alt=""
+        aria-hidden="true"
+        fetchpriority="high"
+        decoding="async"
+        class="absolute inset-0 w-full h-full object-cover object-[center_15%] pointer-events-none select-none"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-[#FAF0E8] via-[#FAF0E8]/25 to-transparent pointer-events-none" />
+      <img :src="ImgLantern" alt="" aria-hidden="true" loading="lazy" decoding="async"
+        class="absolute top-20 right-[7%] w-28 md:w-40 pointer-events-none select-none lantern-multiply"
+        style="animation: float 7s ease-in-out infinite" />
+      <img :src="ImgLantern" alt="" aria-hidden="true" loading="lazy" decoding="async"
+        class="absolute top-44 right-[23%] w-20 md:w-28 pointer-events-none select-none lantern-multiply"
+        style="opacity: 0.65; animation: float-slow 9s ease-in-out infinite 2s" />
+      <div class="relative z-10 max-w-7xl mx-auto px-6 pt-28 pb-32 w-full flex justify-center">
+        <div class="max-w-2xl text-center flex flex-col items-center">
+          <p class="text-sm font-bold tracking-[0.22em] uppercase mb-5 gradient-text">✦ ETHChiangMai 2026</p>
+          <h1 class="font-hero text-4xl md:text-5xl lg:text-[3.25rem] leading-[1.1] text-[#0d0918] mb-10 md:mb-12 uppercase">
+            The Non-Negotiables<br />of Ethereum
+          </h1>
+          <p class="text-base md:text-lg text-[#0d0918]/65 mb-8 leading-relaxed max-w-lg">
+            A multi-month gathering in Chiangmai for builders who hold Ethereum's core values — censorship resistance, openness, permissionlessness, and sovereignty — as non-negotiable.
+          </p>
+          <div class="flex flex-wrap justify-center gap-4">
+            <a href="#schedule" class="inline-flex items-center gap-2 border-2 border-[#0d0918]/25 text-[#0d0918] text-sm font-semibold px-7 py-3.5 rounded-full hover:border-[#0d0918]/50 transition-colors bg-[#faf0e8]/30 backdrop-blur-sm">Know More</a>
+            <a href="#partners" class="inline-flex items-center gap-2 text-white text-sm font-semibold px-7 py-3.5 rounded-full hover:opacity-90 gradient-primary" style="box-shadow: 0 4px 24px #C8366B44">Participate →</a>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- footer -->
-    <footer class="px-4 sm:px-10 py-6 sm:py-7 max-w-[1440px] mx-auto flex flex-col sm:flex-row items-center gap-2 sm:justify-between border-t border-[#C4A858]/30 text-center sm:text-left">
-      <p class="font-fraunces text-[#5B4A8C]/40 text-xs">© 2026 ETHChiangmai · ethchiangmai.com</p>
-      <p class="font-fraunces text-[#9B86C4] text-xs font-medium tracking-wide">CROPS — The Non-Negotiables of Ethereum</p>
-    </footer>
+    <!-- LOOK BACK -->
+    <section class="py-16 overflow-hidden" style="background: #F5EBE0">
+      <div class="max-w-7xl mx-auto px-6 mb-10">
+        <p class="text-xs font-bold tracking-[0.22em] uppercase mb-2 gradient-text-cool inline-block">A Look Back</p>
+        <h2 class="font-display text-3xl md:text-4xl text-[#0d0918]">ETHChiangmai 2025</h2>
+      </div>
+      <div
+        class="relative overflow-hidden"
+        @mouseenter="stopCarousel"
+        @mouseleave="startCarousel"
+      >
+        <div
+          class="flex gap-4 ease-out"
+          :class="carouselAnimating ? 'transition-transform duration-500' : ''"
+          :style="{ transform: `translateX(calc(12vw - ${carouselIndex} * (76vw + 16px)))` }"
+        >
+          <div
+            v-for="(slide, i) in lookbackLoop"
+            :key="i"
+            class="flex-shrink-0 relative rounded-2xl overflow-hidden"
+            style="width: 76vw"
+          >
+            <img :src="slide.url" :alt="slide.alt" class="w-full h-56 md:h-[480px] object-cover" />
+            <div
+              class="absolute inset-0 transition-opacity duration-500"
+              :style="{ background: '#0D0918', opacity: i === carouselIndex ? 0 : 0.45 }"
+            />
+            <p
+              v-if="i === carouselIndex"
+              class="absolute bottom-4 left-4 right-4 text-white text-sm font-medium"
+            >{{ activeCaption(i) }}</p>
+          </div>
+        </div>
+        <button class="carousel-btn left-[calc(12vw-22px)]" aria-label="Previous" @click="prevSlide">←</button>
+        <button class="carousel-btn right-[calc(12vw-22px)]" aria-label="Next" @click="nextSlide">→</button>
+      </div>
+    </section>
 
+    <!-- TIMELINE -->
+    <section
+      id="schedule"
+      ref="timelineRef"
+      class="relative overflow-hidden py-20 md:py-28"
+      style="background: linear-gradient(180deg, #DCCEEF 0%, #E8D4E4 28%, #F5E8EE 55%, #FAF6F8 78%, #FFFFFF 100%)"
+    >
+      <img
+        :src="ImgLantern"
+        alt=""
+        aria-hidden="true"
+        class="absolute top-8 right-[5%] w-20 md:w-28 pointer-events-none hidden md:block opacity-55 lantern-multiply will-change-transform"
+        :style="{ transform: `translate3d(0, ${lanternY * 1.15}px, 0)`, transition: 'transform 0.08s linear' }"
+      />
+      <img
+        :src="ImgLantern"
+        alt=""
+        aria-hidden="true"
+        class="absolute top-[28%] left-[3%] w-14 md:w-20 pointer-events-none hidden md:block opacity-40 lantern-multiply will-change-transform"
+        :style="{ transform: `translate3d(0, ${lanternY * 0.7}px, 0)`, transition: 'transform 0.08s linear' }"
+      />
+      <img
+        :src="ImgLantern"
+        alt=""
+        aria-hidden="true"
+        class="absolute bottom-20 right-[18%] w-16 md:w-24 pointer-events-none hidden md:block opacity-45 lantern-multiply will-change-transform"
+        :style="{ transform: `translate3d(0, ${lanternY * 0.95}px, 0)`, transition: 'transform 0.08s linear' }"
+      />
+      <img
+        :src="ImgLantern"
+        alt=""
+        aria-hidden="true"
+        class="absolute bottom-10 left-[6%] w-12 md:w-16 pointer-events-none hidden md:block opacity-35 lantern-multiply will-change-transform"
+        :style="{ transform: `translate3d(0, ${lanternY * 1.35}px, 0)`, transition: 'transform 0.08s linear' }"
+      />
+      <div class="max-w-4xl mx-auto px-6 relative z-10">
+        <div class="text-center mb-12 md:mb-16">
+          <p class="text-xs font-bold tracking-[0.22em] uppercase mb-3 gradient-text-cool inline-block">✦ Save the Date</p>
+          <h2 class="font-display text-4xl md:text-5xl text-[#0d0918]">2026 ETHChiangMai<br />Timeline</h2>
+        </div>
+        <div class="relative">
+          <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 md:-translate-x-px hidden md:block"
+            style="background: linear-gradient(180deg,#C2A8E088,#C8366B55,#FAF0E8AA)" />
+          <div class="absolute left-4 top-0 bottom-0 w-0.5 md:hidden" style="background: linear-gradient(180deg,#C2A8E088,#C8366B44)" />
+          <div class="space-y-5 md:space-y-6">
+            <div v-for="(item, i) in timeline" :key="i"
+              class="relative flex items-start"
+              :class="i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'">
+              <div class="md:w-[calc(50%-1.5rem)] pl-12 md:pl-0" :class="i % 2 === 0 ? 'md:pr-10' : 'md:pl-10'">
+                <div class="rounded-2xl p-5 md:p-6 border hover:shadow-lg transition-all timeline-card">
+                  <p class="text-xs font-bold tracking-widest uppercase mb-1.5" :style="{ color: item.dotColor }">{{ item.period }}</p>
+                  <h3 class="text-lg md:text-xl text-[#0d0918] mb-1.5 font-display">{{ item.event }}</h3>
+                  <p class="text-sm leading-relaxed text-[#0d0918]/50">{{ item.detail }}</p>
+                  <span v-if="item.multiDay" class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2 py-0.5 rounded-full"
+                    :style="{ background: `${item.dotColor}18`, color: item.dotColor, border: `1px solid ${item.dotColor}30` }">multi-day</span>
+                </div>
+              </div>
+              <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 z-10 items-center justify-center" :style="{ top: item.multiDay ? '1rem' : '1.5rem' }">
+                <div v-if="item.multiDay" class="rounded-full border-2 border-white" :style="{ width: '14px', height: '52px', background: item.gradient, boxShadow: `0 0 10px ${item.dotColor}44` }" />
+                <div v-else class="rounded-full border-2 border-white" :style="{ width: '14px', height: '14px', background: item.dotColor, boxShadow: `0 0 10px ${item.dotColor}66` }" />
+              </div>
+              <div class="md:hidden absolute left-4 -translate-x-1/2 z-10" :style="{ top: item.multiDay ? '0.75rem' : '1.25rem' }">
+                <div v-if="item.multiDay" class="rounded-full border-2 border-white" :style="{ width: '12px', height: '36px', background: item.gradient }" />
+                <div v-else class="rounded-full border-2 border-white" :style="{ width: '12px', height: '12px', background: item.dotColor }" />
+              </div>
+              <div class="hidden md:block md:w-[calc(50%-1.5rem)]" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SPEAKERS -->
+    <section class="py-24 relative overflow-hidden bg-white">
+      <img :src="ImgLotus1" alt="" aria-hidden="true" class="absolute -left-10 bottom-0 w-48 md:w-72 pointer-events-none opacity-15 lantern-multiply" />
+      <img :src="ImgLotus2" alt="" aria-hidden="true" class="absolute -right-8 top-8 w-40 md:w-56 pointer-events-none opacity-12 lantern-multiply" />
+      <div class="max-w-6xl mx-auto px-6 relative z-10">
+        <div class="text-center mb-14">
+          <p class="text-xs font-bold tracking-[0.22em] uppercase mb-3 text-[#0d0918]/45">✦ ETHChiangMai 2026</p>
+          <h2 class="font-display text-4xl md:text-5xl text-[#0d0918]">Featured Residents<br />& Speakers</h2>
+          <p class="mt-4 text-sm text-[#0d0918]/60 max-w-md mx-auto">More announcements coming as we get closer to November.</p>
+        </div>
+        <p class="text-xs font-bold tracking-[0.2em] uppercase mb-5 text-[#0d0918]/50">Speakers</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-5 mb-10">
+          <div v-for="(person, i) in speakers" :key="i" class="person-card">
+            <div class="aspect-square relative" :class="!person.img || person.name === 'TBA' ? 'bg-[#0d0918]/5' : ''">
+              <div v-if="!person.img || person.name === 'TBA'" class="w-full h-full flex items-center justify-center"><span class="text-4xl opacity-10">◇</span></div>
+              <img v-else :src="person.img" :alt="person.name" class="w-full h-full object-cover" />
+              <span v-if="person.tag" class="absolute top-3 right-3 text-[9px] font-bold tracking-widest uppercase px-2 py-0.5 rounded-full text-white" style="background: #C8366B">{{ person.tag }}</span>
+            </div>
+            <div class="p-4">
+              <p class="font-semibold text-sm text-[#0d0918] font-display">{{ person.name }}</p>
+              <p class="text-xs mt-0.5 text-[#0d0918]/50">{{ person.role }}</p>
+            </div>
+          </div>
+        </div>
+        <p class="text-xs font-bold tracking-[0.2em] uppercase mb-5 text-[#0d0918]/50">Residents</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
+          <div v-for="(person, i) in residents" :key="i" class="person-card">
+            <div class="aspect-square relative" :class="!person.img || person.name === 'TBA' ? 'bg-[#0d0918]/5' : ''">
+              <div v-if="!person.img || person.name === 'TBA'" class="w-full h-full flex items-center justify-center"><span class="text-4xl opacity-10">◇</span></div>
+              <img v-else :src="person.img" :alt="person.name" class="w-full h-full object-cover" />
+            </div>
+            <div class="p-4">
+              <p class="font-semibold text-sm text-[#0d0918] font-display">{{ person.name }}</p>
+              <p class="text-xs mt-0.5 text-[#0d0918]/50">{{ person.role }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CROPS -->
+    <section id="crops" class="py-24 relative overflow-hidden gradient-dark">
+      <img :src="ImgLotus1" alt="" aria-hidden="true" class="absolute left-4 bottom-4 w-40 md:w-56 pointer-events-none opacity-18" style="mix-blend-mode: screen" />
+      <img :src="ImgLotus2" alt="" aria-hidden="true" class="absolute right-6 top-10 w-32 md:w-44 pointer-events-none opacity-12" style="mix-blend-mode: screen" />
+      <div class="max-w-6xl mx-auto px-6 relative z-10">
+        <div class="text-center mb-16">
+          <p class="text-xs font-bold tracking-[0.22em] uppercase mb-3 crops-eyebrow inline-block">✦ Our Pillars</p>
+          <h2 class="font-display text-4xl md:text-5xl text-[#faf0e8]">What Does CROPS<br />Stand For?</h2>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div v-for="c in crops" :key="c.abbr"
+            class="rounded-2xl p-7 relative overflow-hidden border group transition-all hover:scale-[1.02] crops-card">
+            <div class="absolute -top-6 -left-6 w-24 h-24 rounded-full opacity-20 blur-2xl" :style="{ background: c.accentColor }" />
+            <div class="flex items-start justify-between gap-3">
+              <div class="flex-1 min-w-0">
+                <div class="text-5xl mb-5 font-semibold font-display crops-abbr" :style="{ '--accent': c.accentColor }">{{ c.abbr }}</div>
+                <h3 class="text-lg text-[#faf0e8] mb-3 whitespace-pre-line leading-tight font-display">{{ c.title }}</h3>
+                <p class="text-sm leading-relaxed text-[#faf0e8]/50">{{ c.desc }}</p>
+              </div>
+              <div class="flex-shrink-0 w-20 h-20 rounded-xl flex items-center justify-center mt-1">
+                <img :src="c.sticker" :alt="c.title" class="w-full h-full object-contain drop-shadow-lg" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY Chiangmai -->
+    <section id="chiangmai" class="py-24 relative overflow-hidden bg-[#faf0e8]">
+      <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <div class="text-center mb-16">
+          <p class="text-xs font-bold tracking-[0.22em] uppercase mb-3 gradient-text inline-block">✦ The Venue</p>
+          <h2 class="font-display text-4xl md:text-5xl text-[#0d0918]">Why Chiangmai?</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+          <div v-for="item in whyItems" :key="item.title" class="group">
+            <div class="rounded-2xl overflow-hidden mb-6 aspect-[4/3] bg-[#c2a8e0]/20">
+              <img :src="item.url" :alt="item.alt" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            </div>
+            <h3 class="text-xl text-[#0d0918] mb-3 font-display">{{ item.title }}</h3>
+            <p class="text-sm leading-relaxed text-[#0d0918]/40">{{ item.desc }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-center mt-16 relative z-10">
+        <img :src="ImgLotus1" alt="" aria-hidden="true" class="w-40 md:w-52 lantern-multiply opacity-60" />
+      </div>
+    </section>
+
+    <!-- PARTNERS -->
+    <section id="partners" class="py-24 bg-white">
+      <div class="max-w-5xl mx-auto px-6">
+        <div class="text-center mb-16">
+          <p class="text-xs font-bold tracking-[0.22em] uppercase mb-3 gradient-text-cool inline-block">✦ Supported By</p>
+          <h2 class="font-display text-4xl md:text-5xl text-[#0d0918]">Ecosystem Partners</h2>
+        </div>
+        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-3 mb-16">
+          <div v-for="p in partners" :key="p.name"
+            class="aspect-square rounded-2xl flex items-center justify-center cursor-pointer transition-all hover:scale-105 border p-3 partner-tile"
+            :title="p.name">
+            <img v-if="p.logo" :src="p.logo" :alt="p.name" class="w-full h-full object-contain" />
+          </div>
+        </div>
+        <div class="text-center">
+          <p class="text-sm mb-6 max-w-sm mx-auto leading-relaxed text-[#0d0918]/38">Want to support ETHChiangMai 2026? Reach out and become part of the ecosystem.</p>
+          <div class="flex flex-wrap justify-center gap-4">
+            <a href="https://t.me/ethchiangmai" target="_blank"
+              class="inline-flex items-center gap-2 text-white text-sm font-semibold px-8 py-4 rounded-full hover:opacity-90 gradient-primary"
+              style="box-shadow: 0 4px 24px #C8366B44">Become a Partner →</a>
+            <a href="mailto:hello@ethchiangmai.com"
+              class="inline-flex items-center gap-2 text-sm font-semibold px-8 py-4 rounded-full border-2 border-[#0d0918]/20 text-[#0d0918] hover:border-[#0d0918]/40 transition-colors">Email Us</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM -->
+    <section
+      class="py-24 relative overflow-hidden"
+      style="background: linear-gradient(145deg, #C2A8E0 0%, #D8E6F2 55%, #FAF0E8 100%)"
+    >
+      <img :src="ImgLotus1" alt="" aria-hidden="true" class="absolute -left-8 bottom-0 w-40 md:w-56 pointer-events-none opacity-20 lantern-multiply" />
+      <img :src="ImgLotus2" alt="" aria-hidden="true" class="absolute -right-6 top-6 w-32 md:w-48 pointer-events-none opacity-15 lantern-multiply" />
+      <div class="max-w-6xl mx-auto px-6 relative z-10">
+        <div class="text-center mb-16">
+          <p class="text-xs font-bold tracking-[0.22em] uppercase mb-3 gradient-text-cool inline-block">✦ The People</p>
+          <h2 class="font-display text-4xl md:text-5xl text-[#0d0918]">Meet the Team</h2>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-5">
+          <div v-for="(person, i) in team" :key="i" class="person-card">
+            <div class="aspect-square relative" :class="!person.img || person.name === 'TBA' ? 'bg-[#0d0918]/5' : ''">
+              <div v-if="!person.img || person.name === 'TBA'" class="w-full h-full flex items-center justify-center"><span class="text-4xl opacity-10">◇</span></div>
+              <img v-else :src="person.img" :alt="person.name" class="w-full h-full object-cover" />
+            </div>
+            <div class="p-4">
+              <p class="font-semibold text-sm text-[#0d0918] font-display">{{ person.name }}</p>
+              <p class="text-xs mt-0.5 text-[#0d0918]/50">{{ person.role }}</p>
+              <div class="flex items-center gap-2.5 mt-3">
+                <a
+                  v-if="person.x"
+                  :href="person.x"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="team-social"
+                  :aria-label="`${person.name} on X`"
+                >
+                  <img :src="IconX" alt="" class="w-3.5 h-3.5" />
+                </a>
+                <span v-else class="team-social team-social--muted" aria-hidden="true">
+                  <img :src="IconX" alt="" class="w-3.5 h-3.5" />
+                </span>
+                <a
+                  v-if="person.telegram"
+                  :href="person.telegram"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="team-social"
+                  :aria-label="`${person.name} on Telegram`"
+                >
+                  <img :src="IconTelegram" alt="" class="w-3.5 h-3.5" />
+                </a>
+                <span v-else class="team-social team-social--muted" aria-hidden="true">
+                  <img :src="IconTelegram" alt="" class="w-3.5 h-3.5" />
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section class="py-20 relative overflow-hidden bg-[#faf0e8]">
+      <img
+        :src="BgFull"
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+        class="absolute inset-0 w-full h-full object-cover object-[center_55%] pointer-events-none select-none"
+      />
+      <div class="absolute inset-0 bg-[#faf0e8]/55 pointer-events-none" />
+      <img :src="ImgLantern" alt="" aria-hidden="true" loading="lazy" decoding="async"
+        class="absolute right-6 top-1/2 -translate-y-1/2 w-40 md:w-56 pointer-events-none hidden md:block opacity-55 lantern-multiply"
+        style="animation: float-slow 8s ease-in-out infinite" />
+      <img :src="ImgLotus1" alt="" aria-hidden="true" loading="lazy" decoding="async"
+        class="absolute left-6 top-1/2 -translate-y-1/2 w-32 md:w-44 pointer-events-none hidden md:block opacity-30 lantern-multiply" />
+      <div class="max-w-xl mx-auto px-6 text-center relative z-10">
+        <p class="text-xs font-bold tracking-[0.22em] uppercase mb-4 gradient-text-cool inline-block">✦ Stay in the Loop</p>
+        <h2 class="font-display text-3xl md:text-4xl text-[#0d0918] mb-4">Get Updates on<br />ETHChiangMai 2026</h2>
+        <p class="text-sm mb-8 leading-relaxed text-[#0d0918]/60">Be the first to know when applications open, event dates are confirmed, and partner announcements drop.</p>
+        <div v-if="subscribed" class="rounded-2xl p-6 border border-[#0d0918]/10 bg-white/60 backdrop-blur-sm">
+          <p class="text-[#0d0918] font-semibold mb-1">You're on the list! ✦</p>
+          <p class="text-sm text-[#0d0918]/55">We'll be in touch before applications open.</p>
+        </div>
+        <form v-else class="flex flex-col gap-3" @submit="onSubscribe">
+          <div class="flex flex-col sm:flex-row gap-3">
+            <input
+              v-model="email"
+              type="email"
+              required
+              autocomplete="email"
+              placeholder="your@email.com"
+              :disabled="subscribePending"
+              class="flex-1 px-5 py-3.5 rounded-full text-sm outline-none border border-[#0d0918]/15 bg-white/70 backdrop-blur-sm text-[#0d0918] placeholder:text-[#0d0918]/40 focus:border-[#c8366b]/50 transition-colors disabled:opacity-60"
+            />
+            <button
+              type="submit"
+              :disabled="subscribePending"
+              class="px-7 py-3.5 rounded-full text-sm font-semibold text-white whitespace-nowrap hover:opacity-90 gradient-primary disabled:opacity-60 disabled:cursor-not-allowed"
+              style="box-shadow: 0 4px 20px #C8366B55"
+            >{{ subscribePending ? 'Subscribing…' : 'Subscribe →' }}</button>
+          </div>
+          <p v-if="subscribeError" class="text-sm text-[#c8366b]">{{ subscribeError }}</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="gradient-dark text-[#faf0e8] border-t border-[#faf0e8]/6">
+      <div class="max-w-7xl mx-auto px-6 pt-16 pb-10">
+        <div class="flex flex-col md:flex-row items-start justify-between gap-12 mb-12">
+          <div class="max-w-xs">
+            <div class="flex items-center gap-2 mb-4">
+              <img :src="LogoLight" alt="ETHChiangMai" class="h-8 w-auto object-contain" />
+            </div>
+            <p class="text-sm leading-relaxed text-[#faf0e8]/45">A gathering for Ethereum builders who hold the core values non-negotiable. November – December, Chiangmai.</p>
+          </div>
+          <div class="grid grid-cols-2 gap-12 sm:gap-16">
+            <div>
+              <p class="text-xs font-bold tracking-widest uppercase mb-4 text-[#faf0e8]/35">Links</p>
+              <ul class="space-y-2 text-sm text-[#faf0e8]/55">
+                <li v-for="link in navLinks" :key="link.href"><a :href="link.href" class="hover:text-[#faf0e8] transition-colors">{{ link.label }}</a></li>
+              </ul>
+            </div>
+            <div>
+              <p class="text-xs font-bold tracking-widest uppercase mb-4 text-[#faf0e8]/35">Contact</p>
+              <ul class="space-y-2 text-sm text-[#faf0e8]/55">
+                <li><a href="https://t.me/ethchiangmai" target="_blank" class="hover:text-[#faf0e8] transition-colors">Telegram</a></li>
+                <li><a href="mailto:hello@ethchiangmai.com" class="hover:text-[#faf0e8] transition-colors">Email</a></li>
+                <li><a href="https://twitter.com/ethchiangmai" target="_blank" class="hover:text-[#faf0e8] transition-colors">Twitter / X</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <p class="text-xs text-[#faf0e8]/30 border-t border-[#faf0e8]/8 pt-8">© 2026 ETHChiangMai. All rights reserved.</p>
+      </div>
+    </footer>
   </div>
 </template>
 
 <style scoped>
-/* ── hero ground illustrations — desktop defaults ── */
-.hero-pc        { width: 280px; left: 3%;  bottom: 0; }
-.hero-lotus1    { width: 150px; bottom: 0; left: 22%; }
-.hero-lotus2    { width: 125px; bottom: 0; left: 33%; opacity: 0.85; }
-.hero-flowerbed { width: 220px; right: 3%; bottom: 8%; }
-
-/* ── hero ground illustrations — mobile ── */
-@media (max-width: 639px) {
-  .hero-elephant  { width: 180px; right: 0; }
-  .hero-pc        { width: 120px; left: 2%; }
-  .hero-lotus1    { width: 72px;  bottom: 6px; left: 26%; }
-  .hero-lotus2    { width: 60px;  bottom: 4px; left: 38%; opacity: 0.85; }
-  .hero-flowerbed { width: 90px;  right: 28%; }
+.lantern-multiply {
+  mix-blend-mode: multiply;
+  opacity: 0.85;
 }
-
-/* ── hero lanterns — responsive width via CSS var ── */
-.hero-lantern { width: var(--lw, 100px); }
-@media (max-width: 639px) {
-  .hero-lantern { width: var(--lw-m, var(--lw, 100px)); }
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  transition: transform 0.2s;
+  background: rgba(13, 9, 24, 0.55);
+  backdrop-filter: blur(8px);
 }
-
-/* ── sparkle twinkle ── */
-.sparkle {
-  animation: twinkle var(--dur, 3s) ease-in-out infinite;
-  opacity: 0.2;
+.carousel-btn:hover { transform: translateY(-50%) scale(1.1); }
+.timeline-card {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(10px);
+  border-color: rgba(13, 9, 24, 0.08);
+  box-shadow: 0 6px 22px rgba(13, 9, 24, 0.06);
 }
-@keyframes twinkle {
-  0%, 100% { opacity: 0.15; transform: scale(0.75); }
-  50%       { opacity: 0.85; transform: scale(1.2);  }
+.person-card {
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid rgba(13, 9, 24, 0.08);
+  background: rgba(255, 255, 255, 0.6);
+  transition: transform 0.2s;
 }
-
-/* ── lantern float ── */
-.float-slow   { animation: floatY 6s ease-in-out infinite; }
-.float-medium { animation: floatY 4.5s ease-in-out infinite; animation-delay: -1.5s; }
-.float-fast   { animation: floatY 3.5s ease-in-out infinite; animation-delay: -0.8s; }
-@keyframes floatY {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-14px); }
+.person-card:hover { transform: scale(1.02); }
+.person-card--dark {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
 }
-
-/* ── scroll arrow bounce ── */
-.bounce-down { animation: bounceDown 1.8s ease-in-out infinite; }
-@keyframes bounceDown {
-  0%, 100% { transform: translateY(0); opacity: 0.6; }
-  50%       { transform: translateY(5px); opacity: 1; }
+.team-social {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 9999px;
+  background: rgba(13, 9, 24, 0.08);
+  transition: background 0.2s, transform 0.2s;
 }
-
-/* ── scroll reveal ── */
-.reveal-out {
-  opacity: 0;
-  transform: translateY(36px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+.team-social img {
+  filter: brightness(0);
+  opacity: 0.65;
 }
-.reveal-in {
+.team-social:hover {
+  background: rgba(13, 9, 24, 0.16);
+  transform: scale(1.08);
+}
+.team-social:hover img {
   opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.team-social--muted {
+  opacity: 0.35;
+  pointer-events: none;
+}
+.crops-card {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.07);
+}
+.crops-eyebrow {
+  background: linear-gradient(90deg, #c8366b, #f0a030);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.crops-abbr {
+  background: linear-gradient(135deg, var(--accent), #faf0e8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.partner-tile {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(13, 9, 24, 0.08);
+  backdrop-filter: blur(8px);
 }
 </style>

@@ -5,22 +5,22 @@ const items = [
   {
     title: 'Unconference',
     schedule: '8 Weeks (Dec 9, 2025 – Jan 27, 2026)',
-    location: 'Venue: 4Seas Nimman & Chiang Mai University',
+    location: 'Venue: 4Seas Nimman & Chiangmai University',
   },
   {
     title: 'Bootcamp',
     schedule: '8 Weeks (Dec 8, 2025 – Feb 3, 2026)',
-    location: 'Venue: Chiang Mai University',
+    location: 'Venue: Chiangmai University',
   },
   {
     title: 'Hackathon',
     schedule: '7 Days (Jan 28 – Feb 3, 2026)',
-    location: 'Venue: Chiang Mai University',
+    location: 'Venue: Chiangmai University',
   },
   {
     title: 'Summit',
     schedule: '1 Day (Feb 3, 2026)',
-    location: 'Venue: Chiang Mai University',
+    location: 'Venue: Chiangmai University',
   },
 ]
 </script>

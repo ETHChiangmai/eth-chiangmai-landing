@@ -19,7 +19,7 @@ const { bootcamp } = useLinks()
         <div class="font-kodchasan font-bold text-4xl">Bootcamp</div>
         <div class="font-inter text-xl mt-10">
           The ETHChiangmai Web3 Bootcamp focuses on cutting-edge Web3 technologies. We recruit 30
-          builders to engage in mentor-led guidance and peer learning on the campus of Chiang Mai
+          builders to engage in mentor-led guidance and peer learning on the campus of Chiangmai
           University, where deep dialogue naturally ignites learning and creation.
         </div>
       </div>

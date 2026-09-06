@@ -7,6 +7,14 @@
   --font-charm: 'Charm', cursive;
   --font-fraunces: 'Fraunces', serif;
   --font-black-ops: 'Black Ops One', serif;
+  --font-jakarta: 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+  --font-space-mono: 'Space Mono', monospace;
+  --color-night: #0d0918;
+  --color-pink: #c8366b;
+  --color-lavender: #c2a8e0;
+  --color-cream: #faf0e8;
+  --color-ink: #0d0918;
 }
 
 @layer components {
@@ -29,5 +37,55 @@ html {
   -moz-osx-font-smoothing: grayscale;
   font-smooth: antialiased;
   overscroll-behavior-y: none;
-  font-family: 'Fraunces', serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: #0d0918;
+  background-color: #faf0e8;
+}
+
+/* ── Figma Make design tokens ── */
+.gradient-primary {
+  background: linear-gradient(135deg, #c8366b 0%, #7632c8 100%);
+}
+.gradient-warm {
+  background: linear-gradient(135deg, #f0a030 0%, #c8366b 100%);
+}
+.gradient-dark {
+  background: linear-gradient(160deg, #4a1230 0%, #0d0918 100%);
+}
+.gradient-lavender {
+  background: linear-gradient(135deg, #c2a8e0 0%, #e8d09a 100%);
+}
+.gradient-text {
+  -webkit-text-fill-color: transparent;
+  background: linear-gradient(90deg, #c8366b 0%, #f0a030 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.gradient-text-cool {
+  -webkit-text-fill-color: transparent;
+  background: linear-gradient(90deg, #c8366b 0%, #7632c8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.font-display {
+  font-family: 'Fraunces', Georgia, serif;
+}
+.font-hero {
+  font-family: 'Space Mono', 'DM Mono', ui-monospace, monospace;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  font-style: normal;
+}
+.font-hero em {
+  font-style: normal;
+  font-weight: 700;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-14px) rotate(1deg); }
+}
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) rotate(2deg); }
+  50% { transform: translateY(-10px) rotate(-1deg); }
 }
