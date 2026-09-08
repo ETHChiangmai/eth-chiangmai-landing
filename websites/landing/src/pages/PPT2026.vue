@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
+import { RouterLink } from 'vue-router'
 import LogoDark from '@/assets/logo-figma.png'
 import LogoLight from '@/assets/logo-long.svg'
 import BgFull from '@/assets/bg-full.webp'
@@ -386,7 +387,12 @@ onUnmounted(() => {
             :class="navScrolled ? 'text-[#0d0918]/60 hover:text-[#0d0918]' : 'text-white/75 hover:text-white'"
           >{{ link.label }}</a>
         </nav>
-        <div class="hidden md:block w-[88px]" />
+        <RouterLink
+          to="/2025"
+          class="hidden md:inline-flex items-center text-xs font-medium px-3 py-1.5 rounded-full border border-white/50 text-white hover:bg-white hover:text-[#0d0918] transition-colors"
+        >
+          2025 Edition →
+        </RouterLink>
         <button class="md:hidden flex flex-col gap-1.5 p-1" aria-label="Toggle menu" @click="menuOpen = !menuOpen">
           <span
             class="w-6 h-0.5 block transition-all"
@@ -415,6 +421,7 @@ onUnmounted(() => {
         <a v-for="link in navLinks" :key="link.href" :href="link.href"
           class="text-base font-medium text-[#0d0918]/70 hover:text-[#0d0918]" @click="closeMenu">{{ link.label }}</a>
         <a href="#partners" class="mt-2 inline-flex items-center justify-center text-white text-sm font-semibold px-5 py-3 rounded-full gradient-primary" @click="closeMenu">Participate →</a>
+        <RouterLink to="/2025" class="inline-flex items-center justify-center text-[#0d0918] text-sm font-semibold px-5 py-3 rounded-full border border-[#0d0918]/20" @click="closeMenu">Enter 2025 Page →</RouterLink>
       </div>
     </header>
 
@@ -681,7 +688,7 @@ onUnmounted(() => {
             <a href="https://t.me/ethchiangmai" target="_blank"
               class="inline-flex items-center gap-2 text-white text-sm font-semibold px-8 py-4 rounded-full hover:opacity-90 gradient-primary"
               style="box-shadow: 0 4px 24px #C8366B44">Become a Partner →</a>
-            <a href="mailto:hello@ethchiangmai.com"
+            <a href="mailto:info@ethchiangmai.com"
               class="inline-flex items-center gap-2 text-sm font-semibold px-8 py-4 rounded-full border-2 border-[#0d0918]/20 text-[#0d0918] hover:border-[#0d0918]/40 transition-colors">Email Us</a>
           </div>
         </div>
@@ -811,7 +818,7 @@ onUnmounted(() => {
               <p class="text-xs font-bold tracking-widest uppercase mb-4 text-[#faf0e8]/35">Contact</p>
               <ul class="space-y-2 text-sm text-[#faf0e8]/55">
                 <li><a href="https://t.me/ethchiangmai" target="_blank" class="hover:text-[#faf0e8] transition-colors">Telegram</a></li>
-                <li><a href="mailto:hello@ethchiangmai.com" class="hover:text-[#faf0e8] transition-colors">Email</a></li>
+                <li><a href="mailto:info@ethchiangmai.com" class="hover:text-[#faf0e8] transition-colors">Email</a></li>
                 <li><a href="https://twitter.com/ethchiangmai" target="_blank" class="hover:text-[#faf0e8] transition-colors">Twitter / X</a></li>
               </ul>
             </div>
