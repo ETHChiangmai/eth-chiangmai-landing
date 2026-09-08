@@ -23,8 +23,9 @@ import LogoEthTokyo from '@/assets/partners/ethtokyo.png'
 import LogoEthTao from '@/assets/partners/ethtao.png'
 import LogoEthPH from '@/assets/partners/ethph.png'
 import LogoEthSingapore from '@/assets/partners/eth-singapore.png'
-import LogoP7 from '@/assets/partners/partner-7.png'
+import LogoEthShenzhen from '@/assets/partners/eth-shenzhen.png'
 import LogoZucity from '@/assets/partners/zucity.png'
+import LogoZucityJapan from '@/assets/partners/zucity-japan.png'
 import LogoZuitz from '@/assets/partners/zuitzerland.png'
 import LogoGCC from '@/assets/partners/gcc.png'
 import LogoSNZ from '@/assets/partners/snz.svg'
@@ -32,6 +33,24 @@ import IconX from '@/assets/social/social-twitter.svg'
 import IconTelegram from '@/assets/social/social-telegram.svg'
 import ImgTeamZik from '@/assets/team-zik.png'
 import ImgTeamTakShire from '@/assets/team-tak-shire.png'
+import ImgTeamSherrie from '@/assets/team-sherrie.png'
+import ImgTeamTin from '@/assets/team-tin.png'
+import ImgLookbackVitalik from '@/assets/lookback-2025/01-vitalik.jpg'
+import ImgLookbackVitalikCowork from '@/assets/lookback-2025/02-vitalik-cowork.jpg'
+import ImgLookbackCommunity from '@/assets/lookback-2025/03-community-session.jpg'
+import ImgLookbackSummitPanel from '@/assets/lookback-2025/04-summit-panel.jpg'
+import ImgLookbackGroupBackdrop from '@/assets/lookback-2025/05-group-backdrop.jpg'
+import ImgLookbackPermissionlessly from '@/assets/lookback-2025/06-permissionlessly-panel.jpg'
+import ImgLookbackEcosystemPanel from '@/assets/lookback-2025/07-ecosystem-panel.jpg'
+import ImgLookbackVitalikKeynote from '@/assets/lookback-2025/08-vitalik-keynote.jpg'
+import ImgLookbackVitalikGroup from '@/assets/lookback-2025/09-vitalik-group.jpg'
+import ImgLookbackStageRemote from '@/assets/lookback-2025/10-stage-vitalik-remote.jpg'
+import ImgLookbackOpening from '@/assets/lookback-2025/11-opening-remarks.jpg'
+import ImgLookbackEthphPanel from '@/assets/lookback-2025/12-ethph-panel.jpg'
+import ImgLookbackHackathonWinners1 from '@/assets/lookback-2025/13-hackathon-winners-1.jpg'
+import ImgLookbackHackathonWinners2 from '@/assets/lookback-2025/14-hackathon-winners-2.jpg'
+import ImgLookbackHackathonWinners3 from '@/assets/lookback-2025/15-hackathon-winners-3.jpg'
+import ImgLookbackHackathonWinners4 from '@/assets/lookback-2025/16-hackathon-winners-4.jpg'
 
 const navScrolled = ref(false)
 const menuOpen = ref(false)
@@ -39,7 +58,7 @@ const email = ref('')
 const subscribed = ref(false)
 const subscribePending = ref(false)
 const subscribeError = ref('')
-const carouselIndex = ref(4)
+const carouselIndex = ref(0)
 const carouselAnimating = ref(true)
 const timelineRef = ref<HTMLElement | null>(null)
 const lanternY = ref(0)
@@ -56,24 +75,84 @@ const navLinks = [
 
 const lookbackSlides = [
   {
-    url: 'https://images.unsplash.com/photo-1725107179577-27983a9de258?w=1400&h=800&fit=crop&auto=format',
-    alt: 'ETHChiangmai 2025 community gathering',
-    caption: 'Community Night — CROPS Summit 2025',
+    url: ImgLookbackVitalik,
+    alt: 'Vitalik Buterin at TogETHer Tuesdays with the Ethereum Cypherpunk',
+    caption: 'TogETHer Tuesdays with the Ethereum Cypherpunk',
   },
   {
-    url: 'https://images.unsplash.com/photo-1568543021136-65aba7793fec?w=1400&h=800&fit=crop&auto=format',
-    alt: 'Yi Peng lanterns above Chiangmai',
-    caption: 'Yi Peng Lantern Festival, November 2025',
+    url: ImgLookbackVitalikCowork,
+    alt: 'Vitalik speaking with the community at co-work',
+    caption: 'Community Session with Vitalik',
   },
   {
-    url: 'https://images.unsplash.com/photo-1524189791114-9781ece3d3ed?w=1400&h=800&fit=crop&auto=format',
-    alt: 'Chiangmai temple at dusk',
-    caption: 'Doi Suthep — Our Spiritual Home Base',
+    url: ImgLookbackCommunity,
+    alt: 'Builders gathered for a community session',
+    caption: 'Builders in Session — Coliving Days',
   },
   {
-    url: 'https://images.unsplash.com/photo-1622790698141-94e30457ef12?w=1400&h=800&fit=crop&auto=format',
-    alt: 'Ethereum token',
-    caption: 'Hackathon 2025 — 72 Hours of Pure Building',
+    url: ImgLookbackSummitPanel,
+    alt: 'Summit panel with Leo Lara and Zhou Qi',
+    caption: 'ETHChiangmai Summit Panel',
+  },
+  {
+    url: ImgLookbackGroupBackdrop,
+    alt: 'Community group photo with Vitalik at the summit backdrop',
+    caption: 'ETHChiangmai Summit 2025',
+  },
+  {
+    url: ImgLookbackPermissionlessly,
+    alt: 'Permissionlessly panel on stage',
+    caption: 'Permissionlessly — Summit Stage',
+  },
+  {
+    url: ImgLookbackEcosystemPanel,
+    alt: 'Ecosystem panel with David Ben Kay, QZ, and Sanzhi',
+    caption: 'Ecosystem Voices — Summit Panel',
+  },
+  {
+    url: ImgLookbackVitalikKeynote,
+    alt: 'Vitalik speaking in Make Ethereum Cypherpunk Again shirt',
+    caption: 'Make Ethereum Cypherpunk Again',
+  },
+  {
+    url: ImgLookbackVitalikGroup,
+    alt: 'Vitalik and friends posing at ETHChiangmai',
+    caption: 'With Friends — ETHChiangmai 2025',
+  },
+  {
+    url: ImgLookbackStageRemote,
+    alt: 'Main stage with Vitalik joining remotely',
+    caption: 'Main Stage — Welcome to ETHChiangmai',
+  },
+  {
+    url: ImgLookbackOpening,
+    alt: 'Opening remarks at ETHChiangmai',
+    caption: 'Opening Remarks',
+  },
+  {
+    url: ImgLookbackEthphPanel,
+    alt: 'ETH Philippine founding contributor on summit panel',
+    caption: 'Regional Builders — Summit Panel',
+  },
+  {
+    url: ImgLookbackHackathonWinners1,
+    alt: 'ETHChiangmai hackathon winners posing with shaka signs',
+    caption: 'Hackathon Winners',
+  },
+  {
+    url: ImgLookbackHackathonWinners2,
+    alt: 'ETHChiangmai hackathon winners group photo',
+    caption: 'Hackathon Winners',
+  },
+  {
+    url: ImgLookbackHackathonWinners3,
+    alt: 'Hackathon winners with Localism and Future Light prize boards',
+    caption: 'Hackathon Winners',
+  },
+  {
+    url: ImgLookbackHackathonWinners4,
+    alt: 'Hackathon 2nd prize winners on stage',
+    caption: 'Hackathon Winners',
   },
 ]
 
@@ -82,12 +161,12 @@ const lookbackLoop = computed(() => [...lookbackSlides, ...lookbackSlides, ...lo
 carouselIndex.value = SLIDE_COUNT
 
 const timeline = [
-  { period: 'October 2026', event: 'Applications Open', detail: 'Apply to join as a builder, coliver, or contributor.', multiDay: false, dotColor: '#DCA524' },
-  { period: 'November 11', event: 'Opening of Coliving', detail: 'Doors open at the Chiangmai base. Community settles in.', multiDay: false, dotColor: '#C8366B' },
-  { period: 'Mid November', event: 'Nomad Market I', detail: 'First open market for Web3 projects, art, and local makers.', multiDay: true, dotColor: '#7632C8', gradient: 'linear-gradient(180deg,#7632C8,#C8366B)' },
-  { period: 'Mid December', event: 'Nomad Market II', detail: 'Second edition — larger, with ecosystem speakers and demos.', multiDay: true, dotColor: '#C8366B', gradient: 'linear-gradient(180deg,#C8366B,#7632C8)' },
-  { period: 'December', event: 'Hackathon', detail: "72 hours of pure building around Ethereum's core values.", multiDay: true, dotColor: '#F0A030', gradient: 'linear-gradient(180deg,#F0A030,#C8366B)' },
-  { period: 'December', event: 'CROPS Summit', detail: 'The flagship multi-day conference. Invite-only + open sessions.', multiDay: true, dotColor: '#DCA524', gradient: 'linear-gradient(180deg,#DCA524,#C8366B 50%,#7632C8)' },
+  { period: 'Nov 1, 2026', event: 'Application Start', detail: '', multiDay: false, dotColor: '#DCA524' },
+  { period: 'Nov 11, 2026', event: 'Opening / Coliving', detail: 'Unconference & Coliving begins', multiDay: false, dotColor: '#C8366B' },
+  { period: 'Mid Nov · 2 Days', event: 'Nomad Market Ⅰ', detail: '4Seas Nimman', multiDay: true, dotColor: '#7632C8', gradient: 'linear-gradient(180deg,#7632C8,#C8366B)' },
+  { period: 'Mid Dec · 2 Days', event: 'Nomad Market Ⅱ', detail: '4Seas Nimman', multiDay: true, dotColor: '#C8366B', gradient: 'linear-gradient(180deg,#C8366B,#7632C8)' },
+  { period: 'Dec 26 – 28, 2026', event: 'Hackathon', detail: '$10,000+ prize pool', multiDay: true, dotColor: '#F0A030', gradient: 'linear-gradient(180deg,#F0A030,#C8366B)' },
+  { period: 'Jan 3, 2027', event: 'CROPS Summit', detail: 'Chiang Mai, Thailand', multiDay: false, dotColor: '#DCA524' },
 ]
 
 const speakers = [
@@ -134,19 +213,20 @@ const whyItems = [
 
 const partners = [
   { name: 'Zucity', logo: LogoZucity },
-  { name: 'GCC', logo: LogoGCC },
-  { name: 'ETH Hangzhou', logo: LogoHangzhou },
   { name: 'ECF Network', logo: LogoEcfNetwork },
-  { name: 'ETH PH', logo: LogoEthPH },
+  { name: 'GCC', logo: LogoGCC },
+  { name: 'Zuitzerland', logo: LogoZuitz },
+  { name: 'SNZ', logo: LogoSNZ },
+  { name: 'ZuCity Japan', logo: LogoZucityJapan },
+  { name: 'ETH Hangzhou', logo: LogoHangzhou },
+  { name: 'ETH PH', logo: LogoEthPH, scale: 0.8 },
   { name: 'ETH NS', logo: LogoEthNS },
   { name: 'ETHKL', logo: LogoEthKL },
   { name: 'ETH Hub HK', logo: LogoEthHubHK },
   { name: 'ETH Tokyo', logo: LogoEthTokyo },
   { name: 'ETH TAO', logo: LogoEthTao },
   { name: 'ETH Singapore', logo: LogoEthSingapore },
-  { name: 'ETH Shenzhen', logo: LogoP7 },
-  { name: 'Zuitzerland', logo: LogoZuitz },
-  { name: 'SNZ', logo: LogoSNZ },
+  { name: 'ETH Shenzhen', logo: LogoEthShenzhen },
 ]
 
 const team = [
@@ -164,8 +244,20 @@ const team = [
     x: 'https://x.com/tak_shire',
     telegram: 'https://t.me/takshire',
   },
-  { name: 'TBA', role: 'Team Member', img: '', x: '', telegram: '' },
-  { name: 'TBA', role: 'Team Member', img: '', x: '', telegram: '' },
+  {
+    name: 'Sherrie',
+    role: 'Core Contributor of ETHChiangmai, Business Development and Operations Lead',
+    img: ImgTeamSherrie,
+    x: '',
+    telegram: '',
+  },
+  {
+    name: 'Tin',
+    role: 'Tech, Developer Relations, and Business Development, ETHPH Core and ETHChiangmai Cheerleader',
+    img: ImgTeamTin,
+    x: 'https://x.com/0xdankiii',
+    telegram: 'https://t.me/SuperDanki',
+  },
   { name: 'TBA', role: 'Team Member', img: '', x: '', telegram: '' },
   { name: 'TBA', role: 'Team Member', img: '', x: '', telegram: '' },
 ]
@@ -447,10 +539,13 @@ onUnmounted(() => {
               class="relative flex items-start"
               :class="i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'">
               <div class="md:w-[calc(50%-1.5rem)] pl-12 md:pl-0" :class="i % 2 === 0 ? 'md:pr-10' : 'md:pl-10'">
-                <div class="rounded-2xl p-5 md:p-6 border hover:shadow-lg transition-all timeline-card">
+                <div
+                  class="rounded-2xl p-5 md:p-6 border timeline-card"
+                  :style="{ '--timeline-accent': item.dotColor }"
+                >
                   <p class="text-xs font-bold tracking-widest uppercase mb-1.5" :style="{ color: item.dotColor }">{{ item.period }}</p>
                   <h3 class="text-lg md:text-xl text-[#0d0918] mb-1.5 font-display">{{ item.event }}</h3>
-                  <p class="text-sm leading-relaxed text-[#0d0918]/50">{{ item.detail }}</p>
+                  <p v-if="item.detail" class="text-sm leading-relaxed text-[#0d0918]/50">{{ item.detail }}</p>
                   <span v-if="item.multiDay" class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2 py-0.5 rounded-full"
                     :style="{ background: `${item.dotColor}18`, color: item.dotColor, border: `1px solid ${item.dotColor}30` }">multi-day</span>
                 </div>
@@ -567,11 +662,17 @@ onUnmounted(() => {
           <p class="text-xs font-bold tracking-[0.22em] uppercase mb-3 gradient-text-cool inline-block">✦ Supported By</p>
           <h2 class="font-display text-4xl md:text-5xl text-[#0d0918]">Ecosystem Partners</h2>
         </div>
-        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-3 mb-16">
+        <div class="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-5 gap-3 mb-16">
           <div v-for="p in partners" :key="p.name"
             class="aspect-square rounded-2xl flex items-center justify-center cursor-pointer transition-all hover:scale-105 border p-3 partner-tile"
             :title="p.name">
-            <img v-if="p.logo" :src="p.logo" :alt="p.name" class="w-full h-full object-contain" />
+            <img
+              v-if="p.logo"
+              :src="p.logo"
+              :alt="p.name"
+              class="w-full h-full object-contain"
+              :style="p.scale ? { transform: `scale(${p.scale})` } : undefined"
+            />
           </div>
         </div>
         <div class="text-center">
@@ -750,6 +851,20 @@ onUnmounted(() => {
   backdrop-filter: blur(10px);
   border-color: rgba(13, 9, 24, 0.08);
   box-shadow: 0 6px 22px rgba(13, 9, 24, 0.06);
+  cursor: default;
+  transition:
+    transform 0.28s ease,
+    background 0.28s ease,
+    border-color 0.28s ease,
+    box-shadow 0.28s ease;
+}
+.timeline-card:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.96);
+  border-color: color-mix(in srgb, var(--timeline-accent, #C8366B) 35%, rgba(13, 9, 24, 0.08));
+  box-shadow:
+    0 12px 28px rgba(13, 9, 24, 0.08),
+    0 0 0 1px color-mix(in srgb, var(--timeline-accent, #C8366B) 18%, transparent);
 }
 .person-card {
   border-radius: 1rem;
