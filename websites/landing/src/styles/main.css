@@ -6,7 +6,7 @@
   --font-chonburi: 'Chonburi', serif;
   --font-charm: 'Charm', cursive;
   --font-fraunces: 'Fraunces', serif;
-  --font-black-ops: 'Black Ops One', serif;
+  --font-black-ops: 'Black Ops One', 'Space Mono', 'DM Mono', ui-monospace, monospace;
   --font-jakarta: 'Plus Jakarta Sans', sans-serif;
   --font-mono: 'DM Mono', monospace;
   --font-space-mono: 'Space Mono', monospace;
@@ -71,14 +71,14 @@ html {
   font-family: 'Fraunces', Georgia, serif;
 }
 .font-hero {
-  font-family: 'Space Mono', 'DM Mono', ui-monospace, monospace;
+  font-family: 'Black Ops One', 'Space Mono', 'DM Mono', ui-monospace, monospace;
   letter-spacing: -0.02em;
-  font-weight: 700;
+  font-weight: 400;
   font-style: normal;
 }
 .font-hero em {
   font-style: normal;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 @keyframes float {

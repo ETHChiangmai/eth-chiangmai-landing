@@ -37,3 +37,6 @@ __screenshots__/
 
 #Wrangler
 .wrangler/tmp
+
+# Local newsletter signups collected by the Vite subscribe API
+data/subscribers.json

@@ -35,6 +35,7 @@ import IconTelegram from '@/assets/social/social-telegram.svg'
 import ImgTeamZik from '@/assets/team-zik.png'
 import ImgTeamTakShire from '@/assets/team-tak-shire.png'
 import ImgTeamSherrie from '@/assets/team-sherrie.png'
+import ImgTeamEmily from '@/assets/team-emily.png'
 import ImgTeamTin from '@/assets/team-tin.png'
 import ImgLookbackVitalik from '@/assets/lookback-2025/01-vitalik.jpg'
 import ImgLookbackVitalikCowork from '@/assets/lookback-2025/02-vitalik-cowork.jpg'
@@ -56,6 +57,7 @@ import ImgLookbackHackathonWinners4 from '@/assets/lookback-2025/16-hackathon-wi
 const navScrolled = ref(false)
 const menuOpen = ref(false)
 const email = ref('')
+const subscribeHoneypot = ref('')
 const subscribed = ref(false)
 const subscribePending = ref(false)
 const subscribeError = ref('')
@@ -232,6 +234,13 @@ const partners = [
 
 const team = [
   {
+    name: 'Sherrie',
+    role: 'Core Contributor of ETHChiangmai, Business Development and Operations Lead',
+    img: ImgTeamSherrie,
+    x: '',
+    telegram: '',
+  },
+  {
     name: 'Zik',
     role: 'Core Contributor of 4Seas, Main organizer of ETHChiangmai',
     img: ImgTeamZik,
@@ -246,11 +255,11 @@ const team = [
     telegram: 'https://t.me/takshire',
   },
   {
-    name: 'Sherrie',
-    role: 'Core Contributor of ETHChiangmai, Business Development and Operations Lead',
-    img: ImgTeamSherrie,
-    x: '',
-    telegram: '',
+    name: 'Emily',
+    role: 'Core Contributor of ETHChiangmai',
+    img: ImgTeamEmily,
+    x: 'https://x.com/qijin_eth',
+    telegram: 'https://t.me/qijinz',
   },
   {
     name: 'Tin',
@@ -259,8 +268,7 @@ const team = [
     x: 'https://x.com/0xdankiii',
     telegram: 'https://t.me/SuperDanki',
   },
-  { name: 'TBA', role: 'Team Member', img: '', x: '', telegram: '' },
-  { name: 'TBA', role: 'Team Member', img: '', x: '', telegram: '' },
+  { name: 'Seher', role: '', img: '', x: '', telegram: '' },
 ]
 
 function onScroll() {
@@ -312,24 +320,42 @@ async function onSubscribe(e: Event) {
   const value = email.value.trim()
   if (!value || subscribePending.value) return
 
-  const endpoint = import.meta.env.VITE_SUBSCRIBE_URL
-  if (!endpoint) {
-    subscribeError.value = 'Subscribe is not configured yet. Add VITE_SUBSCRIBE_URL to .env'
+  // Honeypot: bots that fill hidden fields get a fake success.
+  if (subscribeHoneypot.value) {
+    subscribed.value = true
     return
   }
+
+  const endpoint =
+    import.meta.env.VITE_SUBSCRIBE_URL ||
+    (import.meta.env.DEV
+      ? '/api/subscribe'
+      : 'https://formsubmit.co/ajax/info@ethchiangmai.com')
 
   subscribePending.value = true
   subscribeError.value = ''
   try {
+    const payload: Record<string, string | boolean> = { email: value }
+    if (endpoint.includes('formsubmit.co')) {
+      payload._subject = 'ETHChiangmai 2026 subscriber'
+      payload._captcha = false
+      payload._template = 'table'
+    }
+
     const res = await fetch(endpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
-      body: JSON.stringify({ email: value }),
+      body: JSON.stringify(payload),
     })
-    if (!res.ok) {
+    const data = (await res.json().catch(() => ({}))) as {
+      ok?: boolean
+      success?: boolean | string
+    }
+    const rejected = data.success === false || data.success === 'false'
+    if (!res.ok || rejected) {
       throw new Error(`Subscribe failed (${res.status})`)
     }
     subscribed.value = true
@@ -443,9 +469,9 @@ onUnmounted(() => {
         class="absolute top-44 right-[23%] w-20 md:w-28 pointer-events-none select-none lantern-multiply"
         style="opacity: 0.65; animation: float-slow 9s ease-in-out infinite 2s" />
       <div class="relative z-10 max-w-7xl mx-auto px-6 pt-28 pb-32 w-full flex justify-center">
-        <div class="max-w-2xl text-center flex flex-col items-center">
+        <div class="max-w-3xl text-center flex flex-col items-center">
           <p class="text-sm font-bold tracking-[0.22em] uppercase mb-5 gradient-text">✦ ETHChiangMai 2026</p>
-          <h1 class="font-hero text-4xl md:text-5xl lg:text-[3.25rem] leading-[1.1] text-[#0d0918] mb-10 md:mb-12 uppercase">
+          <h1 class="font-hero text-[2.8rem] md:text-[3.75rem] lg:text-[4.06rem] leading-[1.1] text-[#0d0918] mb-10 md:mb-12 uppercase">
             The Non-Negotiables<br />of Ethereum
           </h1>
           <p class="text-base md:text-lg text-[#0d0918]/65 mb-8 leading-relaxed max-w-lg">
@@ -776,7 +802,9 @@ onUnmounted(() => {
         </div>
         <form v-else class="flex flex-col gap-3" @submit="onSubscribe">
           <div class="flex flex-col sm:flex-row gap-3">
+            <label class="sr-only" for="subscribe-email">Email</label>
             <input
+              id="subscribe-email"
               v-model="email"
               type="email"
               required
@@ -784,6 +812,14 @@ onUnmounted(() => {
               placeholder="your@email.com"
               :disabled="subscribePending"
               class="flex-1 px-5 py-3.5 rounded-full text-sm outline-none border border-[#0d0918]/15 bg-white/70 backdrop-blur-sm text-[#0d0918] placeholder:text-[#0d0918]/40 focus:border-[#c8366b]/50 transition-colors disabled:opacity-60"
+            />
+            <input
+              v-model="subscribeHoneypot"
+              type="text"
+              tabindex="-1"
+              autocomplete="off"
+              aria-hidden="true"
+              class="absolute -left-[9999px] h-0 w-0 overflow-hidden"
             />
             <button
               type="submit"
