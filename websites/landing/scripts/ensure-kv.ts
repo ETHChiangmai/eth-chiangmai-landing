@@ -9,10 +9,10 @@ const WRANGLER_TOML = resolve(ROOT, 'wrangler.toml')
 type Namespace = { id: string; title: string }
 
 async function cf(path: string, init: RequestInit = {}) {
-  const accountId = process.env.CLOUDFLARE_ACCOUNT_ID
-  const token = process.env.CLOUDFLARE_API_TOKEN
+  const accountId = process.env.CLOUDFLARE_ACCOUNT_ID?.trim()
+  const token = process.env.CLOUDFLARE_API_TOKEN?.trim()
   if (!accountId || !token) {
-    throw new Error('CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN are required to set up subscriber storage')
+    throw new Error('CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN are required')
   }
 
   const res = await fetch(`https://api.cloudflare.com/client/v4/accounts/${accountId}${path}`, {
@@ -26,11 +26,11 @@ async function cf(path: string, init: RequestInit = {}) {
   const body = (await res.json()) as {
     success: boolean
     result?: unknown
-    errors?: { message: string }[]
+    errors?: { code?: number; message: string }[]
   }
   if (!res.ok || !body.success) {
     const detail = body.errors?.map((error) => error.message).join(', ') || res.statusText
-    throw new Error(`Cloudflare API ${path} failed: ${detail}`)
+    throw new Error(`Cloudflare API ${path} failed (${res.status}): ${detail}`)
   }
   return body.result
 }
@@ -38,10 +38,11 @@ async function cf(path: string, init: RequestInit = {}) {
 async function findOrCreateNamespace(): Promise<string> {
   let page = 1
   for (;;) {
-    const result = (await cf(`/storage/kv/namespaces?per_page=100&page=${page}`)) as Namespace[]
-    const match = result.find((item) => item.title === NAMESPACE_TITLE)
+    const result = await cf(`/storage/kv/namespaces?per_page=100&page=${page}`)
+    const namespaces = Array.isArray(result) ? (result as Namespace[]) : []
+    const match = namespaces.find((item) => item.title === NAMESPACE_TITLE)
     if (match) return match.id
-    if (result.length < 100) break
+    if (namespaces.length < 100) break
     page += 1
   }
 
@@ -49,21 +50,31 @@ async function findOrCreateNamespace(): Promise<string> {
     method: 'POST',
     body: JSON.stringify({ title: NAMESPACE_TITLE }),
   })) as Namespace
+  if (!created?.id) throw new Error('KV namespace create did not return an id')
   return created.id
 }
 
-function patchWranglerToml(id: string) {
+function writeKvBinding(id: string) {
   const current = readFileSync(WRANGLER_TOML, 'utf8')
-  const updated = current.replace(
-    /binding = "SUBSCRIBERS"\s+id = "[^"]+"/,
-    `binding = "SUBSCRIBERS"\nid = "${id}"`,
+  if (current.includes(`id = "${id}"`) && current.includes('binding = "SUBSCRIBERS"')) return
+
+  const withoutKv = current.replace(/\n\[\[kv_namespaces\]\][\s\S]*$/m, '').trimEnd() + '\n'
+  writeFileSync(
+    WRANGLER_TOML,
+    `${withoutKv}
+[[kv_namespaces]]
+binding = "SUBSCRIBERS"
+id = "${id}"
+`,
   )
-  if (!updated.includes(`id = "${id}"`)) {
-    throw new Error('Could not patch SUBSCRIBERS id in wrangler.toml')
-  }
-  writeFileSync(WRANGLER_TOML, updated)
 }
 
-const id = await findOrCreateNamespace()
-patchWranglerToml(id)
-console.log(`Using KV namespace ${NAMESPACE_TITLE} (${id})`)
+try {
+  const id = await findOrCreateNamespace()
+  writeKvBinding(id)
+  console.log(`Using KV namespace ${NAMESPACE_TITLE} (${id})`)
+} catch (error) {
+  const message = error instanceof Error ? error.message : String(error)
+  console.warn(`Skipping KV setup: ${message}`)
+  console.warn('The site will still deploy. Bind a KV namespace named SUBSCRIBERS in Cloudflare Pages to enable the CSV list.')
+}
