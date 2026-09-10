@@ -315,6 +315,30 @@ function activeCaption(i: number) {
 function closeMenu() {
   menuOpen.value = false
 }
+async function postToSubscribeApi(value: string) {
+  const endpoint = import.meta.env.VITE_SUBSCRIBE_URL || '/api/subscribe'
+  const res = await fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify({ email: value }),
+  })
+  const contentType = res.headers.get('content-type') || ''
+  if (!contentType.includes('application/json')) {
+    throw new Error(`Subscribe failed (${res.status})`)
+  }
+  const data = (await res.json().catch(() => ({}))) as {
+    ok?: boolean
+    success?: boolean | string
+  }
+  const accepted = data.ok === true || data.success === true || data.success === 'true'
+  if (!res.ok || !accepted) {
+    throw new Error(`Subscribe failed (${res.status})`)
+  }
+}
+
 async function onSubscribe(e: Event) {
   e.preventDefault()
   const value = email.value.trim()
@@ -326,38 +350,10 @@ async function onSubscribe(e: Event) {
     return
   }
 
-  const endpoint =
-    import.meta.env.VITE_SUBSCRIBE_URL ||
-    (import.meta.env.DEV
-      ? '/api/subscribe'
-      : 'https://formsubmit.co/ajax/info@ethchiangmai.com')
-
   subscribePending.value = true
   subscribeError.value = ''
   try {
-    const payload: Record<string, string | boolean> = { email: value }
-    if (endpoint.includes('formsubmit.co')) {
-      payload._subject = 'ETHChiangmai 2026 subscriber'
-      payload._captcha = false
-      payload._template = 'table'
-    }
-
-    const res = await fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify(payload),
-    })
-    const data = (await res.json().catch(() => ({}))) as {
-      ok?: boolean
-      success?: boolean | string
-    }
-    const rejected = data.success === false || data.success === 'false'
-    if (!res.ok || rejected) {
-      throw new Error(`Subscribe failed (${res.status})`)
-    }
+    await postToSubscribeApi(value)
     subscribed.value = true
   } catch {
     subscribeError.value = 'Something went wrong. Please try again in a moment.'
@@ -378,6 +374,10 @@ function stopCarousel() {
 }
 
 onMounted(() => {
+  const params = new URLSearchParams(window.location.search)
+  if (params.get('subscribed') === '1') {
+    subscribed.value = true
+  }
   window.addEventListener('scroll', onScroll, { passive: true })
   onScroll()
   startCarousel()
@@ -413,12 +413,21 @@ onUnmounted(() => {
             :class="navScrolled ? 'text-[#0d0918]/60 hover:text-[#0d0918]' : 'text-white/75 hover:text-white'"
           >{{ link.label }}</a>
         </nav>
-        <RouterLink
-          to="/2025"
-          class="hidden md:inline-flex items-center text-xs font-medium px-3 py-1.5 rounded-full border border-white/50 text-white hover:bg-white hover:text-[#0d0918] transition-colors"
-        >
-          2025 Edition →
-        </RouterLink>
+        <div class="hidden md:flex items-center gap-3 shrink-0">
+          <RouterLink
+            to="/2025"
+            class="inline-flex items-center text-xs font-medium px-3 py-1.5 rounded-full border transition-colors"
+            :class="navScrolled
+              ? 'border-[#0d0918]/25 text-[#0d0918] hover:bg-[#0d0918] hover:text-white'
+              : 'border-white/50 text-white hover:bg-white hover:text-[#0d0918]'"
+          >
+            2025 Edition
+          </RouterLink>
+          <a
+            href="#partners"
+            class="inline-flex items-center text-sm font-semibold px-4 py-1.5 rounded-full text-white gradient-primary hover:opacity-90"
+          >Participate →</a>
+        </div>
         <button class="md:hidden flex flex-col gap-1.5 p-1" aria-label="Toggle menu" @click="menuOpen = !menuOpen">
           <span
             class="w-6 h-0.5 block transition-all"
@@ -446,8 +455,10 @@ onUnmounted(() => {
       <div v-if="menuOpen" class="md:hidden bg-[#faf0e8]/98 backdrop-blur-md border-t border-[#0d0918]/8 px-6 py-6 flex flex-col gap-5">
         <a v-for="link in navLinks" :key="link.href" :href="link.href"
           class="text-base font-medium text-[#0d0918]/70 hover:text-[#0d0918]" @click="closeMenu">{{ link.label }}</a>
-        <a href="#partners" class="mt-2 inline-flex items-center justify-center text-white text-sm font-semibold px-5 py-3 rounded-full gradient-primary" @click="closeMenu">Participate →</a>
-        <RouterLink to="/2025" class="inline-flex items-center justify-center text-[#0d0918] text-sm font-semibold px-5 py-3 rounded-full border border-[#0d0918]/20" @click="closeMenu">Enter 2025 Page →</RouterLink>
+        <div class="mt-2 flex gap-3">
+          <RouterLink to="/2025" class="flex-1 inline-flex items-center justify-center text-[#0d0918] text-sm font-semibold px-5 py-3 rounded-full border border-[#0d0918]/20" @click="closeMenu">2025 Edition</RouterLink>
+          <a href="#partners" class="flex-1 inline-flex items-center justify-center text-white text-sm font-semibold px-5 py-3 rounded-full gradient-primary" @click="closeMenu">Participate →</a>
+        </div>
       </div>
     </header>
 
@@ -471,7 +482,7 @@ onUnmounted(() => {
       <div class="relative z-10 max-w-7xl mx-auto px-6 pt-28 pb-32 w-full flex justify-center">
         <div class="max-w-3xl text-center flex flex-col items-center">
           <p class="text-sm font-bold tracking-[0.22em] uppercase mb-5 gradient-text">✦ ETHChiangMai 2026</p>
-          <h1 class="font-hero text-[2.8rem] md:text-[3.75rem] lg:text-[4.06rem] leading-[1.1] text-[#0d0918] mb-10 md:mb-12 uppercase">
+          <h1 class="font-hero text-[2.5rem] md:text-[3rem] lg:text-[3.35rem] leading-[1.1] text-[#0d0918] mb-10 md:mb-12 uppercase">
             The Non-Negotiables<br />of Ethereum
           </h1>
           <p class="text-base md:text-lg text-[#0d0918]/65 mb-8 leading-relaxed max-w-lg">
@@ -777,7 +788,7 @@ onUnmounted(() => {
     </section>
 
     <!-- NEWSLETTER -->
-    <section class="py-20 relative overflow-hidden bg-[#faf0e8]">
+    <section id="newsletter" class="py-20 relative overflow-hidden bg-[#faf0e8]">
       <img
         :src="BgFull"
         alt=""
@@ -800,7 +811,7 @@ onUnmounted(() => {
           <p class="text-[#0d0918] font-semibold mb-1">You're on the list! ✦</p>
           <p class="text-sm text-[#0d0918]/55">We'll be in touch before applications open.</p>
         </div>
-        <form v-else class="flex flex-col gap-3" @submit="onSubscribe">
+        <form v-else class="relative flex flex-col gap-3" @submit="onSubscribe">
           <div class="flex flex-col sm:flex-row gap-3">
             <label class="sr-only" for="subscribe-email">Email</label>
             <input

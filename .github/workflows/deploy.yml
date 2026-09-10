@@ -19,9 +19,15 @@ jobs:
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
       - run: bun run landing build
+      - name: Ensure subscribers KV
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: bun run landing ensure-kv
       - uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy websites/landing/dist --project-name=ethcm --branch=main
+          workingDirectory: websites/landing
+          command: pages deploy dist --project-name=ethcm --branch=main
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}

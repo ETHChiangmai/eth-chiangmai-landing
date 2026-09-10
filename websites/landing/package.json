@@ -13,7 +13,8 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "format": "prettier --write src/",
-    "deploy": "bun run build && bunx wrangler pages deploy ./dist --project-name ethcm"
+    "ensure-kv": "bun scripts/ensure-kv.ts",
+    "deploy": "bun run build && bun run ensure-kv && bunx wrangler pages deploy ./dist --project-name ethcm"
   },
   "dependencies": {
     "@vueuse/core": "^14.0.0",
