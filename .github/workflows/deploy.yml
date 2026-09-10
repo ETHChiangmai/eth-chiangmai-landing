@@ -30,5 +30,6 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           workingDirectory: websites/landing
+          packageManager: bun
           command: pages deploy dist --project-name=ethcm --branch=main
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
