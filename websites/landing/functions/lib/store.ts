@@ -193,6 +193,8 @@ async function emailUpdatedCsv(newEmail: string, rows: Subscriber[]) {
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
+      Origin: 'https://ethchiangmai.com',
+      Referer: 'https://ethchiangmai.com/',
     },
     body: JSON.stringify({
       _subject: `ETHChiangmai subscriber list (${rows.length})`,
