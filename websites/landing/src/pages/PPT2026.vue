@@ -416,6 +416,8 @@ onUnmounted(() => {
         <div class="hidden md:flex items-center gap-3 shrink-0">
           <RouterLink
             to="/2025"
+            target="_blank"
+            rel="noopener noreferrer"
             class="inline-flex items-center text-xs font-medium px-3 py-1.5 rounded-full border transition-colors"
             :class="navScrolled
               ? 'border-[#0d0918]/25 text-[#0d0918] hover:bg-[#0d0918] hover:text-white'
@@ -456,7 +458,7 @@ onUnmounted(() => {
         <a v-for="link in navLinks" :key="link.href" :href="link.href"
           class="text-base font-medium text-[#0d0918]/70 hover:text-[#0d0918]" @click="closeMenu">{{ link.label }}</a>
         <div class="mt-2 flex gap-3">
-          <RouterLink to="/2025" class="flex-1 inline-flex items-center justify-center text-[#0d0918] text-sm font-semibold px-5 py-3 rounded-full border border-[#0d0918]/20" @click="closeMenu">2025 Edition</RouterLink>
+          <RouterLink to="/2025" target="_blank" rel="noopener noreferrer" class="flex-1 inline-flex items-center justify-center text-[#0d0918] text-sm font-semibold px-5 py-3 rounded-full border border-[#0d0918]/20" @click="closeMenu">2025 Edition</RouterLink>
           <a href="#partners" class="flex-1 inline-flex items-center justify-center text-white text-sm font-semibold px-5 py-3 rounded-full gradient-primary" @click="closeMenu">Participate →</a>
         </div>
       </div>
