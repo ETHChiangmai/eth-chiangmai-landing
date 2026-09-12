@@ -7,7 +7,7 @@
 | 活动名称 | ETHChiangmai 2026 |
 | 主题 | CROPS: The Non-Negotiables of Ethereum |
 | 时间 | Nov 11, 2026 – Jan 5, 2027 |
-| 地点 | Chiangmai, Thailand |
+| 地点 | Chiang Mai, Thailand |
 | 网址 | https://ethchiangmai.com |
 
 ---
@@ -51,7 +51,7 @@
 │     THE NON-NEGOTIABLES OF ETHEREUM              │
 │           (Kodchasan Bold, 深紫黑)               │
 │                                                  │
-│    Nov 11, 2026 – Jan 5, 2027 · Chiangmai       │
+│    Nov 11, 2026 – Jan 5, 2027 · Chiang Mai       │
 │                                                  │
 │              Coming Soon (斜体紫)                │
 │                                                  │

@@ -72,7 +72,7 @@ const navLinks = [
   { label: 'About', href: '#about' },
   { label: 'Schedule', href: '#schedule' },
   { label: 'CROPS', href: '#crops' },
-  { label: 'Chiangmai', href: '#chiangmai' },
+  { label: 'Chiang Mai', href: '#chiangmai' },
   { label: 'Partners', href: '#partners' },
 ]
 
@@ -188,9 +188,9 @@ const residents = [
 
 const crops = [
   { abbr: 'CR', title: 'Censorship\nResistance', desc: 'Building systems that no authority can shut down. Code as the final frontier of free expression.', sticker: StickerCensorship, accentColor: '#C8366B' },
-  { abbr: 'O', title: 'Openness', desc: 'Open-source at the core. Every protocol, every tool — transparent and forever forkable.', sticker: StickerNode, accentColor: '#7632C8' },
-  { abbr: 'P', title: 'Permissionless', desc: 'No gatekeepers. No borders. Anyone, anywhere can build, participate, and contribute equally.', sticker: StickerTalent, accentColor: '#DCA524' },
-  { abbr: 'S', title: 'Self-\nSovereignty', desc: 'Your keys, your rules. True ownership of identity, assets, and data — no intermediaries.', sticker: StickerSynergy, accentColor: '#C2A8E0' },
+  { abbr: 'O', title: 'Opensource\nand Free', desc: 'Open-source and free at the core. Every protocol, every tool — transparent, accessible, and forever forkable.', sticker: StickerNode, accentColor: '#7632C8' },
+  { abbr: 'P', title: 'Privacy', desc: 'Your data, your business. Build systems that protect identity, communications, and on-chain activity from surveillance.', sticker: StickerTalent, accentColor: '#DCA524' },
+  { abbr: 'S', title: 'Security', desc: 'Harden the stack. Users should transact, store, and build without compromise — security as a default, not an afterthought.', sticker: StickerSynergy, accentColor: '#C2A8E0' },
 ]
 
 const whyItems = [
@@ -198,7 +198,7 @@ const whyItems = [
     url: ImgPermanentOutpost,
     alt: 'Zuzalu Library Chiang Mai',
     title: 'A Permanent Outpost',
-    desc: "Chiangmai is not just a backdrop — it's the world's most established long-term Ethereum outpost. The community never fully left.",
+    desc: "Chiang Mai is not just a backdrop — it's the world's most established long-term Ethereum outpost. The community never fully left.",
   },
   {
     url: ImgUnmatchedCostQuality,
@@ -488,7 +488,7 @@ onUnmounted(() => {
             The Non-Negotiables<br />of Ethereum
           </h1>
           <p class="text-base md:text-lg text-[#0d0918]/65 mb-8 leading-relaxed max-w-lg">
-            A multi-month gathering in Chiangmai for builders who hold Ethereum's core values — censorship resistance, openness, permissionlessness, and sovereignty — as non-negotiable.
+            A multi-month gathering in Chiang Mai for builders who hold Ethereum's core values — censorship resistance, opensource and free, privacy, and security — as non-negotiable.
           </p>
           <div class="flex flex-wrap justify-center gap-4">
             <a href="#schedule" class="inline-flex items-center gap-2 border-2 border-[#0d0918]/25 text-[#0d0918] text-sm font-semibold px-7 py-3.5 rounded-full hover:border-[#0d0918]/50 transition-colors bg-[#faf0e8]/30 backdrop-blur-sm">Know More</a>
@@ -679,12 +679,12 @@ onUnmounted(() => {
       </div>
     </section>
 
-    <!-- WHY Chiangmai -->
+    <!-- WHY Chiang Mai -->
     <section id="chiangmai" class="py-24 relative overflow-hidden bg-[#faf0e8]">
       <div class="max-w-7xl mx-auto px-6 relative z-10">
         <div class="text-center mb-16">
           <p class="text-xs font-bold tracking-[0.22em] uppercase mb-3 gradient-text inline-block">✦ The Venue</p>
-          <h2 class="font-display text-4xl md:text-5xl text-[#0d0918]">Why Chiangmai?</h2>
+          <h2 class="font-display text-4xl md:text-5xl text-[#0d0918]">Why Chiang Mai?</h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
           <div v-for="item in whyItems" :key="item.title" class="group">
@@ -854,7 +854,7 @@ onUnmounted(() => {
             <div class="flex items-center gap-2 mb-4">
               <img :src="LogoLight" alt="ETHChiangMai" class="h-8 w-auto object-contain" />
             </div>
-            <p class="text-sm leading-relaxed text-[#faf0e8]/45">A gathering for Ethereum builders who hold the core values non-negotiable. November – December, Chiangmai.</p>
+            <p class="text-sm leading-relaxed text-[#faf0e8]/45">A gathering for Ethereum builders who hold the core values non-negotiable. November – December, Chiang Mai.</p>
           </div>
           <div class="grid grid-cols-2 gap-12 sm:gap-16">
             <div>

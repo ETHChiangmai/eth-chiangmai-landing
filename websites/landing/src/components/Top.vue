@@ -102,7 +102,7 @@ const links = [speaker, sponsor, hackathon, eventList]
             Make Ethereum CypherPunk Again
           </div>
           <div class="font-kodchasan font-semibold text-2xl xl:text-3xl 2xl:text-4xl">
-            8 Dec 2025 - 3 Feb 2026 @ Chiangmai, Thailand
+            8 Dec 2025 - 3 Feb 2026 @ Chiang Mai, Thailand
           </div>
           <div
             class="mt-8 lg:mt-16 xl:mt-24 grid grid-cols-4 justify-center place-items-center gap-5"
@@ -143,7 +143,7 @@ const links = [speaker, sponsor, hackathon, eventList]
             class="font-kodchasan font-semibold text-lg md:text-xl lg:text-3xl inline-flex gap-2 flex-wrap justify-center text-center"
           >
             <div>8 Dec 2025 - 3 Feb 2026</div>
-            <div>@ Chiangmai, Thailand</div>
+            <div>@ Chiang Mai, Thailand</div>
           </div>
         </div>
         <div
