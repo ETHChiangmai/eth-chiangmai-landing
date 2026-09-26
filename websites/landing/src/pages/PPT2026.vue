@@ -483,18 +483,18 @@ onUnmounted(() => {
         style="opacity: 0.65; animation: float-slow 9s ease-in-out infinite 2s" />
       <div class="relative z-10 max-w-7xl mx-auto px-6 pt-28 pb-32 w-full flex justify-center">
         <div class="max-w-3xl text-center flex flex-col items-center">
-          <p class="text-sm font-bold tracking-[0.22em] uppercase mb-5 gradient-text">✦ ETHChiangMai 2026</p>
-          <h1 class="font-hero text-[2.5rem] md:text-[3rem] lg:text-[3.35rem] leading-[1.1] text-[#0d0918] mb-10 md:mb-12 uppercase">
+          <p class="text-xl font-bold tracking-[0.22em] uppercase mb-4 gradient-text">✦ ETHChiangMai 2026</p>
+          <h1 class="font-hero text-[2.5rem] md:text-[3rem] lg:text-[3.35rem] leading-[1.1] mb-6 uppercase" style="color: #3d2e28">
             The Non-Negotiables<br />of Ethereum
           </h1>
-          <p class="text-base md:text-lg text-[#0d0918]/65 mb-8 leading-relaxed max-w-lg">
+          <p class="text-base md:text-lg text-[#0d0918]/65 mb-4 leading-relaxed max-w-lg">
             A multi-month gathering in Chiang Mai for builders who hold Ethereum's core values — censorship resistance, opensource and free, privacy, and security — as non-negotiable.
           </p>
+          <p class="text-xs mb-8 inline-flex items-center gap-1.5 uppercase tracking-widest" style="color: #c8650a"><i class="fa-solid fa-location-dot"></i> 4Seas Nimman, Chiang Mai</p>
           <div class="flex flex-wrap justify-center gap-4">
             <a href="#schedule" class="inline-flex items-center gap-2 border-2 border-[#0d0918]/25 text-[#0d0918] text-sm font-semibold px-7 py-3.5 rounded-full hover:border-[#0d0918]/50 transition-colors bg-[#faf0e8]/30 backdrop-blur-sm">Know More</a>
             <RouterLink to="/participate" class="inline-flex items-center gap-2 text-white text-sm font-semibold px-7 py-3.5 rounded-full hover:opacity-90 gradient-primary" style="box-shadow: 0 4px 24px #C8366B44">Participate →</RouterLink>
           </div>
-          <p class="mt-6 text-xs text-[#0d0918]/45 tracking-wide">📍 4Seas Nimman, Chiang Mai</p>
         </div>
       </div>
     </section>
