@@ -51,16 +51,17 @@ const cards = [
   },
   {
     id: 'nomad-market',
-    accent: '#c2a8e0',
-    accentBg: 'rgba(194,168,224,0.1)',
-    accentBorder: 'rgba(194,168,224,0.3)',
+    accent: '#d4631a',
+    accentBg: 'rgba(212,99,26,0.07)',
+    accentBorder: 'rgba(212,99,26,0.18)',
     icon: 'fa-solid fa-store',
     label: 'Nomad Market Exhibitor',
     tagline: 'Show what you make',
     desc: 'Set up a booth at the Nomad Market. Showcase your project, products, art, or merchandise to hundreds of Ethereum community members across two market days.',
-    cta: 'Coming Soon',
-    to: null,
-    disabled: true,
+    cta: 'Apply for a Booth',
+    to: 'https://forms.gle/evb2uTTMbcAPEWrv7',
+    disabled: false,
+    external: true,
   },
 ]
 </script>
@@ -143,8 +144,19 @@ const cards = [
           <p class="text-sm leading-relaxed text-[#0d0918]/55 mb-8 flex-1">{{ card.desc }}</p>
 
           <!-- CTA -->
+          <a
+            v-if="!card.disabled && card.to && card.external"
+            :href="card.to"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center gap-2 rounded-full text-sm font-semibold px-6 py-3 text-white transition-all duration-200 hover:opacity-90 active:scale-95"
+            :style="{
+              background: `linear-gradient(135deg, ${card.accent} 0%, color-mix(in srgb, ${card.accent} 60%, #7632c8) 100%)`,
+              boxShadow: `0 4px 16px color-mix(in srgb, ${card.accent} 35%, transparent)`
+            }"
+          >{{ card.cta }} <i class="fa-solid fa-arrow-right text-xs"></i></a>
           <RouterLink
-            v-if="!card.disabled && card.to"
+            v-else-if="!card.disabled && card.to"
             :to="card.to"
             target="_blank"
             rel="noopener noreferrer"
