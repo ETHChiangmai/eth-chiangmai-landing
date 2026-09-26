@@ -198,7 +198,7 @@ const whyItems = [
     url: ImgPermanentOutpost,
     alt: 'Zuzalu Library Chiang Mai',
     title: 'A Permanent Outpost',
-    desc: "Chiang Mai is not just a backdrop — it's the world's most established long-term Ethereum outpost. The community never fully left.",
+    descHtml: `Chiang Mai is not just a backdrop — it's the world's most established <a href="https://www.4seas.xyz" target="_blank" rel="noopener noreferrer" class="text-[#4a1a7e] font-semibold hover:underline underline-offset-2">long-term Ethereum outpost</a>. The community never fully left.`,
   },
   {
     url: ImgUnmatchedCostQuality,
@@ -425,10 +425,10 @@ onUnmounted(() => {
           >
             2025 Edition
           </RouterLink>
-          <a
-            href="#partners"
+          <RouterLink
+            to="/participate"
             class="inline-flex items-center text-sm font-semibold px-4 py-1.5 rounded-full text-white gradient-primary hover:opacity-90"
-          >Participate →</a>
+          >Participate →</RouterLink>
         </div>
         <button class="md:hidden flex flex-col gap-1.5 p-1" aria-label="Toggle menu" @click="menuOpen = !menuOpen">
           <span
@@ -459,7 +459,7 @@ onUnmounted(() => {
           class="text-base font-medium text-[#0d0918]/70 hover:text-[#0d0918]" @click="closeMenu">{{ link.label }}</a>
         <div class="mt-2 flex gap-3">
           <RouterLink to="/2025" target="_blank" rel="noopener noreferrer" class="flex-1 inline-flex items-center justify-center text-[#0d0918] text-sm font-semibold px-5 py-3 rounded-full border border-[#0d0918]/20" @click="closeMenu">2025 Edition</RouterLink>
-          <a href="#partners" class="flex-1 inline-flex items-center justify-center text-white text-sm font-semibold px-5 py-3 rounded-full gradient-primary" @click="closeMenu">Participate →</a>
+          <RouterLink to="/participate" class="flex-1 inline-flex items-center justify-center text-white text-sm font-semibold px-5 py-3 rounded-full gradient-primary" @click="closeMenu">Participate →</RouterLink>
         </div>
       </div>
     </header>
@@ -492,8 +492,9 @@ onUnmounted(() => {
           </p>
           <div class="flex flex-wrap justify-center gap-4">
             <a href="#schedule" class="inline-flex items-center gap-2 border-2 border-[#0d0918]/25 text-[#0d0918] text-sm font-semibold px-7 py-3.5 rounded-full hover:border-[#0d0918]/50 transition-colors bg-[#faf0e8]/30 backdrop-blur-sm">Know More</a>
-            <a href="#partners" class="inline-flex items-center gap-2 text-white text-sm font-semibold px-7 py-3.5 rounded-full hover:opacity-90 gradient-primary" style="box-shadow: 0 4px 24px #C8366B44">Participate →</a>
+            <RouterLink to="/participate" class="inline-flex items-center gap-2 text-white text-sm font-semibold px-7 py-3.5 rounded-full hover:opacity-90 gradient-primary" style="box-shadow: 0 4px 24px #C8366B44">Participate →</RouterLink>
           </div>
+          <p class="mt-6 text-xs text-[#0d0918]/45 tracking-wide">📍 4Seas Nimman, Chiang Mai</p>
         </div>
       </div>
     </section>
@@ -692,7 +693,7 @@ onUnmounted(() => {
               <img :src="item.url" :alt="item.alt" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
             </div>
             <h3 class="text-xl text-[#0d0918] mb-3 font-display">{{ item.title }}</h3>
-            <p class="text-sm leading-relaxed text-[#0d0918]/40">{{ item.desc }}</p>
+            <p class="text-sm leading-relaxed text-[#0d0918]/40" v-html="item.descHtml ?? item.desc"></p>
           </div>
         </div>
       </div>
@@ -861,6 +862,7 @@ onUnmounted(() => {
               <p class="text-xs font-bold tracking-widest uppercase mb-4 text-[#faf0e8]/35">Links</p>
               <ul class="space-y-2 text-sm text-[#faf0e8]/55">
                 <li v-for="link in navLinks" :key="link.href"><a :href="link.href" class="hover:text-[#faf0e8] transition-colors">{{ link.label }}</a></li>
+                <li><a href="https://www.4seas.xyz" target="_blank" rel="noopener noreferrer" class="hover:text-[#faf0e8] transition-colors">4Seas</a></li>
               </ul>
             </div>
             <div>
