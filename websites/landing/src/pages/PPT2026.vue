@@ -29,14 +29,19 @@ import LogoZucity from '@/assets/partners/zucity.png'
 import LogoZucityJapan from '@/assets/partners/zucity-japan.png'
 import LogoZuitz from '@/assets/partners/zuitzerland.png'
 import LogoGCC from '@/assets/partners/gcc.png'
+import Logo4Seas from '@/assets/partners/4seas.png'
+import LogoPeer from '@/assets/partners/peer.png'
 import LogoSNZ from '@/assets/partners/snz.svg'
 import IconX from '@/assets/social/social-twitter.svg'
 import IconTelegram from '@/assets/social/social-telegram.svg'
+import IconLinkedIn from '@/assets/social/social-linkedin.svg'
 import ImgTeamZik from '@/assets/team-zik.png'
 import ImgTeamTakShire from '@/assets/team-tak-shire.png'
 import ImgTeamSherrie from '@/assets/team-sherrie.png'
 import ImgTeamEmily from '@/assets/team-emily.png'
 import ImgTeamTin from '@/assets/team-tin.png'
+import ImgTeamSeher from '@/assets/team-seher.png'
+import ImgTeamYara from '@/assets/team-yara.png'
 import ImgLookbackVitalik from '@/assets/lookback-2025/01-vitalik.jpg'
 import ImgLookbackVitalikCowork from '@/assets/lookback-2025/02-vitalik-cowork.jpg'
 import ImgLookbackCommunity from '@/assets/lookback-2025/03-community-session.jpg'
@@ -214,12 +219,17 @@ const whyItems = [
   },
 ]
 
-const partners = [
+const majorPartners = [
+  { name: '4Seas', logo: Logo4Seas, url: 'https://4seas.xyz' },
+  { name: 'Peer', logo: LogoPeer, url: 'https://peer.xyz' },
+  { name: 'GCC', logo: LogoGCC, url: 'https://gccofficial.org' },
+]
+
+const communityPartners = [
   { name: 'Zucity', logo: LogoZucity },
   { name: 'ECF Network', logo: LogoEcfNetwork },
-  { name: 'GCC', logo: LogoGCC },
   { name: 'Zuitzerland', logo: LogoZuitz },
-  { name: 'SNZ', logo: LogoSNZ },
+  { name: 'SNZ', logo: LogoSNZ, scale: 0.65 },
   { name: 'ZuCity Japan', logo: LogoZucityJapan },
   { name: 'ETH Hangzhou', logo: LogoHangzhou },
   { name: 'ETH PH', logo: LogoEthPH, scale: 0.8 },
@@ -239,6 +249,7 @@ const team = [
     img: ImgTeamSherrie,
     x: '',
     telegram: '',
+    linkedin: '',
   },
   {
     name: 'Zik',
@@ -246,6 +257,7 @@ const team = [
     img: ImgTeamZik,
     x: 'https://x.com/muziknozik',
     telegram: 'https://t.me/muziknozik',
+    linkedin: '',
   },
   {
     name: 'Tak Shire',
@@ -253,6 +265,7 @@ const team = [
     img: ImgTeamTakShire,
     x: 'https://x.com/tak_shire',
     telegram: 'https://t.me/takshire',
+    linkedin: '',
   },
   {
     name: 'Emily',
@@ -260,6 +273,7 @@ const team = [
     img: ImgTeamEmily,
     x: 'https://x.com/qijin_eth',
     telegram: 'https://t.me/qijinz',
+    linkedin: '',
   },
   {
     name: 'Tin',
@@ -267,8 +281,24 @@ const team = [
     img: ImgTeamTin,
     x: 'https://x.com/0xdankiii',
     telegram: 'https://t.me/SuperDanki',
+    linkedin: '',
   },
-  { name: 'Seher', role: '', img: '', x: '', telegram: '' },
+  {
+    name: 'Seher',
+    role: 'Marketing',
+    img: ImgTeamSeher,
+    x: '',
+    telegram: '',
+    linkedin: 'https://www.linkedin.com/in/seher-deng-b959a442a/',
+  },
+  {
+    name: 'Yara',
+    role: 'Content Marketing',
+    img: ImgTeamYara,
+    x: 'https://x.com/yyli70656569',
+    telegram: 'https://t.me/kimliunx',
+    linkedin: '',
+  },
 ]
 
 function onScroll() {
@@ -707,10 +737,32 @@ onUnmounted(() => {
       <div class="max-w-5xl mx-auto px-6">
         <div class="text-center mb-16">
           <p class="text-xs font-bold tracking-[0.22em] uppercase mb-3 gradient-text-cool inline-block">✦ Supported By</p>
-          <h2 class="font-display text-4xl md:text-5xl text-[#0d0918]">Ecosystem Partners</h2>
+          <h2 class="font-display text-4xl md:text-5xl text-[#0d0918]">Major Partners</h2>
         </div>
-        <div class="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-5 gap-3 mb-16">
-          <div v-for="p in partners" :key="p.name"
+        <div class="grid grid-cols-3 gap-4 mb-12">
+          <a v-for="p in majorPartners" :key="p.name"
+            :href="p.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="aspect-[4/3] rounded-2xl flex items-center justify-center cursor-pointer transition-all hover:scale-105 border p-5 partner-tile-major"
+            :title="p.name">
+            <img
+              v-if="p.logo"
+              :src="p.logo"
+              :alt="p.name"
+              class="w-full h-full object-contain"
+              :style="p.scale ? { transform: `scale(${p.scale})` } : undefined"
+            />
+          </a>
+        </div>
+
+        <!-- Community Partners -->
+        <div class="text-center mb-10 mt-16">
+          <p class="text-xs font-bold tracking-[0.22em] uppercase mb-3 gradient-text-cool inline-block">✦ Together With</p>
+          <h2 class="font-display text-3xl md:text-4xl text-[#0d0918]">Community Partners</h2>
+        </div>
+        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4 mb-16">
+          <div v-for="p in communityPartners" :key="p.name"
             class="aspect-square rounded-2xl flex items-center justify-center cursor-pointer transition-all hover:scale-105 border p-3 partner-tile"
             :title="p.name">
             <img
@@ -722,6 +774,7 @@ onUnmounted(() => {
             />
           </div>
         </div>
+
         <div class="text-center">
           <p class="text-sm mb-6 max-w-sm mx-auto leading-relaxed text-[#0d0918]/38">Want to support ETHChiangMai 2026? Reach out and become part of the ecosystem.</p>
           <div class="flex flex-wrap justify-center gap-4">
@@ -747,8 +800,8 @@ onUnmounted(() => {
           <p class="text-xs font-bold tracking-[0.22em] uppercase mb-3 gradient-text-cool inline-block">✦ The People</p>
           <h2 class="font-display text-4xl md:text-5xl text-[#0d0918]">Meet the Team</h2>
         </div>
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-5">
-          <div v-for="(person, i) in team" :key="i" class="person-card">
+        <div class="flex flex-wrap justify-center gap-5">
+          <div v-for="(person, i) in team" :key="i" class="person-card w-[calc(50%-10px)] sm:w-[calc(33.333%-14px)] md:w-[220px]">
             <div class="aspect-square relative" :class="!person.img || person.name === 'TBA' ? 'bg-[#0d0918]/5' : ''">
               <div v-if="!person.img || person.name === 'TBA'" class="w-full h-full flex items-center justify-center"><span class="text-4xl opacity-10">◇</span></div>
               <img v-else :src="person.img" :alt="person.name" class="w-full h-full object-cover" />
@@ -782,6 +835,19 @@ onUnmounted(() => {
                 </a>
                 <span v-else class="team-social team-social--muted" aria-hidden="true">
                   <img :src="IconTelegram" alt="" class="w-3.5 h-3.5" />
+                </span>
+                <a
+                  v-if="person.linkedin"
+                  :href="person.linkedin"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="team-social"
+                  :aria-label="`${person.name} on LinkedIn`"
+                >
+                  <img :src="IconLinkedIn" alt="" class="w-3.5 h-3.5" />
+                </a>
+                <span v-else class="team-social team-social--muted" aria-hidden="true">
+                  <img :src="IconLinkedIn" alt="" class="w-3.5 h-3.5" />
                 </span>
               </div>
             </div>
@@ -981,5 +1047,11 @@ onUnmounted(() => {
   background: rgba(255, 255, 255, 0.85);
   border-color: rgba(13, 9, 24, 0.08);
   backdrop-filter: blur(8px);
+}
+.partner-tile-major {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(13, 9, 24, 0.12);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 20px rgba(13, 9, 24, 0.06);
 }
 </style>
