@@ -219,13 +219,13 @@ const whyItems = [
   },
 ]
 
-const majorPartners = [
+const majorPartners: Array<{ name: string; logo: string; url: string; scale?: number }> = [
   { name: '4Seas', logo: Logo4Seas, url: 'https://4seas.xyz' },
   { name: 'Peer', logo: LogoPeer, url: 'https://peer.xyz' },
   { name: 'GCC', logo: LogoGCC, url: 'https://gccofficial.org' },
 ]
 
-const communityPartners = [
+const communityPartners: Array<{ name: string; logo: string; scale?: number }> = [
   { name: 'Zucity', logo: LogoZucity },
   { name: 'ECF Network', logo: LogoEcfNetwork },
   { name: 'Zuitzerland', logo: LogoZuitz },
