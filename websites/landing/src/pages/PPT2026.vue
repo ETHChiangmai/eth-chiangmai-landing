@@ -174,7 +174,7 @@ const timeline = [
   { period: 'Mid Nov · 2 Days', event: 'Nomad Market Ⅰ', detail: '4Seas Nimman', multiDay: true, dotColor: '#7632C8', gradient: 'linear-gradient(180deg,#7632C8,#C8366B)' },
   { period: 'Mid Dec · 2 Days', event: 'Nomad Market Ⅱ', detail: '4Seas Nimman', multiDay: true, dotColor: '#C8366B', gradient: 'linear-gradient(180deg,#C8366B,#7632C8)' },
   { period: 'Dec 26 – 28, 2026', event: 'Hackathon', detail: '$10,000+ prize pool', multiDay: true, dotColor: '#F0A030', gradient: 'linear-gradient(180deg,#F0A030,#C8366B)' },
-  { period: 'Jan 3, 2027', event: 'CROPS Summit', detail: 'Chiang Mai, Thailand', multiDay: false, dotColor: '#DCA524' },
+  { period: 'Dec 28, 2027', event: 'CROPS Summit', detail: 'Chiang Mai, Thailand', multiDay: false, dotColor: '#DCA524' },
 ]
 
 const speakers = [
