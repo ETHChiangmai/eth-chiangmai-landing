@@ -40,7 +40,6 @@ import ImgTeamTakShire from '@/assets/team-tak-shire.png'
 import ImgTeamSherrie from '@/assets/team-sherrie.png'
 import ImgTeamEmily from '@/assets/team-emily.png'
 import ImgTeamTin from '@/assets/team-tin.png'
-import ImgTeamSeher from '@/assets/team-seher.png'
 import ImgTeamYara from '@/assets/team-yara.png'
 import ImgLookbackVitalik from '@/assets/lookback-2025/01-vitalik.jpg'
 import ImgLookbackVitalikCowork from '@/assets/lookback-2025/02-vitalik-cowork.jpg'
@@ -286,18 +285,10 @@ const team = [
   {
     name: 'Seher',
     role: 'Marketing',
-    img: ImgTeamSeher,
+    img: ImgTeamYara,
     x: '',
     telegram: '',
     linkedin: 'https://www.linkedin.com/in/seher-deng-b959a442a/',
-  },
-  {
-    name: 'Yara',
-    role: 'Content Marketing',
-    img: ImgTeamYara,
-    x: 'https://x.com/yyli70656569',
-    telegram: 'https://t.me/kimliunx',
-    linkedin: '',
   },
 ]
 
@@ -800,8 +791,8 @@ onUnmounted(() => {
           <p class="text-xs font-bold tracking-[0.22em] uppercase mb-3 gradient-text-cool inline-block">✦ The People</p>
           <h2 class="font-display text-4xl md:text-5xl text-[#0d0918]">Meet the Team</h2>
         </div>
-        <div class="flex flex-wrap justify-center gap-5">
-          <div v-for="(person, i) in team" :key="i" class="person-card w-[calc(50%-10px)] sm:w-[calc(33.333%-14px)] md:w-[220px]">
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-5 max-w-3xl mx-auto">
+          <div v-for="(person, i) in team" :key="i" class="person-card">
             <div class="aspect-square relative" :class="!person.img || person.name === 'TBA' ? 'bg-[#0d0918]/5' : ''">
               <div v-if="!person.img || person.name === 'TBA'" class="w-full h-full flex items-center justify-center"><span class="text-4xl opacity-10">◇</span></div>
               <img v-else :src="person.img" :alt="person.name" class="w-full h-full object-cover" />
