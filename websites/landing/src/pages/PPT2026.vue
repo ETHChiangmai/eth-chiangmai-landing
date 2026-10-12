@@ -276,7 +276,7 @@ const team = [
   },
   {
     name: 'Tin',
-    role: 'Tech, Developer Relations, and Business Development, ETHPH Core and ETHChiangmai Cheerleader',
+    role: 'BD Lead and Website',
     img: ImgTeamTin,
     x: 'https://x.com/0xdankiii',
     telegram: 'https://t.me/SuperDanki',
