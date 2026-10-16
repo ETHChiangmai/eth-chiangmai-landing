@@ -19,10 +19,16 @@ import scott from '@/assets/speakers/speaker-scott.png'
 import victor from '@/assets/speakers/speaker-victor.png'
 import yis from '@/assets/speakers/speaker-yis.png'
 import yu from '@/assets/speakers/speaker-yu.png'
+import vitalik from '@/assets/speakers/speaker-vitalik.png'
 import zhou from '@/assets/speakers/speaker-zhou.png'
 
 export const usePeople = () => {
   const speakers = [
+    {
+      name: 'Vitalik Buterin',
+      photo: vitalik,
+      description: 'Ethereum Co-Founder',
+    },
     {
       name: 'Angela',
       photo: angela,

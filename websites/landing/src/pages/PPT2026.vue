@@ -177,7 +177,7 @@ const timeline = [
 ]
 
 const speakers = [
-  { name: 'TBA', role: 'Speaker', tag: 'Soon', img: '' },
+  { name: 'Vitalik Buterin', role: 'Ethereum Co-Founder', tag: '', img: new URL('@/assets/speakers/speaker-vitalik.png', import.meta.url).href },
   { name: 'TBA', role: 'Speaker', tag: 'Soon', img: '' },
   { name: 'TBA', role: 'Speaker', tag: 'Soon', img: '' },
   { name: 'TBA', role: 'Speaker', tag: 'Soon', img: '' },
