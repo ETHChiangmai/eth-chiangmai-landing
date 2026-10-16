@@ -1,10 +1,18 @@
 <script lang="ts" setup>
 /**
- * GOOGLE SHEETS SETUP — see ResidentForm.vue for full instructions.
- * Paste the same Apps Script into a separate Google Sheet (or different tab),
- * deploy it, and paste the URL below.
+ * Sponsor inquiry - submits directly to Google Form
+ * Form: https://docs.google.com/forms/d/e/1FAIpQLSfo_qI0glPrXLh5ka5x4dN7epNm33R8SG8sBPdBVM1Bs96lnw/viewform
  */
-const SHEET_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE'
+const GOOGLE_FORM_VIEW = 'https://docs.google.com/forms/d/e/1FAIpQLSfo_qI0glPrXLh5ka5x4dN7epNm33R8SG8sBPdBVM1Bs96lnw/viewform'
+
+// Google Form entry IDs
+const ENTRY_IDS = {
+  contact_name: 'entry.559352220',
+  organization: 'entry.151620712',
+  email: 'entry.1473529534',
+  website: 'entry.500163404',
+  message: 'entry.1909508672',
+}
 
 import { ref, onMounted, onUnmounted } from 'vue'
 import { RouterLink } from 'vue-router'
@@ -16,36 +24,26 @@ function onScroll() { navScrolled.value = window.scrollY > 30 }
 onMounted(() => window.addEventListener('scroll', onScroll, { passive: true }))
 onUnmounted(() => window.removeEventListener('scroll', onScroll))
 
-type Status = 'idle' | 'submitting' | 'success' | 'error'
-const status = ref<Status>('idle')
-
 const form = ref({
   contact_name: '',
   organization: '',
   email: '',
   website: '',
-  sponsorship_level: '',
   message: '',
 })
 
-async function submit() {
-  status.value = 'submitting'
-  try {
-    const params = new URLSearchParams({
-      ...form.value,
-      form_type: 'sponsor',
-      submitted_at: new Date().toISOString(),
-    })
-    await fetch(SHEET_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: params.toString(),
-    })
-    status.value = 'success'
-  } catch {
-    status.value = 'error'
-  }
+function submit() {
+  // Build pre-filled Google Form URL
+  const prefilledUrl = new URL(GOOGLE_FORM_VIEW)
+  prefilledUrl.searchParams.set('usp', 'pp_url')
+  prefilledUrl.searchParams.set(ENTRY_IDS.contact_name, form.value.contact_name)
+  prefilledUrl.searchParams.set(ENTRY_IDS.organization, form.value.organization)
+  prefilledUrl.searchParams.set(ENTRY_IDS.email, form.value.email)
+  prefilledUrl.searchParams.set(ENTRY_IDS.website, form.value.website)
+  prefilledUrl.searchParams.set(ENTRY_IDS.message, form.value.message)
+  
+  // Redirect to Google Form with pre-filled values
+  window.location.href = prefilledUrl.toString()
 }
 </script>
 
@@ -90,20 +88,8 @@ async function submit() {
     <section class="py-16 px-6">
       <div class="max-w-2xl mx-auto">
 
-        <!-- Success state -->
-        <div v-if="status === 'success'" class="rounded-2xl border border-[#dca524]/20 bg-white p-12 text-center shadow-sm">
-          <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6" style="background: rgba(220,165,36,0.1)">
-            <i class="fa-solid fa-circle-check text-3xl" style="color: #dca524"></i>
-          </div>
-          <h2 class="font-display text-3xl text-[#0d0918] mb-3">Inquiry Received!</h2>
-          <p class="text-[#0d0918]/55 text-sm leading-relaxed mb-8">Thanks for your interest in sponsoring ETHChiangmai 2026. Our team will reach out shortly to discuss the details.</p>
-          <RouterLink to="/participate" class="inline-flex items-center gap-2 rounded-full text-sm font-semibold px-6 py-3 text-white gradient-primary hover:opacity-90">
-            <i class="fa-solid fa-arrow-left text-xs"></i> Back to Participate
-          </RouterLink>
-        </div>
-
         <!-- Form -->
-        <form v-else @submit.prevent="submit" class="rounded-2xl bg-white border border-[#0d0918]/8 shadow-sm overflow-hidden">
+        <form @submit.prevent="submit" class="rounded-2xl bg-white border border-[#0d0918]/8 shadow-sm overflow-hidden">
           <div class="p-8 md:p-10 space-y-6">
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -133,20 +119,6 @@ async function submit() {
             </div>
 
             <div>
-              <label class="block text-xs font-bold tracking-widest uppercase text-[#0d0918]/45 mb-2">Sponsorship Interest <span class="text-[#dca524]">*</span></label>
-              <select v-model="form.sponsorship_level" required
-                class="w-full rounded-xl border border-[#0d0918]/12 bg-[#faf0e8]/50 px-4 py-3 text-sm text-[#0d0918] focus:outline-none focus:ring-2 focus:ring-[#dca524]/25 focus:border-[#dca524] transition appearance-none">
-                <option value="" disabled>Select a level</option>
-                <option>Title Sponsor</option>
-                <option>Gold</option>
-                <option>Silver</option>
-                <option>Bronze</option>
-                <option>Community Partner</option>
-                <option>Custom / Other</option>
-              </select>
-            </div>
-
-            <div>
               <label class="block text-xs font-bold tracking-widest uppercase text-[#0d0918]/45 mb-2">Message / Additional Notes</label>
               <textarea v-model="form.message" rows="4" placeholder="Tell us about your goals, what you're looking for, or any questions you have..."
                 class="w-full rounded-xl border border-[#0d0918]/12 bg-[#faf0e8]/50 px-4 py-3 text-sm text-[#0d0918] placeholder-[#0d0918]/30 focus:outline-none focus:ring-2 focus:ring-[#dca524]/25 focus:border-[#dca524] transition resize-none"></textarea>
@@ -159,19 +131,13 @@ async function submit() {
             <p class="text-xs text-[#0d0918]/35">Fields marked <span class="text-[#dca524]">*</span> are required.</p>
             <button
               type="submit"
-              :disabled="status === 'submitting'"
-              class="inline-flex items-center gap-2 rounded-full text-sm font-semibold px-7 py-3 text-white transition disabled:opacity-60 disabled:cursor-not-allowed hover:opacity-90 active:scale-95"
+              class="inline-flex items-center gap-2 rounded-full text-sm font-semibold px-7 py-3 text-white transition hover:opacity-90 active:scale-95"
               style="background: linear-gradient(135deg, #dca524 0%, #c8366b 100%); box-shadow: 0 4px 16px rgba(220,165,36,0.3)"
             >
-              <i v-if="status === 'submitting'" class="fa-solid fa-spinner fa-spin"></i>
-              <i v-else class="fa-solid fa-paper-plane"></i>
-              {{ status === 'submitting' ? 'Submitting…' : 'Send Inquiry' }}
+              <i class="fa-solid fa-arrow-right"></i>
+              Continue to Google Form
             </button>
           </div>
-
-          <p v-if="status === 'error'" class="text-center text-sm text-[#c8366b] py-4">
-            Something went wrong. Please try again or email us at <a href="mailto:info@ethchiangmai.com" class="underline">info@ethchiangmai.com</a>.
-          </p>
         </form>
       </div>
     </section>

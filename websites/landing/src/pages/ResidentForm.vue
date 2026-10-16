@@ -1,26 +1,20 @@
 <script lang="ts" setup>
 /**
- * GOOGLE SHEETS SETUP
- * 1. Create a new Google Sheet.
- * 2. Open Extensions → Apps Script and paste the script below.
- * 3. Deploy → New Deployment → Web App.
- *    - Execute as: Me
- *    - Who has access: Anyone
- * 4. Copy the deployment URL and paste it into SHEET_URL below.
- *
- * ─── Apps Script ────────────────────────────────────────────────────────────
- * function doPost(e) {
- *   const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
- *   const data  = e.parameter;
- *   if (sheet.getLastRow() === 0) sheet.appendRow(Object.keys(data));
- *   sheet.appendRow(Object.values(data));
- *   return ContentService
- *     .createTextOutput(JSON.stringify({ result: 'success' }))
- *     .setMimeType(ContentService.MimeType.JSON);
- * }
- * ────────────────────────────────────────────────────────────────────────────
+ * Resident application - submits directly to Google Form
+ * Form: https://docs.google.com/forms/d/e/1FAIpQLSdQN3QtpWkicP7CY1uOsn5-fFbHh0lStv78DhoIZvjHoh-MZw/viewform
  */
-const SHEET_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE'
+const GOOGLE_FORM_VIEW = 'https://docs.google.com/forms/d/e/1FAIpQLSdQN3QtpWkicP7CY1uOsn5-fFbHh0lStv78DhoIZvjHoh-MZw/viewform'
+
+// Google Form entry IDs
+const ENTRY_IDS = {
+  full_name: 'entry.559352220',
+  email: 'entry.1473529534',
+  telegram: 'entry.500163404',
+  duration: 'entry.1815158470',
+  working_on: 'entry.1909508672',
+  why_resident: 'entry.1630083535',
+  how_heard: 'entry.924523986',
+}
 
 import { ref, onMounted, onUnmounted } from 'vue'
 import { RouterLink } from 'vue-router'
@@ -32,9 +26,6 @@ function onScroll() { navScrolled.value = window.scrollY > 30 }
 onMounted(() => window.addEventListener('scroll', onScroll, { passive: true }))
 onUnmounted(() => window.removeEventListener('scroll', onScroll))
 
-type Status = 'idle' | 'submitting' | 'success' | 'error'
-const status = ref<Status>('idle')
-
 const form = ref({
   full_name: '',
   email: '',
@@ -45,24 +36,20 @@ const form = ref({
   how_heard: '',
 })
 
-async function submit() {
-  status.value = 'submitting'
-  try {
-    const params = new URLSearchParams({
-      ...form.value,
-      form_type: 'resident',
-      submitted_at: new Date().toISOString(),
-    })
-    await fetch(SHEET_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: params.toString(),
-    })
-    status.value = 'success'
-  } catch {
-    status.value = 'error'
-  }
+function submit() {
+  // Build pre-filled Google Form URL
+  const prefilledUrl = new URL(GOOGLE_FORM_VIEW)
+  prefilledUrl.searchParams.set('usp', 'pp_url')
+  prefilledUrl.searchParams.set(ENTRY_IDS.full_name, form.value.full_name)
+  prefilledUrl.searchParams.set(ENTRY_IDS.email, form.value.email)
+  prefilledUrl.searchParams.set(ENTRY_IDS.telegram, form.value.telegram)
+  prefilledUrl.searchParams.set(ENTRY_IDS.duration, form.value.duration)
+  prefilledUrl.searchParams.set(ENTRY_IDS.working_on, form.value.working_on)
+  prefilledUrl.searchParams.set(ENTRY_IDS.why_resident, form.value.why_resident)
+  prefilledUrl.searchParams.set(ENTRY_IDS.how_heard, form.value.how_heard)
+  
+  // Redirect to Google Form with pre-filled values
+  window.location.href = prefilledUrl.toString()
 }
 </script>
 
@@ -107,20 +94,8 @@ async function submit() {
     <section class="py-16 px-6">
       <div class="max-w-2xl mx-auto">
 
-        <!-- Success state -->
-        <div v-if="status === 'success'" class="rounded-2xl border border-[#c8366b]/20 bg-white p-12 text-center shadow-sm">
-          <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6" style="background: rgba(200,54,107,0.1)">
-            <i class="fa-solid fa-circle-check text-3xl" style="color: #c8366b"></i>
-          </div>
-          <h2 class="font-display text-3xl text-[#0d0918] mb-3">Application Received!</h2>
-          <p class="text-[#0d0918]/55 text-sm leading-relaxed mb-8">Thanks for applying to be a resident at ETHChiangmai 2026. We'll be in touch via email or Telegram soon.</p>
-          <RouterLink to="/participate" class="inline-flex items-center gap-2 rounded-full text-sm font-semibold px-6 py-3 text-white gradient-primary hover:opacity-90">
-            <i class="fa-solid fa-arrow-left text-xs"></i> Back to Participate
-          </RouterLink>
-        </div>
-
         <!-- Form -->
-        <form v-else @submit.prevent="submit" class="rounded-2xl bg-white border border-[#0d0918]/8 shadow-sm overflow-hidden">
+        <form @submit.prevent="submit" class="rounded-2xl bg-white border border-[#0d0918]/8 shadow-sm overflow-hidden">
           <div class="p-8 md:p-10 space-y-6">
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -172,7 +147,7 @@ async function submit() {
 
             <div>
               <label class="block text-xs font-bold tracking-widest uppercase text-[#0d0918]/45 mb-2">How did you hear about ETHChiangmai?</label>
-              <input v-model="form.how_heard" type="text" placeholder="Twitter, a friend, ETHGlobal, ..."
+              <input v-model="form.how_heard" type="text" placeholder="Twitter, a friend, Telegram, website..."
                 class="w-full rounded-xl border border-[#0d0918]/12 bg-[#faf0e8]/50 px-4 py-3 text-sm text-[#0d0918] placeholder-[#0d0918]/30 focus:outline-none focus:ring-2 focus:ring-[#c8366b]/25 focus:border-[#c8366b] transition" />
             </div>
 
@@ -183,19 +158,14 @@ async function submit() {
             <p class="text-xs text-[#0d0918]/35">Fields marked <span class="text-[#c8366b]">*</span> are required.</p>
             <button
               type="submit"
-              :disabled="status === 'submitting'"
-              class="inline-flex items-center gap-2 rounded-full text-sm font-semibold px-7 py-3 text-white gradient-primary hover:opacity-90 active:scale-95 transition disabled:opacity-60 disabled:cursor-not-allowed"
+              class="inline-flex items-center gap-2 rounded-full text-sm font-semibold px-7 py-3 text-white gradient-primary hover:opacity-90 active:scale-95 transition"
               style="box-shadow: 0 4px 16px rgba(200,54,107,0.3)"
             >
-              <i v-if="status === 'submitting'" class="fa-solid fa-spinner fa-spin"></i>
-              <i v-else class="fa-solid fa-paper-plane"></i>
-              {{ status === 'submitting' ? 'Submitting…' : 'Submit Application' }}
+              <i class="fa-solid fa-arrow-right"></i>
+              Continue to Google Form
             </button>
           </div>
 
-          <p v-if="status === 'error'" class="text-center text-sm text-[#c8366b] py-4">
-            Something went wrong. Please try again or email us at <a href="mailto:info@ethchiangmai.com" class="underline">info@ethchiangmai.com</a>.
-          </p>
         </form>
       </div>
     </section>

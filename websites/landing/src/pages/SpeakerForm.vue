@@ -1,10 +1,18 @@
 <script lang="ts" setup>
 /**
- * GOOGLE SHEETS SETUP — see ResidentForm.vue for full instructions.
- * Paste the same Apps Script into a separate Google Sheet (or different tab),
- * deploy it, and paste the URL below.
+ * Speaker application - submits directly to Google Form
+ * Form: https://docs.google.com/forms/d/e/1FAIpQLSd-eynwCAv9ROU9DNbUQEGULQX2jIB2Bg-Cdzjynn7OY9nixA/viewform
  */
-const SHEET_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE'
+const GOOGLE_FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLSd-eynwCAv9ROU9DNbUQEGULQX2jIB2Bg-Cdzjynn7OY9nixA/formResponse'
+const GOOGLE_FORM_VIEW = 'https://docs.google.com/forms/d/e/1FAIpQLSd-eynwCAv9ROU9DNbUQEGULQX2jIB2Bg-Cdzjynn7OY9nixA/viewform'
+
+// Google Form entry IDs
+const ENTRY_IDS = {
+  name: 'entry.1164750498',
+  title: 'entry.43852427',
+  organization: 'entry.919260096',
+  social: 'entry.2130319075',
+}
 
 import { ref, onMounted, onUnmounted } from 'vue'
 import { RouterLink } from 'vue-router'
@@ -16,38 +24,24 @@ function onScroll() { navScrolled.value = window.scrollY > 30 }
 onMounted(() => window.addEventListener('scroll', onScroll, { passive: true }))
 onUnmounted(() => window.removeEventListener('scroll', onScroll))
 
-type Status = 'idle' | 'submitting' | 'success' | 'error'
-const status = ref<Status>('idle')
-
 const form = ref({
-  full_name: '',
-  email: '',
-  telegram: '',
-  talk_title: '',
-  talk_description: '',
-  format: '',
-  duration: '',
-  experience: '',
+  name: '',
+  title: '',
+  organization: '',
+  social: '',
 })
 
-async function submit() {
-  status.value = 'submitting'
-  try {
-    const params = new URLSearchParams({
-      ...form.value,
-      form_type: 'speaker',
-      submitted_at: new Date().toISOString(),
-    })
-    await fetch(SHEET_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: params.toString(),
-    })
-    status.value = 'success'
-  } catch {
-    status.value = 'error'
-  }
+function submit() {
+  // Build pre-filled Google Form URL
+  const prefilledUrl = new URL(GOOGLE_FORM_VIEW)
+  prefilledUrl.searchParams.set('usp', 'pp_url')
+  prefilledUrl.searchParams.set(ENTRY_IDS.name, form.value.name)
+  prefilledUrl.searchParams.set(ENTRY_IDS.title, form.value.title)
+  prefilledUrl.searchParams.set(ENTRY_IDS.organization, form.value.organization)
+  prefilledUrl.searchParams.set(ENTRY_IDS.social, form.value.social)
+  
+  // Redirect to Google Form with pre-filled values
+  window.location.href = prefilledUrl.toString()
 }
 </script>
 
@@ -92,85 +86,44 @@ async function submit() {
     <section class="py-16 px-6">
       <div class="max-w-2xl mx-auto">
 
-        <!-- Success state -->
-        <div v-if="status === 'success'" class="rounded-2xl border border-[#7632c8]/20 bg-white p-12 text-center shadow-sm">
-          <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6" style="background: rgba(118,50,200,0.1)">
-            <i class="fa-solid fa-circle-check text-3xl" style="color: #7632c8"></i>
-          </div>
-          <h2 class="font-display text-3xl text-[#0d0918] mb-3">Talk Submitted!</h2>
-          <p class="text-[#0d0918]/55 text-sm leading-relaxed mb-8">Thanks for your proposal. We'll review your submission and get back to you via email or Telegram.</p>
-          <RouterLink to="/participate" class="inline-flex items-center gap-2 rounded-full text-sm font-semibold px-6 py-3 text-white gradient-primary hover:opacity-90">
-            <i class="fa-solid fa-arrow-left text-xs"></i> Back to Participate
-          </RouterLink>
-        </div>
-
         <!-- Form -->
-        <form v-else @submit.prevent="submit" class="rounded-2xl bg-white border border-[#0d0918]/8 shadow-sm overflow-hidden">
+        <form @submit.prevent="submit" class="rounded-2xl bg-white border border-[#0d0918]/8 shadow-sm overflow-hidden">
           <div class="p-8 md:p-10 space-y-6">
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <label class="block text-xs font-bold tracking-widest uppercase text-[#0d0918]/45 mb-2">Full Name <span class="text-[#7632c8]">*</span></label>
-                <input v-model="form.full_name" type="text" required placeholder="Your name"
+                <input v-model="form.name" type="text" required placeholder="Vitalik Buterin"
                   class="w-full rounded-xl border border-[#0d0918]/12 bg-[#faf0e8]/50 px-4 py-3 text-sm text-[#0d0918] placeholder-[#0d0918]/30 focus:outline-none focus:ring-2 focus:ring-[#7632c8]/25 focus:border-[#7632c8] transition" />
               </div>
               <div>
-                <label class="block text-xs font-bold tracking-widest uppercase text-[#0d0918]/45 mb-2">Email <span class="text-[#7632c8]">*</span></label>
-                <input v-model="form.email" type="email" required placeholder="you@example.com"
+                <label class="block text-xs font-bold tracking-widest uppercase text-[#0d0918]/45 mb-2">Title / Role <span class="text-[#7632c8]">*</span></label>
+                <input v-model="form.title" type="text" required placeholder="Co-Founder"
                   class="w-full rounded-xl border border-[#0d0918]/12 bg-[#faf0e8]/50 px-4 py-3 text-sm text-[#0d0918] placeholder-[#0d0918]/30 focus:outline-none focus:ring-2 focus:ring-[#7632c8]/25 focus:border-[#7632c8] transition" />
               </div>
             </div>
 
             <div>
-              <label class="block text-xs font-bold tracking-widest uppercase text-[#0d0918]/45 mb-2">Telegram Username</label>
-              <div class="relative">
-                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-sm text-[#0d0918]/30">@</span>
-                <input v-model="form.telegram" type="text" placeholder="username"
-                  class="w-full rounded-xl border border-[#0d0918]/12 bg-[#faf0e8]/50 pl-8 pr-4 py-3 text-sm text-[#0d0918] placeholder-[#0d0918]/30 focus:outline-none focus:ring-2 focus:ring-[#7632c8]/25 focus:border-[#7632c8] transition" />
-              </div>
-            </div>
-
-            <div>
-              <label class="block text-xs font-bold tracking-widest uppercase text-[#0d0918]/45 mb-2">Talk / Session Title <span class="text-[#7632c8]">*</span></label>
-              <input v-model="form.talk_title" type="text" required placeholder="e.g. ZK Proofs for the rest of us"
+              <label class="block text-xs font-bold tracking-widest uppercase text-[#0d0918]/45 mb-2">Organization / Project <span class="text-[#7632c8]">*</span></label>
+              <input v-model="form.organization" type="text" required placeholder="Ethereum Foundation"
                 class="w-full rounded-xl border border-[#0d0918]/12 bg-[#faf0e8]/50 px-4 py-3 text-sm text-[#0d0918] placeholder-[#0d0918]/30 focus:outline-none focus:ring-2 focus:ring-[#7632c8]/25 focus:border-[#7632c8] transition" />
             </div>
 
             <div>
-              <label class="block text-xs font-bold tracking-widest uppercase text-[#0d0918]/45 mb-2">Session Description <span class="text-[#7632c8]">*</span></label>
-              <textarea v-model="form.talk_description" required rows="4" placeholder="What will you cover? What should attendees expect to learn or discuss?"
-                class="w-full rounded-xl border border-[#0d0918]/12 bg-[#faf0e8]/50 px-4 py-3 text-sm text-[#0d0918] placeholder-[#0d0918]/30 focus:outline-none focus:ring-2 focus:ring-[#7632c8]/25 focus:border-[#7632c8] transition resize-none"></textarea>
+              <label class="block text-xs font-bold tracking-widest uppercase text-[#0d0918]/45 mb-2">Social Link (X/Twitter, LinkedIn, etc.)</label>
+              <input v-model="form.social" type="url" placeholder="https://x.com/yourhandle"
+                class="w-full rounded-xl border border-[#0d0918]/12 bg-[#faf0e8]/50 px-4 py-3 text-sm text-[#0d0918] placeholder-[#0d0918]/30 focus:outline-none focus:ring-2 focus:ring-[#7632c8]/25 focus:border-[#7632c8] transition" />
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div>
-                <label class="block text-xs font-bold tracking-widest uppercase text-[#0d0918]/45 mb-2">Format <span class="text-[#7632c8]">*</span></label>
-                <select v-model="form.format" required
-                  class="w-full rounded-xl border border-[#0d0918]/12 bg-[#faf0e8]/50 px-4 py-3 text-sm text-[#0d0918] focus:outline-none focus:ring-2 focus:ring-[#7632c8]/25 focus:border-[#7632c8] transition appearance-none">
-                  <option value="" disabled>Select format</option>
-                  <option>Talk / Presentation</option>
-                  <option>Workshop</option>
-                  <option>Panel Discussion</option>
-                  <option>Open Discussion</option>
-                </select>
+            <!-- Photo Upload Note -->
+            <div class="rounded-xl border border-[#7632c8]/20 bg-[#7632c8]/5 p-4">
+              <div class="flex items-start gap-3">
+                <i class="fa-solid fa-image text-[#7632c8] mt-0.5"></i>
+                <div>
+                  <p class="text-sm font-medium text-[#0d0918] mb-1">Profile Photo Required</p>
+                  <p class="text-xs text-[#0d0918]/60">After submitting this form, you'll be redirected to Google Forms to upload your profile photo. Square images work best.</p>
+                </div>
               </div>
-              <div>
-                <label class="block text-xs font-bold tracking-widest uppercase text-[#0d0918]/45 mb-2">Preferred Duration <span class="text-[#7632c8]">*</span></label>
-                <select v-model="form.duration" required
-                  class="w-full rounded-xl border border-[#0d0918]/12 bg-[#faf0e8]/50 px-4 py-3 text-sm text-[#0d0918] focus:outline-none focus:ring-2 focus:ring-[#7632c8]/25 focus:border-[#7632c8] transition appearance-none">
-                  <option value="" disabled>Select duration</option>
-                  <option>20 minutes</option>
-                  <option>45 minutes</option>
-                  <option>60 minutes</option>
-                  <option>90 minutes</option>
-                </select>
-              </div>
-            </div>
-
-            <div>
-              <label class="block text-xs font-bold tracking-widest uppercase text-[#0d0918]/45 mb-2">Previous Experience / Profile Link</label>
-              <textarea v-model="form.experience" rows="2" placeholder="Any relevant speaking experience, GitHub, Twitter, personal site, etc."
-                class="w-full rounded-xl border border-[#0d0918]/12 bg-[#faf0e8]/50 px-4 py-3 text-sm text-[#0d0918] placeholder-[#0d0918]/30 focus:outline-none focus:ring-2 focus:ring-[#7632c8]/25 focus:border-[#7632c8] transition resize-none"></textarea>
             </div>
 
           </div>
@@ -180,19 +133,13 @@ async function submit() {
             <p class="text-xs text-[#0d0918]/35">Fields marked <span class="text-[#7632c8]">*</span> are required.</p>
             <button
               type="submit"
-              :disabled="status === 'submitting'"
-              class="inline-flex items-center gap-2 rounded-full text-sm font-semibold px-7 py-3 text-white transition disabled:opacity-60 disabled:cursor-not-allowed hover:opacity-90 active:scale-95"
+              class="inline-flex items-center gap-2 rounded-full text-sm font-semibold px-7 py-3 text-white transition hover:opacity-90 active:scale-95"
               style="background: linear-gradient(135deg, #7632c8 0%, #c8366b 100%); box-shadow: 0 4px 16px rgba(118,50,200,0.3)"
             >
-              <i v-if="status === 'submitting'" class="fa-solid fa-spinner fa-spin"></i>
-              <i v-else class="fa-solid fa-paper-plane"></i>
-              {{ status === 'submitting' ? 'Submitting…' : 'Submit Talk' }}
+              <i class="fa-solid fa-arrow-right"></i>
+              Continue to Upload Photo
             </button>
           </div>
-
-          <p v-if="status === 'error'" class="text-center text-sm text-[#c8366b] py-4">
-            Something went wrong. Please try again or email us at <a href="mailto:info@ethchiangmai.com" class="underline">info@ethchiangmai.com</a>.
-          </p>
         </form>
       </div>
     </section>
