@@ -42,7 +42,9 @@ import ImgTeamTakShire from '@/assets/team-tak-shire.png'
 import ImgTeamSherrie from '@/assets/team-sherrie.png'
 import ImgTeamEmily from '@/assets/team-emily.png'
 import ImgTeamTin from '@/assets/team-tin.png'
+import ImgTeamSeher from '@/assets/team-yara.png'
 import ImgTeamKhachirawut from '@/assets/team-khachirawut.png'
+import ImgTeamGigi from '@/assets/team-gigi.png'
 import ImgSpeakerAndrej from '@/assets/speakers/speaker-andrej-sanctuary.png'
 import ImgSpeakerSachin from '@/assets/speakers/speaker-sachin.png'
 import ImgLookbackVitalik from '@/assets/lookback-2025/01-vitalik.jpg'
@@ -247,7 +249,15 @@ const communityPartners: Array<{ name: string; logo: string; scale?: number }> =
   { name: 'ETH Shenzhen', logo: LogoEthShenzhen },
 ]
 
-const team = [
+const team: Array<{
+  name: string
+  role: string
+  img: string
+  imgPosition?: string
+  x: string
+  telegram: string
+  linkedin: string
+}> = [
   {
     name: 'Sherrie',
     role: 'Core Contributor of ETHChiangmai, Business Development and Operations Lead',
@@ -289,9 +299,26 @@ const team = [
     linkedin: '',
   },
   {
+    name: 'Seher',
+    role: 'Marketing',
+    img: ImgTeamSeher,
+    x: '',
+    telegram: '',
+    linkedin: 'https://www.linkedin.com/in/seher-deng-b959a442a/',
+  },
+  {
     name: 'Khachirawut Pinlert',
     role: 'Contributor of ETHChiangmai',
     img: ImgTeamKhachirawut,
+    x: '',
+    telegram: '',
+    linkedin: '',
+  },
+  {
+    name: 'Gigi',
+    role: 'Contributor of ETHChiangmai',
+    img: ImgTeamGigi,
+    imgPosition: 'center 18%',
     x: '',
     telegram: '',
     linkedin: '',
@@ -797,11 +824,11 @@ onUnmounted(() => {
           <p class="text-xs font-bold tracking-[0.22em] uppercase mb-3 gradient-text-cool inline-block">✦ The People</p>
           <h2 class="font-display text-4xl md:text-5xl text-[#0d0918]">Meet the Team</h2>
         </div>
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-5 max-w-3xl mx-auto">
-          <div v-for="(person, i) in team" :key="i" class="person-card">
+        <div class="flex flex-wrap justify-center gap-5 max-w-4xl mx-auto">
+          <div v-for="(person, i) in team" :key="i" class="person-card w-[calc(50%-0.625rem)] md:w-[calc(25%-0.9375rem)]">
             <div class="aspect-square relative" :class="!person.img || person.name === 'TBA' ? 'bg-[#0d0918]/5' : ''">
               <div v-if="!person.img || person.name === 'TBA'" class="w-full h-full flex items-center justify-center"><span class="text-4xl opacity-10">◇</span></div>
-              <img v-else :src="person.img" :alt="person.name" class="w-full h-full object-cover" />
+              <img v-else :src="person.img" :alt="person.name" class="w-full h-full object-cover" :style="person.imgPosition ? { objectPosition: person.imgPosition } : undefined" />
             </div>
             <div class="p-4">
               <p class="font-semibold text-sm text-[#0d0918] font-display">{{ person.name }}</p>
