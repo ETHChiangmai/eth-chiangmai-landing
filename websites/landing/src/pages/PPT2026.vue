@@ -234,7 +234,7 @@ const communityPartners: Array<{ name: string; logo: string; scale?: number }> =
   { name: 'Logos', logo: LogoLogos },
   { name: 'Zuitzerland', logo: LogoZuitz },
   { name: 'SNZ', logo: LogoSNZ, scale: 0.65 },
-  { name: 'Tangem', logo: LogoTangem },
+  { name: 'Tangem', logo: LogoTangem, scale: 0.6 },
   { name: 'ZuCity Japan', logo: LogoZucityJapan },
   { name: 'ETH Hangzhou', logo: LogoHangzhou },
   { name: 'ETH PH', logo: LogoEthPH, scale: 0.8 },
