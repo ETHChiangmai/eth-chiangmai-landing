@@ -32,6 +32,8 @@ import LogoGCC from '@/assets/partners/gcc.png'
 import Logo4Seas from '@/assets/partners/4seas.png'
 import LogoPeer from '@/assets/partners/peer.png'
 import LogoSNZ from '@/assets/partners/snz.svg'
+import LogoLogos from '@/assets/partners/logos.png'
+import LogoTangem from '@/assets/partners/tangem.png'
 import IconX from '@/assets/social/social-twitter.svg'
 import IconTelegram from '@/assets/social/social-telegram.svg'
 import IconLinkedIn from '@/assets/social/social-linkedin.svg'
@@ -40,7 +42,9 @@ import ImgTeamTakShire from '@/assets/team-tak-shire.png'
 import ImgTeamSherrie from '@/assets/team-sherrie.png'
 import ImgTeamEmily from '@/assets/team-emily.png'
 import ImgTeamTin from '@/assets/team-tin.png'
-import ImgTeamYara from '@/assets/team-yara.png'
+import ImgTeamKhachirawut from '@/assets/team-khachirawut.png'
+import ImgSpeakerAndrej from '@/assets/speakers/speaker-andrej-sanctuary.png'
+import ImgSpeakerSachin from '@/assets/speakers/speaker-sachin.png'
 import ImgLookbackVitalik from '@/assets/lookback-2025/01-vitalik.jpg'
 import ImgLookbackVitalikCowork from '@/assets/lookback-2025/02-vitalik-cowork.jpg'
 import ImgLookbackCommunity from '@/assets/lookback-2025/03-community-session.jpg'
@@ -178,8 +182,8 @@ const timeline = [
 
 const speakers = [
   { name: 'Vitalik Buterin', role: 'Ethereum Co-Founder', tag: '', img: new URL('@/assets/speakers/speaker-vitalik.png', import.meta.url).href },
-  { name: 'TBA', role: 'Speaker', tag: 'Soon', img: '' },
-  { name: 'TBA', role: 'Speaker', tag: 'Soon', img: '' },
+  { name: '0xSachin', role: 'Co-founder of Peer', tag: '', img: ImgSpeakerSachin },
+  { name: 'Andrej', role: 'Organizational Designer at Sanctuary', tag: '', img: ImgSpeakerAndrej },
   { name: 'TBA', role: 'Speaker', tag: 'Soon', img: '' },
 ]
 
@@ -227,8 +231,10 @@ const majorPartners: Array<{ name: string; logo: string; url: string; scale?: nu
 const communityPartners: Array<{ name: string; logo: string; scale?: number }> = [
   { name: 'Zucity', logo: LogoZucity },
   { name: 'ECF Network', logo: LogoEcfNetwork },
+  { name: 'Logos', logo: LogoLogos },
   { name: 'Zuitzerland', logo: LogoZuitz },
   { name: 'SNZ', logo: LogoSNZ, scale: 0.65 },
+  { name: 'Tangem', logo: LogoTangem },
   { name: 'ZuCity Japan', logo: LogoZucityJapan },
   { name: 'ETH Hangzhou', logo: LogoHangzhou },
   { name: 'ETH PH', logo: LogoEthPH, scale: 0.8 },
@@ -283,12 +289,12 @@ const team = [
     linkedin: '',
   },
   {
-    name: 'Seher',
-    role: 'Marketing',
-    img: ImgTeamYara,
+    name: 'Khachirawut Pinlert',
+    role: 'Contributor of ETHChiangmai',
+    img: ImgTeamKhachirawut,
     x: '',
     telegram: '',
-    linkedin: 'https://www.linkedin.com/in/seher-deng-b959a442a/',
+    linkedin: '',
   },
 ]
 
