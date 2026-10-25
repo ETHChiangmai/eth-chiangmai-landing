@@ -33,6 +33,7 @@ import Logo4Seas from '@/assets/partners/4seas.png'
 import LogoPeer from '@/assets/partners/peer.png'
 import LogoSNZ from '@/assets/partners/snz.svg'
 import LogoLogos from '@/assets/partners/logos.png'
+import LogoDevfolio from '@/assets/partners/devfolio.png'
 import LogoTangem from '@/assets/partners/tangem.png'
 import IconX from '@/assets/social/social-twitter.svg'
 import IconTelegram from '@/assets/social/social-telegram.svg'
@@ -238,6 +239,7 @@ const communityPartners: Array<{ name: string; logo: string; scale?: number }> =
   { name: 'Zucity', logo: LogoZucity },
   { name: 'ECF Network', logo: LogoEcfNetwork },
   { name: 'Logos', logo: LogoLogos },
+  { name: 'Devfolio', logo: LogoDevfolio },
   { name: 'Zuitzerland', logo: LogoZuitz },
   { name: 'SNZ', logo: LogoSNZ, scale: 0.65 },
   { name: 'Tangem', logo: LogoTangem, scale: 0.6 },
