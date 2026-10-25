@@ -106,9 +106,10 @@ function subscriberBindings(config: PagesConfig | undefined, kvId: string | null
     CF_ACCOUNT_ID: { type: 'plain_text', value: accountId },
     CF_API_TOKEN: { type: 'secret_text', value: token },
   }
-  if (!config?.env_vars?.SUBSCRIBERS_DATA?.value) {
-    envVars.SUBSCRIBERS_DATA = { type: 'plain_text', value: '[]' }
-  }
+  const existing = config?.env_vars?.SUBSCRIBERS_DATA
+  envVars.SUBSCRIBERS_DATA = existing?.value
+    ? existing
+    : { type: 'plain_text', value: '[]' }
 
   const next: PagesConfig = { env_vars: envVars }
   if (kvId) {
