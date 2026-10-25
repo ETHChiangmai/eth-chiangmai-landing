@@ -8,18 +8,6 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const WRANGLER_TOML = resolve(ROOT, 'wrangler.toml')
 
 type Namespace = { id: string; title: string }
-type PagesEnvVar = { type?: string; value?: string }
-type PagesConfig = {
-  env_vars?: Record<string, PagesEnvVar>
-  kv_namespaces?: Record<string, { namespace_id: string }>
-  [key: string]: unknown
-}
-type PagesProject = {
-  deployment_configs?: {
-    production?: PagesConfig
-    preview?: PagesConfig
-  }
-}
 
 function credentials() {
   const accountId = process.env.CLOUDFLARE_ACCOUNT_ID?.trim()
@@ -100,37 +88,18 @@ function upsertTomlVar(key: string, value: string) {
   writeFileSync(WRANGLER_TOML, current.replace('[vars]', `[vars]\n${line}`))
 }
 
-function subscriberBindings(config: PagesConfig | undefined, kvId: string | null): PagesConfig {
-  const { accountId, token } = credentials()
-  const envVars: Record<string, PagesEnvVar> = {}
-  for (const [key, value] of Object.entries(config?.env_vars ?? {})) {
-    if (value?.value) envVars[key] = value
-  }
-  envVars.CF_ACCOUNT_ID = { type: 'plain_text', value: accountId }
-  envVars.CF_API_TOKEN = { type: 'secret_text', value: token }
-
-  const store = config?.env_vars?.SUBSCRIBERS_DATA
-  if (store && !store.value) {
-    const next: PagesConfig = {}
-    if (kvId) next.kv_namespaces = { SUBSCRIBERS: { namespace_id: kvId } }
-    return next
-  }
-
-  const next: PagesConfig = { env_vars: envVars }
-  if (kvId) {
-    next.kv_namespaces = { SUBSCRIBERS: { namespace_id: kvId } }
-  }
-  return next
-}
-
 async function bindPagesProject(kvId: string | null) {
-  const project = await cf<PagesProject>(`/pages/projects/${PAGES_PROJECT}`)
+  if (!kvId) {
+    console.log('Leaving existing Pages subscriber storage untouched.')
+    return
+  }
+
   await cf(`/pages/projects/${PAGES_PROJECT}`, {
     method: 'PATCH',
     body: JSON.stringify({
       deployment_configs: {
-        production: subscriberBindings(project.deployment_configs?.production, kvId),
-        preview: subscriberBindings(project.deployment_configs?.preview, kvId),
+        production: { kv_namespaces: { SUBSCRIBERS: { namespace_id: kvId } } },
+        preview: { kv_namespaces: { SUBSCRIBERS: { namespace_id: kvId } } },
       },
     }),
   })
@@ -152,8 +121,8 @@ try {
   await bindPagesProject(kvId)
   console.log(
     kvId
-      ? 'Bound SUBSCRIBERS KV and subscribe credentials on the Pages project.'
-      : 'Configured Pages project storage for the subscriber CSV.',
+      ? 'Bound SUBSCRIBERS KV on the Pages project.'
+      : 'Left existing subscriber storage untouched.',
   )
 } catch (error) {
   const message = error instanceof Error ? error.message : String(error)
