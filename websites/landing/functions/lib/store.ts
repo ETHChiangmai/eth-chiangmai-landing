@@ -51,6 +51,8 @@ type SaveResult = {
 
 export type SubscriberEnv = {
   SUBSCRIBERS?: KvBinding
+  SUBSCRIBE_CF_TOKEN?: string
+  SUBSCRIBE_CF_ACCOUNT?: string
   CF_API_TOKEN?: string
   CF_ACCOUNT_ID?: string
   CLOUDFLARE_API_TOKEN?: string
@@ -85,11 +87,11 @@ function notFound() {
 }
 
 function accountId(env: SubscriberEnv) {
-  return env.CF_ACCOUNT_ID || env.CLOUDFLARE_ACCOUNT_ID || ''
+  return env.SUBSCRIBE_CF_ACCOUNT || env.CF_ACCOUNT_ID || env.CLOUDFLARE_ACCOUNT_ID || ''
 }
 
 function apiToken(env: SubscriberEnv) {
-  return env.CF_API_TOKEN || env.CLOUDFLARE_API_TOKEN || ''
+  return env.SUBSCRIBE_CF_TOKEN || env.CF_API_TOKEN || env.CLOUDFLARE_API_TOKEN || ''
 }
 
 function canUsePagesStore(env: SubscriberEnv) {

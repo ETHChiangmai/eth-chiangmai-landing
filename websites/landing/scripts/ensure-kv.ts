@@ -82,8 +82,8 @@ function injectWranglerVars(subscriberJson?: string) {
     current,
     '',
     '[vars]',
-    `CF_ACCOUNT_ID = ${tomlString(accountId)}`,
-    `CF_API_TOKEN = ${tomlString(token)}`,
+    `SUBSCRIBE_CF_ACCOUNT = ${tomlString(accountId)}`,
+    `SUBSCRIBE_CF_TOKEN = ${tomlString(token)}`,
   ]
   if (subscriberJson) {
     lines.push(`SUBSCRIBERS_DATA = ${tomlString(subscriberJson)}`)
@@ -109,8 +109,8 @@ id = "${id}"
 function credentialVars() {
   const { accountId, token } = credentials()
   return {
-    CF_ACCOUNT_ID: { type: 'plain_text', value: accountId },
-    CF_API_TOKEN: { type: 'secret_text', value: token },
+    SUBSCRIBE_CF_ACCOUNT: { type: 'plain_text', value: accountId },
+    SUBSCRIBE_CF_TOKEN: { type: 'secret_text', value: token },
   }
 }
 
