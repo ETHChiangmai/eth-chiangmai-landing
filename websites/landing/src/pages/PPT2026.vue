@@ -194,13 +194,6 @@ const speakers = [
   { name: 'TBA', role: 'Speaker', tag: 'Soon', img: '' },
 ]
 
-const residents = [
-  { name: 'TBA', role: 'Resident Builder', img: '' },
-  { name: 'TBA', role: 'Resident Builder', img: '' },
-  { name: 'TBA', role: 'Resident Builder', img: '' },
-  { name: 'TBA', role: 'Resident Builder', img: '' },
-]
-
 const crops = [
   { abbr: 'CR', title: 'Censorship\nResistance', desc: 'Building systems that no authority can shut down. Code as the final frontier of free expression.', sticker: StickerCensorship, accentColor: '#C8366B' },
   { abbr: 'O', title: 'Opensource\nand Free', desc: 'Open-source and free at the core. Every protocol, every tool — transparent, accessible, and forever forkable.', sticker: StickerNode, accentColor: '#7632C8' },
@@ -679,29 +672,15 @@ onUnmounted(() => {
       <div class="max-w-6xl mx-auto px-6 relative z-10">
         <div class="text-center mb-14">
           <p class="text-xs font-bold tracking-[0.22em] uppercase mb-3 text-[#0d0918]/45">✦ ETHChiangMai 2026</p>
-          <h2 class="font-display text-4xl md:text-5xl text-[#0d0918]">Featured Residents<br />& Speakers</h2>
+          <h2 class="font-display text-4xl md:text-5xl text-[#0d0918]">Featured Speakers</h2>
           <p class="mt-4 text-sm text-[#0d0918]/60 max-w-md mx-auto">More announcements coming as we get closer to November.</p>
         </div>
-        <p class="text-xs font-bold tracking-[0.2em] uppercase mb-5 text-[#0d0918]/50">Speakers</p>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-5 mb-10">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
           <div v-for="(person, i) in speakers" :key="i" class="person-card">
             <div class="aspect-square relative" :class="!person.img || person.name === 'TBA' ? 'bg-[#0d0918]/5' : ''">
               <div v-if="!person.img || person.name === 'TBA'" class="w-full h-full flex items-center justify-center"><span class="text-4xl opacity-10">◇</span></div>
               <img v-else :src="person.img" :alt="person.name" class="w-full h-full object-cover" :style="person.imgPosition ? { objectPosition: person.imgPosition } : undefined" />
               <span v-if="person.tag" class="absolute top-3 right-3 text-[9px] font-bold tracking-widest uppercase px-2 py-0.5 rounded-full text-white" style="background: #C8366B">{{ person.tag }}</span>
-            </div>
-            <div class="p-4">
-              <p class="font-semibold text-sm text-[#0d0918] font-display">{{ person.name }}</p>
-              <p class="text-xs mt-0.5 text-[#0d0918]/50">{{ person.role }}</p>
-            </div>
-          </div>
-        </div>
-        <p class="text-xs font-bold tracking-[0.2em] uppercase mb-5 text-[#0d0918]/50">Residents</p>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
-          <div v-for="(person, i) in residents" :key="i" class="person-card">
-            <div class="aspect-square relative" :class="!person.img || person.name === 'TBA' ? 'bg-[#0d0918]/5' : ''">
-              <div v-if="!person.img || person.name === 'TBA'" class="w-full h-full flex items-center justify-center"><span class="text-4xl opacity-10">◇</span></div>
-              <img v-else :src="person.img" :alt="person.name" class="w-full h-full object-cover" />
             </div>
             <div class="p-4">
               <p class="font-semibold text-sm text-[#0d0918] font-display">{{ person.name }}</p>
