@@ -1,8 +1,14 @@
-import { EMAIL_RE, subscribersToCsv, type Subscriber } from '../../lib/subscribers'
+import {
+  DEFAULT_EXPORT_KEY,
+  EMAIL_RE,
+  csvResponse,
+  exportKeyFromRequest,
+  isAuthorizedExport,
+  type Subscriber,
+} from '../../lib/subscribers'
 
 const PAGES_PROJECT = 'ethcm'
 const STORE_VAR = 'SUBSCRIBERS_DATA'
-const TEAM_INBOX = 'info@ethchiangmai.com'
 
 type KvBinding = {
   put(key: string, value: string): Promise<void>
@@ -46,6 +52,7 @@ export type SubscriberEnv = {
   CF_ACCOUNT_ID?: string
   CLOUDFLARE_API_TOKEN?: string
   CLOUDFLARE_ACCOUNT_ID?: string
+  SUBSCRIBE_EXPORT_KEY?: string
 }
 
 export function json(body: unknown, status = 200) {
@@ -186,27 +193,10 @@ export async function saveSubscriber(env: SubscriberEnv, email: string): Promise
   return null
 }
 
-async function emailUpdatedCsv(newEmail: string, rows: Subscriber[]) {
-  const csv = subscribersToCsv(rows)
-  const res = await fetch(`https://formsubmit.co/ajax/${TEAM_INBOX}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-      Origin: 'https://ethchiangmai.com',
-      Referer: 'https://ethchiangmai.com/',
-    },
-    body: JSON.stringify({
-      _subject: `ETHChiangmai subscriber list (${rows.length})`,
-      _template: 'box',
-      _captcha: false,
-      new_subscriber: newEmail,
-      message: `New subscriber: ${newEmail}\nTotal: ${rows.length}\n\nFull list (CSV):\n\n${csv}`,
-    }),
-  })
-  if (!res.ok) {
-    throw new Error(`Team notify failed (${res.status})`)
-  }
+export async function listSubscribers(env: SubscriberEnv): Promise<Subscriber[] | null> {
+  if (env.SUBSCRIBERS) return listFromKv(env.SUBSCRIBERS)
+  if (canUsePagesStore(env)) return listFromPages(env)
+  return null
 }
 
 export async function handleSubscribePost(context: { request: Request; env: SubscriberEnv }) {
@@ -236,15 +226,27 @@ export async function handleSubscribePost(context: { request: Request; env: Subs
     return json({ error: 'Subscriber storage is not configured' }, 503)
   }
 
-  if (saved.isNew) {
-    try {
-      await emailUpdatedCsv(email, saved.rows)
-    } catch {
-      // Storage succeeded; the inbox notify is best-effort.
-    }
+  return json({ ok: true })
+}
+
+export async function handleSubscribersExport(context: { request: Request; env: SubscriberEnv }) {
+  if (context.request.method === 'OPTIONS') return corsOptions('GET, OPTIONS')
+  if (context.request.method !== 'GET') return json({ error: 'Method not allowed' }, 405)
+
+  const url = new URL(context.request.url)
+  const provided = exportKeyFromRequest(url, context.request.headers.get('authorization'))
+  const expected = context.env.SUBSCRIBE_EXPORT_KEY || DEFAULT_EXPORT_KEY
+  if (!isAuthorizedExport(provided, expected)) {
+    return json({ error: 'Unauthorized' }, 401)
   }
 
-  return json({ ok: true })
+  try {
+    const rows = await listSubscribers(context.env)
+    if (!rows) return json({ error: 'Subscriber storage is not configured' }, 503)
+    return csvResponse(rows)
+  } catch {
+    return json({ error: 'Could not load subscribers' }, 503)
+  }
 }
 
 export function handleSubscribersGone() {

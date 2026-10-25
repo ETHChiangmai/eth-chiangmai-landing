@@ -1,5 +1,5 @@
-import { handleSubscribersGone } from '../lib/store'
+import { handleSubscribersExport, type SubscriberEnv } from '../lib/store'
 
-export function onRequest() {
-  return handleSubscribersGone()
+export function onRequest(context: { request: Request; env: SubscriberEnv }) {
+  return handleSubscribersExport(context)
 }

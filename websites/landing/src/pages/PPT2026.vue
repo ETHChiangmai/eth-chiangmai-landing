@@ -368,6 +368,8 @@ function activeCaption(i: number) {
 function closeMenu() {
   menuOpen.value = false
 }
+const TEAM_INBOX = 'info@ethchiangmai.com'
+
 async function postToSubscribeApi(value: string) {
   const endpoint = import.meta.env.VITE_SUBSCRIBE_URL || '/api/subscribe'
   const res = await fetch(endpoint, {
@@ -392,6 +394,33 @@ async function postToSubscribeApi(value: string) {
   }
 }
 
+async function notifyTeamInbox(value: string) {
+  const res = await fetch(`https://formsubmit.co/ajax/${TEAM_INBOX}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify({
+      _subject: `ETHChiangmai new subscriber: ${value}`,
+      _template: 'box',
+      email: value,
+      new_subscriber: value,
+      message: `New subscriber: ${value}`,
+    }),
+  })
+  const data = (await res.json().catch(() => ({}))) as { success?: boolean | string }
+  const accepted = data.success === true || data.success === 'true'
+  if (!res.ok || !accepted) {
+    throw new Error('Team notify failed')
+  }
+}
+
+function shouldNotifyTeamInbox() {
+  const host = window.location.hostname
+  return host !== 'localhost' && host !== '127.0.0.1'
+}
+
 async function onSubscribe(e: Event) {
   e.preventDefault()
   const value = email.value.trim()
@@ -406,7 +435,9 @@ async function onSubscribe(e: Event) {
   subscribePending.value = true
   subscribeError.value = ''
   try {
-    await postToSubscribeApi(value)
+    const tasks = [postToSubscribeApi(value)]
+    if (shouldNotifyTeamInbox()) tasks.push(notifyTeamInbox(value))
+    await Promise.all(tasks)
     subscribed.value = true
   } catch {
     subscribeError.value = 'Something went wrong. Please try again in a moment.'
