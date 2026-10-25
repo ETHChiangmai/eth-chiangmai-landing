@@ -73,21 +73,6 @@ id = "${id}"
   )
 }
 
-function upsertTomlVar(key: string, value: string) {
-  const current = readFileSync(WRANGLER_TOML, 'utf8')
-  const line = `${key} = "${value}"`
-  const re = new RegExp(`^${key} = ".*"$`, 'm')
-  if (re.test(current)) {
-    writeFileSync(WRANGLER_TOML, current.replace(re, line))
-    return
-  }
-  if (!current.includes('[vars]')) {
-    writeFileSync(WRANGLER_TOML, `${current.trimEnd()}\n\n[vars]\n${line}\n`)
-    return
-  }
-  writeFileSync(WRANGLER_TOML, current.replace('[vars]', `[vars]\n${line}`))
-}
-
 async function bindPagesProject(kvId: string | null) {
   if (!kvId) {
     console.log('Leaving existing Pages subscriber storage untouched.')
@@ -117,7 +102,6 @@ try {
 }
 
 try {
-  upsertTomlVar('CF_ACCOUNT_ID', credentials().accountId)
   await bindPagesProject(kvId)
   console.log(
     kvId

@@ -1,5 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import type { IncomingMessage, ServerResponse } from 'node:http'
 import type { Plugin } from 'vite'
 import {
@@ -12,7 +13,7 @@ import {
   type Subscriber,
 } from './lib/subscribers'
 
-const STORE = path.resolve(process.cwd(), 'data/subscribers.json')
+const STORE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), 'data/subscribers.json')
 
 function requestPath(req: IncomingMessage): string {
   return (req.url || '/').split('?')[0]
@@ -83,12 +84,13 @@ async function handleSubscribe(req: IncomingMessage, res: ServerResponse) {
   if (isNew) {
     fs.mkdirSync(path.dirname(STORE), { recursive: true })
     fs.writeFileSync(STORE, `${JSON.stringify(rows, null, 2)}\n`)
+    console.log(`[subscribe] appended ${email} -> ${STORE} (${rows.length} total)`)
   }
 
   json(res, 200, { ok: true })
 }
 
-function handleExport(req: IncomingMessage, res: ServerResponse) {
+function handleExport(req: IncomingMessage, res: ServerResponse, requireKey: boolean) {
   if (req.method === 'OPTIONS') {
     res.statusCode = 204
     res.end()
@@ -99,10 +101,12 @@ function handleExport(req: IncomingMessage, res: ServerResponse) {
     return
   }
 
-  const provided = exportKeyFromRequest(requestUrl(req), req.headers.authorization)
-  if (!isAuthorizedExport(provided, expectedExportKey())) {
-    json(res, 401, { error: 'Unauthorized' })
-    return
+  if (requireKey) {
+    const provided = exportKeyFromRequest(requestUrl(req), req.headers.authorization)
+    if (!isAuthorizedExport(provided, expectedExportKey())) {
+      json(res, 401, { error: 'Unauthorized' })
+      return
+    }
   }
 
   const csv = subscribersToCsv(readStore())
@@ -113,27 +117,29 @@ function handleExport(req: IncomingMessage, res: ServerResponse) {
   res.end(csv)
 }
 
-function subscribeMiddleware(req: IncomingMessage, res: ServerResponse, next: () => void) {
-  const pathname = requestPath(req)
-  if (pathname === '/api/subscribe') {
-    void handleSubscribe(req, res)
-    return
+function subscribeMiddleware(requireKey: boolean) {
+  return (req: IncomingMessage, res: ServerResponse, next: () => void) => {
+    const pathname = requestPath(req)
+    if (pathname === '/api/subscribe') {
+      void handleSubscribe(req, res)
+      return
+    }
+    if (pathname === '/api/subscribers' || pathname === '/api/subscribers.csv') {
+      handleExport(req, res, requireKey)
+      return
+    }
+    next()
   }
-  if (pathname === '/api/subscribers' || pathname === '/api/subscribers.csv') {
-    handleExport(req, res)
-    return
-  }
-  next()
 }
 
 export function subscribeApiPlugin(): Plugin {
   return {
     name: 'subscribe-api',
     configureServer(server) {
-      server.middlewares.use(subscribeMiddleware)
+      server.middlewares.use(subscribeMiddleware(false))
     },
     configurePreviewServer(server) {
-      server.middlewares.use(subscribeMiddleware)
+      server.middlewares.use(subscribeMiddleware(true))
     },
   }
 }
