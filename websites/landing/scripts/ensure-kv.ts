@@ -92,19 +92,17 @@ function credentialVars() {
   }
 }
 
-function envVarsKeepingList(config: PagesConfig | undefined): Record<string, PagesEnvVar> | null {
+function envVarsKeepingList(config: PagesConfig | undefined): Record<string, PagesEnvVar> {
   const existing = config?.env_vars ?? {}
-  const store = existing.SUBSCRIBERS_DATA
-  if (store && store.value === undefined) {
-    return null
-  }
-
   const next: Record<string, PagesEnvVar> = {}
   for (const [key, value] of Object.entries(existing)) {
+    if (key === 'SUBSCRIBERS_DATA' && value?.value === undefined) continue
     if (value?.value) next[key] = value
   }
   Object.assign(next, credentialVars())
-  if (store?.value) next.SUBSCRIBERS_DATA = store
+  if (existing.SUBSCRIBERS_DATA?.value) {
+    next.SUBSCRIBERS_DATA = existing.SUBSCRIBERS_DATA
+  }
   return next
 }
 
@@ -113,22 +111,6 @@ async function bindPagesProject(kvId: string | null) {
   const productionEnv = envVarsKeepingList(project.deployment_configs?.production)
   const previewEnv = envVarsKeepingList(project.deployment_configs?.preview)
   const kv = kvId ? { kv_namespaces: { SUBSCRIBERS: { namespace_id: kvId } } } : {}
-
-  if (!productionEnv || !previewEnv) {
-    console.warn('Subscriber list is present but not readable; not patching Pages env vars.')
-    if (kvId) {
-      await cf(`/pages/projects/${PAGES_PROJECT}`, {
-        method: 'PATCH',
-        body: JSON.stringify({
-          deployment_configs: {
-            production: kv,
-            preview: kv,
-          },
-        }),
-      })
-    }
-    return
-  }
 
   await cf(`/pages/projects/${PAGES_PROJECT}`, {
     method: 'PATCH',
