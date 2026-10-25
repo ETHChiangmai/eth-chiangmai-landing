@@ -47,6 +47,8 @@ import ImgTeamKhachirawut from '@/assets/team-khachirawut.png'
 import ImgTeamGigi from '@/assets/team-gigi.png'
 import ImgSpeakerAndrej from '@/assets/speakers/speaker-andrej-sanctuary.png'
 import ImgSpeakerSachin from '@/assets/speakers/speaker-sachin.png'
+import ImgSpeakerClement from '@/assets/speakers/speaker-clement.png'
+import ImgSpeakerMichel from '@/assets/speakers/speaker-michel-bauwens.png'
 import ImgLookbackVitalik from '@/assets/lookback-2025/01-vitalik.jpg'
 import ImgLookbackVitalikCowork from '@/assets/lookback-2025/02-vitalik-cowork.jpg'
 import ImgLookbackCommunity from '@/assets/lookback-2025/03-community-session.jpg'
@@ -186,6 +188,8 @@ const speakers = [
   { name: 'Vitalik Buterin', role: 'Ethereum Co-Founder', tag: '', img: new URL('@/assets/speakers/speaker-vitalik.png', import.meta.url).href },
   { name: '0xSachin', role: 'Co-founder of Peer', tag: '', img: ImgSpeakerSachin },
   { name: 'Andrej', role: 'Organizational Designer at Sanctuary', tag: '', img: ImgSpeakerAndrej },
+  { name: 'Clément Lesaege', role: 'Co-Founder and CTO, Kleros', tag: '', img: ImgSpeakerClement },
+  { name: 'Michel Bauwens', role: 'Founder, P2P Foundation', tag: '', img: ImgSpeakerMichel, imgPosition: 'center 25%' },
   { name: 'TBA', role: 'Speaker', tag: 'Soon', img: '' },
 ]
 
@@ -677,11 +681,11 @@ onUnmounted(() => {
           <p class="mt-4 text-sm text-[#0d0918]/60 max-w-md mx-auto">More announcements coming as we get closer to November.</p>
         </div>
         <p class="text-xs font-bold tracking-[0.2em] uppercase mb-5 text-[#0d0918]/50">Speakers</p>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-5 mb-10">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-5 mb-10">
           <div v-for="(person, i) in speakers" :key="i" class="person-card">
             <div class="aspect-square relative" :class="!person.img || person.name === 'TBA' ? 'bg-[#0d0918]/5' : ''">
               <div v-if="!person.img || person.name === 'TBA'" class="w-full h-full flex items-center justify-center"><span class="text-4xl opacity-10">◇</span></div>
-              <img v-else :src="person.img" :alt="person.name" class="w-full h-full object-cover" />
+              <img v-else :src="person.img" :alt="person.name" class="w-full h-full object-cover" :style="person.imgPosition ? { objectPosition: person.imgPosition } : undefined" />
               <span v-if="person.tag" class="absolute top-3 right-3 text-[9px] font-bold tracking-widest uppercase px-2 py-0.5 rounded-full text-white" style="background: #C8366B">{{ person.tag }}</span>
             </div>
             <div class="p-4">
