@@ -69,6 +69,28 @@ async function findOrCreateNamespace(): Promise<string> {
   return created.id
 }
 
+function tomlString(value: string) {
+  return JSON.stringify(value)
+}
+
+function injectWranglerVars(subscriberJson?: string) {
+  const { accountId, token } = credentials()
+  const current = readFileSync(WRANGLER_TOML, 'utf8')
+    .replace(/\n\[vars\][\s\S]*$/m, '')
+    .trimEnd()
+  const lines = [
+    current,
+    '',
+    '[vars]',
+    `CF_ACCOUNT_ID = ${tomlString(accountId)}`,
+    `CF_API_TOKEN = ${tomlString(token)}`,
+  ]
+  if (subscriberJson) {
+    lines.push(`SUBSCRIBERS_DATA = ${tomlString(subscriberJson)}`)
+  }
+  writeFileSync(WRANGLER_TOML, `${lines.join('\n')}\n`)
+}
+
 function writeKvBinding(id: string) {
   const current = readFileSync(WRANGLER_TOML, 'utf8')
   if (current.includes(`id = "${id}"`) && current.includes('binding = "SUBSCRIBERS"')) return
@@ -135,6 +157,20 @@ try {
 }
 
 try {
+  const project = await cf<PagesProject>(`/pages/projects/${PAGES_PROJECT}`)
+  const backup = project.deployment_configs?.production?.env_vars?.SUBSCRIBERS_DATA?.value
+  injectWranglerVars(backup)
+  let backupCount = 0
+  try {
+    backupCount = Array.isArray(JSON.parse(backup ?? '[]')) ? JSON.parse(backup ?? '[]').length : 0
+  } catch {
+    backupCount = 0
+  }
+  console.log(
+    backupCount
+      ? `Injected subscribe credentials and ${backupCount} saved emails into wrangler.toml`
+      : 'Injected subscribe credentials into wrangler.toml',
+  )
   await bindPagesProject(kvId)
   console.log(
     kvId

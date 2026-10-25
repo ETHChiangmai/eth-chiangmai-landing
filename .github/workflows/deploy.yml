@@ -19,6 +19,12 @@ jobs:
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
       - run: bun run landing build
+      - name: Prepare subscriber storage
+        working-directory: websites/landing
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: bun scripts/ensure-kv.ts
       - uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -27,9 +33,3 @@ jobs:
           packageManager: bun
           command: pages deploy dist --project-name=ethcm --branch=main
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-      - name: Restore subscriber storage credentials
-        working-directory: websites/landing
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: bun scripts/ensure-kv.ts
