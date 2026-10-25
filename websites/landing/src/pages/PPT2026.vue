@@ -967,8 +967,10 @@ onUnmounted(() => {
             <div>
               <p class="text-xs font-bold tracking-widest uppercase mb-4 text-[#faf0e8]/35">Links</p>
               <ul class="space-y-2 text-sm text-[#faf0e8]/55">
-                <li v-for="link in navLinks" :key="link.href"><a :href="link.href" class="hover:text-[#faf0e8] transition-colors">{{ link.label }}</a></li>
+                <li><a href="#about" class="hover:text-[#faf0e8] transition-colors">About</a></li>
+                <li><a href="#partners" class="hover:text-[#faf0e8] transition-colors">Partners</a></li>
                 <li><a href="https://www.4seas.xyz" target="_blank" rel="noopener noreferrer" class="hover:text-[#faf0e8] transition-colors">4Seas</a></li>
+                <li><a href="https://github.com/ETHChiangmai/Media-kit" target="_blank" rel="noopener noreferrer" class="hover:text-[#faf0e8] transition-colors">Media Kit</a></li>
               </ul>
             </div>
             <div>
