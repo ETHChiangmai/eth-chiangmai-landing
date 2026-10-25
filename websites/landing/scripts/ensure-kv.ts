@@ -102,14 +102,19 @@ function upsertTomlVar(key: string, value: string) {
 
 function subscriberBindings(config: PagesConfig | undefined, kvId: string | null): PagesConfig {
   const { accountId, token } = credentials()
-  const envVars: Record<string, PagesEnvVar> = {
-    CF_ACCOUNT_ID: { type: 'plain_text', value: accountId },
-    CF_API_TOKEN: { type: 'secret_text', value: token },
+  const envVars: Record<string, PagesEnvVar> = {}
+  for (const [key, value] of Object.entries(config?.env_vars ?? {})) {
+    if (value?.value) envVars[key] = value
   }
-  const existing = config?.env_vars?.SUBSCRIBERS_DATA
-  envVars.SUBSCRIBERS_DATA = existing?.value
-    ? existing
-    : { type: 'plain_text', value: '[]' }
+  envVars.CF_ACCOUNT_ID = { type: 'plain_text', value: accountId }
+  envVars.CF_API_TOKEN = { type: 'secret_text', value: token }
+
+  const store = config?.env_vars?.SUBSCRIBERS_DATA
+  if (store && !store.value) {
+    const next: PagesConfig = {}
+    if (kvId) next.kv_namespaces = { SUBSCRIBERS: { namespace_id: kvId } }
+    return next
+  }
 
   const next: PagesConfig = { env_vars: envVars }
   if (kvId) {

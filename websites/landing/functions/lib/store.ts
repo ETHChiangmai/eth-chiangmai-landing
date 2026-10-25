@@ -1,9 +1,12 @@
 import {
   DEFAULT_EXPORT_KEY,
   EMAIL_RE,
+  appendSubscriber,
   csvResponse,
   exportKeyFromRequest,
   isAuthorizedExport,
+  isUnreadableStore,
+  parseSubscriberStore,
   type Subscriber,
 } from '../../lib/subscribers'
 
@@ -114,14 +117,15 @@ async function pagesApi(env: SubscriberEnv, path: string, init: RequestInit = {}
   return (body.result ?? {}) as PagesProject
 }
 
-function parseStore(raw: string | undefined): Subscriber[] {
-  if (!raw) return []
-  try {
-    const parsed = JSON.parse(raw) as Subscriber[]
-    return Array.isArray(parsed) ? parsed.filter((row) => row?.email) : []
-  } catch {
-    return []
+function envVarsForPatch(
+  existing: Record<string, PagesEnvVar> | undefined,
+  updates: Record<string, PagesEnvVar>,
+): Record<string, PagesEnvVar> {
+  const next: Record<string, PagesEnvVar> = {}
+  for (const [key, value] of Object.entries(existing ?? {})) {
+    if (value?.value) next[key] = value
   }
+  return { ...next, ...updates }
 }
 
 async function listFromKv(kv: KvBinding): Promise<Subscriber[]> {
@@ -148,31 +152,45 @@ async function listFromKv(kv: KvBinding): Promise<Subscriber[]> {
 
 async function listFromPages(env: SubscriberEnv): Promise<Subscriber[]> {
   const project = await pagesApi(env, `/pages/projects/${PAGES_PROJECT}`)
-  return parseStore(project.deployment_configs?.production?.env_vars?.[STORE_VAR]?.value)
+  const store = project.deployment_configs?.production?.env_vars?.[STORE_VAR]
+  if (isUnreadableStore(store)) {
+    throw new Error('Existing subscriber list is not readable')
+  }
+  return parseSubscriberStore(store?.value)
 }
 
 async function saveToPages(env: SubscriberEnv, email: string): Promise<SaveResult | null> {
   for (let attempt = 0; attempt < 5; attempt += 1) {
     const project = await pagesApi(env, `/pages/projects/${PAGES_PROJECT}`)
-    const rows = parseStore(project.deployment_configs?.production?.env_vars?.[STORE_VAR]?.value)
-    const isNew = !rows.some((row) => row.email === email)
-    if (isNew) {
-      rows.push({ email, createdAt: new Date().toISOString() })
+    const production = project.deployment_configs?.production
+    const store = production?.env_vars?.[STORE_VAR]
+    if (isUnreadableStore(store)) {
+      throw new Error('Refusing to overwrite an unreadable subscriber list')
     }
+
+    const current = parseSubscriberStore(store?.value)
+    const { rows, isNew } = appendSubscriber(current, email)
+    if (!isNew) return { isNew, rows }
 
     await pagesApi(env, `/pages/projects/${PAGES_PROJECT}`, {
       method: 'PATCH',
       body: JSON.stringify({
         deployment_configs: {
           production: {
-            env_vars: {
+            env_vars: envVarsForPatch(production?.env_vars, {
+              CF_ACCOUNT_ID: { type: 'plain_text', value: accountId(env) },
+              CF_API_TOKEN: { type: 'secret_text', value: apiToken(env) },
               [STORE_VAR]: { type: 'plain_text', value: JSON.stringify(rows) },
-            },
+            }),
           },
         },
       }),
     })
-    return { isNew, rows }
+
+    const written = await listFromPages(env)
+    if (written.some((row) => row.email === email)) {
+      return { isNew, rows: written }
+    }
   }
   return null
 }
@@ -187,16 +205,37 @@ async function saveToKv(kv: KvBinding, email: string): Promise<SaveResult> {
   return { isNew, rows: await listFromKv(kv) }
 }
 
+function mergeRows(...groups: Subscriber[][]): Subscriber[] {
+  const byEmail = new Map<string, Subscriber>()
+  for (const row of groups.flat()) {
+    const current = byEmail.get(row.email)
+    if (!current || (row.createdAt && row.createdAt < current.createdAt)) {
+      byEmail.set(row.email, row)
+    }
+  }
+  return [...byEmail.values()]
+}
+
 export async function saveSubscriber(env: SubscriberEnv, email: string): Promise<SaveResult | null> {
-  if (env.SUBSCRIBERS) return saveToKv(env.SUBSCRIBERS, email)
-  if (canUsePagesStore(env)) return saveToPages(env, email)
-  return null
+  const saved: SaveResult[] = []
+  if (env.SUBSCRIBERS) saved.push(await saveToKv(env.SUBSCRIBERS, email))
+  if (canUsePagesStore(env)) {
+    const pages = await saveToPages(env, email)
+    if (pages) saved.push(pages)
+  }
+  if (!saved.length) return null
+  return {
+    isNew: saved.some((result) => result.isNew),
+    rows: mergeRows(...saved.map((result) => result.rows)),
+  }
 }
 
 export async function listSubscribers(env: SubscriberEnv): Promise<Subscriber[] | null> {
-  if (env.SUBSCRIBERS) return listFromKv(env.SUBSCRIBERS)
-  if (canUsePagesStore(env)) return listFromPages(env)
-  return null
+  const groups: Subscriber[][] = []
+  if (env.SUBSCRIBERS) groups.push(await listFromKv(env.SUBSCRIBERS))
+  if (canUsePagesStore(env)) groups.push(await listFromPages(env))
+  if (!groups.length) return null
+  return mergeRows(...groups)
 }
 
 export async function handleSubscribePost(context: { request: Request; env: SubscriberEnv }) {

@@ -5,6 +5,7 @@ import type { Plugin } from 'vite'
 import {
   DEFAULT_EXPORT_KEY,
   EMAIL_RE,
+  appendSubscriber,
   exportKeyFromRequest,
   isAuthorizedExport,
   subscribersToCsv,
@@ -78,11 +79,10 @@ async function handleSubscribe(req: IncomingMessage, res: ServerResponse) {
     return
   }
 
-  const list = readStore()
-  if (!list.some((entry) => entry.email === email)) {
-    list.push({ email, createdAt: new Date().toISOString() })
+  const { rows, isNew } = appendSubscriber(readStore(), email)
+  if (isNew) {
     fs.mkdirSync(path.dirname(STORE), { recursive: true })
-    fs.writeFileSync(STORE, `${JSON.stringify(list, null, 2)}\n`)
+    fs.writeFileSync(STORE, `${JSON.stringify(rows, null, 2)}\n`)
   }
 
   json(res, 200, { ok: true })

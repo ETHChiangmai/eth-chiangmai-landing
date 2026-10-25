@@ -35,6 +35,32 @@ export function subscribersToCsv(rows: Subscriber[]): string {
   return ['email,created_at', ...lines].join('\n') + '\n'
 }
 
+export function parseSubscriberStore(raw: string | undefined): Subscriber[] {
+  if (!raw) return []
+  try {
+    const parsed = JSON.parse(raw) as Subscriber[]
+    return Array.isArray(parsed) ? parsed.filter((row) => row?.email) : []
+  } catch {
+    return []
+  }
+}
+
+export function appendSubscriber(
+  rows: Subscriber[],
+  email: string,
+  createdAt = new Date().toISOString(),
+): { rows: Subscriber[]; isNew: boolean } {
+  if (rows.some((row) => row.email === email)) {
+    return { rows, isNew: false }
+  }
+  return { rows: [...rows, { email, createdAt }], isNew: true }
+}
+
+/** True when an existing store is present but its value was not returned, so replacing it would wipe data. */
+export function isUnreadableStore(store: { type?: string; value?: string } | undefined): boolean {
+  return Boolean(store && store.value === undefined)
+}
+
 export function csvResponse(rows: Subscriber[]): Response {
   return new Response(subscribersToCsv(rows), {
     status: 200,
