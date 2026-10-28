@@ -32,6 +32,7 @@ import LogoGCC from '@/assets/partners/gcc.png'
 import Logo4Seas from '@/assets/partners/4seas.png'
 import LogoPeer from '@/assets/partners/peer.png'
 import LogoSNZ from '@/assets/partners/snz.svg'
+import LogoNear from '@/assets/partners/near.png'
 import LogoLogos from '@/assets/partners/logos.png'
 import LogoDevfolio from '@/assets/partners/devfolio.png'
 import LogoTangem from '@/assets/partners/tangem.png'
@@ -187,10 +188,10 @@ const timeline = [
 
 const speakers = [
   { name: 'Vitalik Buterin', role: 'Ethereum Co-Founder', tag: '', img: new URL('@/assets/speakers/speaker-vitalik.png', import.meta.url).href },
+  { name: 'Michel Bauwens', role: 'Founder, P2P Foundation', tag: '', img: ImgSpeakerMichel, imgPosition: 'center 25%' },
   { name: '0xSachin', role: 'Co-founder of Peer', tag: '', img: ImgSpeakerSachin },
   { name: 'Andrej', role: 'Organizational Designer at Sanctuary', tag: '', img: ImgSpeakerAndrej },
   { name: 'Clément Lesaege', role: 'Co-Founder and CTO, Kleros', tag: '', img: ImgSpeakerClement },
-  { name: 'Michel Bauwens', role: 'Founder, P2P Foundation', tag: '', img: ImgSpeakerMichel, imgPosition: 'center 25%' },
   { name: 'TBA', role: 'Speaker', tag: 'Soon', img: '' },
 ]
 
@@ -235,6 +236,7 @@ const communityPartners: Array<{ name: string; logo: string; scale?: number }> =
   { name: 'Devfolio', logo: LogoDevfolio },
   { name: 'Zuitzerland', logo: LogoZuitz },
   { name: 'SNZ', logo: LogoSNZ, scale: 0.65 },
+  { name: 'NEAR', logo: LogoNear },
   { name: 'Tangem', logo: LogoTangem, scale: 0.6 },
   { name: 'ZuCity Japan', logo: LogoZucityJapan },
   { name: 'ETH Hangzhou', logo: LogoHangzhou },
@@ -576,7 +578,7 @@ onUnmounted(() => {
           </p>
           <p class="text-xs mb-8 inline-flex items-center gap-1.5 uppercase tracking-widest" style="color: #c8650a"><i class="fa-solid fa-location-dot"></i> 4Seas Nimman, Chiang Mai</p>
           <div class="flex flex-wrap justify-center gap-4">
-            <a href="#schedule" class="inline-flex items-center gap-2 border-2 border-[#0d0918]/25 text-[#0d0918] text-sm font-semibold px-7 py-3.5 rounded-full hover:border-[#0d0918]/50 transition-colors bg-[#faf0e8]/30 backdrop-blur-sm">Know More</a>
+            <a href="https://4seas.xyz/coliving" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 border-2 border-[#c8650a]/40 text-[#c8650a] text-sm font-semibold px-7 py-3.5 rounded-full hover:border-[#c8650a]/70 transition-colors bg-[#faf0e8]/30 backdrop-blur-sm"><i class="fa-solid fa-house text-xs"></i> Co-living</a>
             <RouterLink to="/participate" class="inline-flex items-center gap-2 text-white text-sm font-semibold px-7 py-3.5 rounded-full hover:opacity-90 gradient-primary" style="box-shadow: 0 4px 24px #C8366B44">Participate →</RouterLink>
           </div>
         </div>

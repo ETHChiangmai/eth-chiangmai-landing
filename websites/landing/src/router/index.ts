@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home2025 from '@/pages/Home2025.vue'
+import Media2026 from '@/pages/Media2026.vue'
 import PPT2026 from '@/pages/PPT2026.vue'
 import Participate from '@/pages/Participate.vue'
 import ResidentForm from '@/pages/ResidentForm.vue'
@@ -11,6 +12,7 @@ const router = createRouter({
   routes: [
     { path: '/', component: PPT2026 },
     { path: '/2025', component: Home2025 },
+    { path: '/media/2026', component: Media2026 },
     { path: '/participate', component: Participate },
     { path: '/participate/resident', component: ResidentForm },
     { path: '/participate/speaker', component: SpeakerForm },
