@@ -60,7 +60,7 @@ const activities = [
   {
     icon: '🇹🇭',
     title: 'Nomad Market',
-    when: 'Nov 14–15 and Dec 24–25',
+    when: 'Nov 14–15 and Dec 25–26',
     paragraphs: [
       "We call it Southeast Asia's first crypto-themed market. Chiang Mai already has a mature market culture and one of the region's densest nomad populations. Nomad Market grafts builder projects, crypto payments and the nomad economy onto that scene, with tech demos, project booths, local vendors, live performances and blockchain exhibits. Local vendors, digital nomads and Web3 builders trade and make friends on the same street.",
       "For us, it's the most direct way to bring CROPS into the digital economy and local resilience. Onchain payments shouldn't live only in hackathon demos. They should buy you a coffee at the market.",
