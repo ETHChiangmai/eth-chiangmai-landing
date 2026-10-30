@@ -6,6 +6,9 @@ import LogoDark from '@/assets/logo-figma.png'
 import Logo4Seas from '@/assets/partners/4seas.png'
 import LogoPeer from '@/assets/partners/peer.png'
 import NomadLogo from '@/assets/nomad-market/logo.webp'
+import Ink4Seas from '@/assets/nomad-market/ink-4seas.webp'
+import InkEthChiangmai from '@/assets/nomad-market/ink-ethchiangmai.webp'
+import InkPeer from '@/assets/nomad-market/ink-peer.webp'
 import Banner4Seas from '@/assets/nomad-market/banner-1.webp'
 import BannerCreative from '@/assets/nomad-market/banner-2.webp'
 import BannerBuilder from '@/assets/nomad-market/banner-3.webp'
@@ -25,9 +28,9 @@ const techForm = 'https://docs.google.com/forms/d/e/1FAIpQLSeMP6QE3p8ft5D0Qn8x07
 const vendorForm = 'https://forms.gle/evb2uTTMbcAPEWrv7'
 
 const cohosts = [
-  { name: '4Seas', logo: Logo4Seas, url: 'https://4seas.xyz', sm: 'h-14 -my-3', lg: 'h-28 -my-6', strip: { w: 72, h: 18, img: 77 } },
-  { name: 'ETHChiangmai', logo: LogoDark, url: 'https://ethchiangmai.com', sm: 'h-[18px]', lg: 'h-10', strip: { w: 84, h: 16, img: 84 } },
-  { name: 'Peer', logo: LogoPeer, url: 'https://peer.xyz', badge: 'Official Payment Partner', sm: 'h-14 -my-3', lg: 'h-28 -my-6', strip: { w: 54, h: 20, img: 60 } },
+  { name: '4Seas', logo: Logo4Seas, ink: Ink4Seas, url: 'https://4seas.xyz', sm: 'h-14 -my-3', lg: 'h-28 -my-6', strip: 'h-[15px]' },
+  { name: 'ETHChiangmai', logo: LogoDark, ink: InkEthChiangmai, url: 'https://ethchiangmai.com', sm: 'h-[18px]', lg: 'h-10', strip: 'h-[19px]' },
+  { name: 'Peer', logo: LogoPeer, ink: InkPeer, url: 'https://peer.xyz', badge: 'Official Payment Partner', sm: 'h-14 -my-3', lg: 'h-28 -my-6', strip: 'h-[19px] translate-y-[2px]' },
 ]
 
 const dates = [
@@ -150,7 +153,7 @@ const program = [
             <img :src="Banner4Seas" alt="4Seas Nomad Market poster" class="block w-full h-auto" />
             <!-- cover the poster's printed host strip with the current co-hosts -->
             <div class="absolute inset-x-0 bottom-0 h-[9.2%] border-t border-[#0d0918] flex items-center justify-center gap-5 px-4" style="background:#52B24E">
-              <span v-for="h in cohosts" :key="h.name" class="flex items-center justify-center overflow-hidden shrink-0" :style="{ width: `${h.strip.w}px`, height: `${h.strip.h}px` }"><img :src="h.logo" :alt="h.name" class="max-w-none h-auto ink-on-green" :style="{ width: `${h.strip.img}px` }" /></span>
+              <img v-for="h in cohosts" :key="h.name" :src="h.ink" :alt="h.name" class="w-auto shrink-0" :class="h.strip" />
             </div>
           </div>
         </div>
@@ -372,10 +375,6 @@ const program = [
 .nm-btn:hover {
   transform: translate(-2px, -2px);
   box-shadow: 6px 6px 0 #0d0918;
-}
-.ink-on-green {
-  filter: grayscale(1) brightness(0.56) contrast(100);
-  mix-blend-mode: multiply;
 }
 .shard {
   position: absolute;
