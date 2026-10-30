@@ -223,9 +223,9 @@ const whyItems = [
   },
 ]
 
-const majorPartners: Array<{ name: string; logo: string; url: string; scale?: number }> = [
+const majorPartners: Array<{ name: string; logo: string; url: string; scale?: number; role?: string }> = [
   { name: '4Seas', logo: Logo4Seas, url: 'https://4seas.xyz' },
-  { name: 'Peer', logo: LogoPeer, url: 'https://peer.xyz' },
+  { name: 'Peer', logo: LogoPeer, url: 'https://peer.xyz', role: 'Official Payment Partner & Nomad Market Co-Host' },
   { name: 'GCC', logo: LogoGCC, url: 'https://gccofficial.org' },
 ]
 
@@ -782,20 +782,30 @@ onUnmounted(() => {
           <h2 class="font-display text-4xl md:text-5xl text-[#0d0918]">Major Partners</h2>
         </div>
         <div class="grid grid-cols-3 gap-4 mb-12">
-          <a v-for="p in majorPartners" :key="p.name"
-            :href="p.url"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="aspect-[4/3] rounded-2xl flex items-center justify-center cursor-pointer transition-all hover:scale-105 border p-5 partner-tile-major"
-            :title="p.name">
-            <img
-              v-if="p.logo"
-              :src="p.logo"
-              :alt="p.name"
-              class="w-full h-full object-contain"
-              :style="p.scale ? { transform: `scale(${p.scale})` } : undefined"
-            />
-          </a>
+          <div v-for="p in majorPartners" :key="p.name">
+            <a
+              :href="p.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="relative aspect-[4/3] rounded-2xl flex items-center justify-center cursor-pointer transition-all hover:scale-105 border p-5 partner-tile-major"
+              :title="p.name">
+              <img
+                v-if="p.logo"
+                :src="p.logo"
+                :alt="p.name"
+                class="w-full h-full object-contain"
+                :style="p.scale ? { transform: `scale(${p.scale})` } : undefined"
+              />
+              <span
+                v-if="p.role"
+                class="hidden md:block absolute inset-x-3 bottom-4 text-center text-xs font-bold tracking-[0.12em] uppercase leading-snug gradient-text"
+              >{{ p.role }}</span>
+            </a>
+            <p
+              v-if="p.role"
+              class="md:hidden mt-2 text-center text-[9px] font-bold tracking-[0.08em] uppercase leading-snug gradient-text"
+            >{{ p.role }}</p>
+          </div>
         </div>
 
         <!-- Community Partners -->
