@@ -25,9 +25,9 @@ const techForm = 'https://docs.google.com/forms/d/e/1FAIpQLSeMP6QE3p8ft5D0Qn8x07
 const vendorForm = 'https://forms.gle/evb2uTTMbcAPEWrv7'
 
 const cohosts = [
-  { name: '4Seas', logo: Logo4Seas, url: 'https://4seas.xyz', sm: 'h-14 -my-3', lg: 'h-28 -my-6', strip: 'h-16 -my-4' },
-  { name: 'ETHChiangmai', logo: LogoDark, url: 'https://ethchiangmai.com', sm: 'h-[18px]', lg: 'h-10', strip: 'h-6' },
-  { name: 'Peer', logo: LogoPeer, url: 'https://peer.xyz', badge: 'Official Payment Partner', sm: 'h-14 -my-3', lg: 'h-28 -my-6', strip: 'h-16 -my-4' },
+  { name: '4Seas', logo: Logo4Seas, url: 'https://4seas.xyz', sm: 'h-14 -my-3', lg: 'h-28 -my-6', strip: { w: 72, h: 18, img: 77 } },
+  { name: 'ETHChiangmai', logo: LogoDark, url: 'https://ethchiangmai.com', sm: 'h-[18px]', lg: 'h-10', strip: { w: 84, h: 16, img: 84 } },
+  { name: 'Peer', logo: LogoPeer, url: 'https://peer.xyz', badge: 'Official Payment Partner', sm: 'h-14 -my-3', lg: 'h-28 -my-6', strip: { w: 54, h: 20, img: 60 } },
 ]
 
 const dates = [
@@ -149,8 +149,8 @@ const program = [
           <div class="relative w-[300px] lg:w-[340px] nm-card overflow-hidden rotate-[4deg]">
             <img :src="Banner4Seas" alt="4Seas Nomad Market poster" class="block w-full h-auto" />
             <!-- cover the poster's printed host strip with the current co-hosts -->
-            <div class="absolute inset-x-0 bottom-0 h-[9.2%] border-t border-[#0d0918] flex items-center justify-evenly px-4" style="background:#52B24E">
-              <img v-for="h in cohosts" :key="h.name" :src="h.logo" :alt="h.name" class="w-auto ink-on-green" :class="h.strip" />
+            <div class="absolute inset-x-0 bottom-0 h-[9.2%] border-t border-[#0d0918] flex items-center justify-center gap-5 px-4" style="background:#52B24E">
+              <span v-for="h in cohosts" :key="h.name" class="flex items-center justify-center overflow-hidden shrink-0" :style="{ width: `${h.strip.w}px`, height: `${h.strip.h}px` }"><img :src="h.logo" :alt="h.name" class="max-w-none h-auto ink-on-green" :style="{ width: `${h.strip.img}px` }" /></span>
             </div>
           </div>
         </div>
