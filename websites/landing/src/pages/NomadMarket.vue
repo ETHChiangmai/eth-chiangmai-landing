@@ -35,7 +35,7 @@ const cohosts = [
 
 const dates = [
   { label: 'Market Ⅰ', date: 'Nov 14–15', bg: '#38AEFF' },
-  { label: 'Market Ⅱ', date: 'Dec 5–6', bg: '#FF66AA' },
+  { label: 'Market Ⅱ', date: 'Dec 25–26', bg: '#FF66AA' },
 ]
 
 const zones = [
