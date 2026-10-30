@@ -223,11 +223,13 @@ const whyItems = [
   },
 ]
 
-const majorPartners: Array<{ name: string; logo: string; url: string; scale?: number; role?: string }> = [
+const majorPartners: Array<{ name: string; logo: string; url?: string; scale?: number }> = [
   { name: '4Seas', logo: Logo4Seas, url: 'https://4seas.xyz' },
-  { name: 'Peer', logo: LogoPeer, url: 'https://peer.xyz', role: 'Official Payment Partner & Nomad Market Co-Host' },
-  { name: 'GCC', logo: LogoGCC, url: 'https://gccofficial.org' },
+  { name: 'GCC', logo: LogoGCC, url: 'https://gccofficial.org', scale: 0.75 },
+  { name: 'ETH TAO', logo: LogoEthTao },
 ]
+
+const paymentPartner = { name: 'Peer', logo: LogoPeer, url: 'https://peer.xyz' }
 
 const communityPartners: Array<{ name: string; logo: string; scale?: number }> = [
   { name: 'Zucity', logo: LogoZucity },
@@ -245,7 +247,6 @@ const communityPartners: Array<{ name: string; logo: string; scale?: number }> =
   { name: 'ETHKL', logo: LogoEthKL },
   { name: 'ETH Hub HK', logo: LogoEthHubHK },
   { name: 'ETH Tokyo', logo: LogoEthTokyo },
-  { name: 'ETH TAO', logo: LogoEthTao },
   { name: 'ETH Singapore', logo: LogoEthSingapore },
   { name: 'ETH Shenzhen', logo: LogoEthShenzhen },
 ]
@@ -781,31 +782,37 @@ onUnmounted(() => {
           <p class="text-xs font-bold tracking-[0.22em] uppercase mb-3 gradient-text-cool inline-block">✦ Supported By</p>
           <h2 class="font-display text-4xl md:text-5xl text-[#0d0918]">Major Partners</h2>
         </div>
-        <div class="grid grid-cols-3 gap-4 mb-12">
-          <div v-for="p in majorPartners" :key="p.name">
-            <a
-              :href="p.url"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="relative aspect-[4/3] rounded-2xl flex items-center justify-center cursor-pointer transition-all hover:scale-105 border p-5 partner-tile-major"
-              :title="p.name">
-              <img
-                v-if="p.logo"
-                :src="p.logo"
-                :alt="p.name"
-                class="w-full h-full object-contain"
-                :style="p.scale ? { transform: `scale(${p.scale})` } : undefined"
-              />
-              <span
-                v-if="p.role"
-                class="hidden md:block absolute inset-x-3 bottom-4 text-center text-xs font-bold tracking-[0.12em] uppercase leading-snug gradient-text"
-              >{{ p.role }}</span>
-            </a>
-            <p
-              v-if="p.role"
-              class="md:hidden mt-2 text-center text-[9px] font-bold tracking-[0.08em] uppercase leading-snug gradient-text"
-            >{{ p.role }}</p>
-          </div>
+        <div class="grid grid-cols-3 gap-4">
+          <a v-for="p in majorPartners" :key="p.name"
+            :href="p.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="aspect-[4/3] rounded-2xl flex items-center justify-center cursor-pointer transition-all hover:scale-105 border p-5 partner-tile-major"
+            :title="p.name">
+            <img
+              v-if="p.logo"
+              :src="p.logo"
+              :alt="p.name"
+              class="w-full h-full object-contain"
+              :style="p.scale ? { transform: `scale(${p.scale})` } : undefined"
+            />
+          </a>
+        </div>
+
+        <!-- Payment partner -->
+        <div class="text-center mb-10 mt-16">
+          <p class="text-xs font-bold tracking-[0.22em] uppercase mb-3 gradient-text-cool inline-block">✦ Nomad Market Co-Host</p>
+          <h2 class="font-display text-2xl md:text-3xl text-[#0d0918]">Official Payment Partner</h2>
+        </div>
+        <div class="flex justify-center mb-12">
+          <a
+            :href="paymentPartner.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-[calc((100%-2rem)/3)] aspect-[4/3] rounded-2xl flex items-center justify-center cursor-pointer transition-all hover:scale-105 border p-5 partner-tile-major"
+            :title="paymentPartner.name">
+            <img :src="paymentPartner.logo" :alt="paymentPartner.name" class="w-full h-full object-contain" />
+          </a>
         </div>
 
         <!-- Community Partners -->
