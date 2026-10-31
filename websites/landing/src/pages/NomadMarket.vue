@@ -74,9 +74,12 @@ const zones = [
 ]
 
 const schedule = [
-  { time: '4 PM', title: 'Market opens', desc: 'Stalls open with live music. Follow 4Seas, post and tag us to get an invite to 4SeasOS and some merch.' },
-  { time: '5 PM', title: 'Panels & talks', desc: 'Community, technology and longevity, plus regular 4Seas sessions like QTM, AI learning and vibe coding.' },
-  { time: '6–8 PM', title: 'Live music', desc: 'Original bands from Chiang Mai close out the night.' },
+  { time: '4 PM', title: 'Market open' },
+  { time: '5 PM', title: 'Welcome', desc: 'By 4Seas Team' },
+  { time: '5:10 – 5:40 PM', title: 'Pitch stage' },
+  { time: '5:40 – 6:10 PM', title: 'Nomad Hub talk panel', desc: 'By ATTIKA Owner' },
+  { time: '6:10 – 8:00 PM', title: 'Music performance', desc: 'By Chiang Mai OG' },
+  { time: '8:00 – 9:00 PM', title: 'DJ music' },
 ]
 
 const program = [
@@ -231,14 +234,14 @@ const program = [
       <div class="max-w-4xl mx-auto">
         <div class="text-center mb-10">
           <p class="text-xs font-bold tracking-[0.22em] uppercase mb-2">Each market day</p>
-          <h2 class="nm-display text-3xl md:text-5xl text-[#FFF8D8] nm-outline">Schedule</h2>
+          <h2 class="nm-display text-3xl md:text-5xl text-[#FFF8D8] nm-outline">Nomad Agenda</h2>
         </div>
         <div class="grid gap-4">
-          <div v-for="s in schedule" :key="s.time" class="nm-card bg-[#FFF8D8] p-5 md:p-6 flex flex-col sm:flex-row gap-3 sm:gap-6 sm:items-center">
-            <span class="nm-display text-2xl md:text-3xl shrink-0 sm:w-28">{{ s.time }}</span>
+          <div v-for="s in schedule" :key="s.time" class="nm-card bg-[#FFF8D8] p-5 md:p-6 flex flex-col sm:flex-row gap-2 sm:gap-6 sm:items-center">
+            <span class="nm-display text-xl md:text-2xl shrink-0 sm:w-52">{{ s.time }}</span>
             <div>
-              <h3 class="nm-display text-xl mb-1">{{ s.title }}</h3>
-              <p class="text-sm md:text-[15px] leading-relaxed text-[#0d0918]/75">{{ s.desc }}</p>
+              <h3 class="nm-display text-xl" :class="s.desc && 'mb-1'">{{ s.title }}</h3>
+              <p v-if="s.desc" class="text-sm md:text-[15px] leading-relaxed text-[#0d0918]/75">{{ s.desc }}</p>
             </div>
           </div>
         </div>
