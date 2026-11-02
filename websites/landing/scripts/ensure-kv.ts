@@ -1,6 +1,7 @@
 import { readFileSync, writeFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { googleSubscribeConfig } from '../lib/google-subscribe'
 
 const NAMESPACE_TITLE = 'ethcm-subscribers'
 const PAGES_PROJECT = 'ethcm'
@@ -88,6 +89,16 @@ function injectWranglerVars(subscriberJson?: string) {
   if (subscriberJson) {
     lines.push(`SUBSCRIBERS_DATA = ${tomlString(subscriberJson)}`)
   }
+  const google = googleSubscribeConfig({
+    SUBSCRIBE_GOOGLE_FORM_ACTION: process.env.SUBSCRIBE_GOOGLE_FORM_ACTION,
+    SUBSCRIBE_GOOGLE_EMAIL_ENTRY: process.env.SUBSCRIBE_GOOGLE_EMAIL_ENTRY,
+    SUBSCRIBE_GOOGLE_SHEET_URL: process.env.SUBSCRIBE_GOOGLE_SHEET_URL,
+    SUBSCRIBE_SHEET_WEBHOOK: process.env.SUBSCRIBE_SHEET_WEBHOOK,
+  })
+  if (google.formAction) lines.push(`SUBSCRIBE_GOOGLE_FORM_ACTION = ${tomlString(google.formAction)}`)
+  if (google.emailEntry) lines.push(`SUBSCRIBE_GOOGLE_EMAIL_ENTRY = ${tomlString(google.emailEntry)}`)
+  if (google.sheetUrl) lines.push(`SUBSCRIBE_GOOGLE_SHEET_URL = ${tomlString(google.sheetUrl)}`)
+  if (google.webhook) lines.push(`SUBSCRIBE_SHEET_WEBHOOK = ${tomlString(google.webhook)}`)
   writeFileSync(WRANGLER_TOML, `${lines.join('\n')}\n`)
 }
 
@@ -114,6 +125,21 @@ function credentialVars() {
   }
 }
 
+function googleVars(): Record<string, PagesEnvVar> {
+  const google = googleSubscribeConfig({
+    SUBSCRIBE_GOOGLE_FORM_ACTION: process.env.SUBSCRIBE_GOOGLE_FORM_ACTION,
+    SUBSCRIBE_GOOGLE_EMAIL_ENTRY: process.env.SUBSCRIBE_GOOGLE_EMAIL_ENTRY,
+    SUBSCRIBE_GOOGLE_SHEET_URL: process.env.SUBSCRIBE_GOOGLE_SHEET_URL,
+    SUBSCRIBE_SHEET_WEBHOOK: process.env.SUBSCRIBE_SHEET_WEBHOOK,
+  })
+  const next: Record<string, PagesEnvVar> = {}
+  if (google.formAction) next.SUBSCRIBE_GOOGLE_FORM_ACTION = { type: 'plain_text', value: google.formAction }
+  if (google.emailEntry) next.SUBSCRIBE_GOOGLE_EMAIL_ENTRY = { type: 'plain_text', value: google.emailEntry }
+  if (google.sheetUrl) next.SUBSCRIBE_GOOGLE_SHEET_URL = { type: 'plain_text', value: google.sheetUrl }
+  if (google.webhook) next.SUBSCRIBE_SHEET_WEBHOOK = { type: 'plain_text', value: google.webhook }
+  return next
+}
+
 function envVarsKeepingList(config: PagesConfig | undefined): Record<string, PagesEnvVar> {
   const existing = config?.env_vars ?? {}
   const next: Record<string, PagesEnvVar> = {}
@@ -121,7 +147,7 @@ function envVarsKeepingList(config: PagesConfig | undefined): Record<string, Pag
     if (key === 'SUBSCRIBERS_DATA' && value?.value === undefined) continue
     if (value?.value) next[key] = value
   }
-  Object.assign(next, credentialVars())
+  Object.assign(next, credentialVars(), googleVars())
   if (existing.SUBSCRIBERS_DATA?.value) {
     next.SUBSCRIBERS_DATA = existing.SUBSCRIBERS_DATA
   }

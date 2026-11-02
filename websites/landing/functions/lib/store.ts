@@ -1,3 +1,4 @@
+import { googleFormBody, googleSubscribeConfig, type GoogleSubscribeEnv } from '../../lib/google-subscribe'
 import {
   DEFAULT_EXPORT_KEY,
   EMAIL_RE,
@@ -60,7 +61,7 @@ export type SubscriberEnv = {
   CLOUDFLARE_API_TOKEN?: string
   CLOUDFLARE_ACCOUNT_ID?: string
   SUBSCRIBE_EXPORT_KEY?: string
-}
+} & GoogleSubscribeEnv
 
 export function json(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), {
@@ -232,7 +233,39 @@ function mergeRows(...groups: Subscriber[][]): Subscriber[] {
   return [...byEmail.values()]
 }
 
+async function saveToGoogleSheet(env: SubscriberEnv, email: string): Promise<SaveResult | null> {
+  const config = googleSubscribeConfig(env)
+  if (!config.enabled) return null
+
+  const createdAt = new Date().toISOString()
+
+  if (config.webhook) {
+    const res = await fetch(config.webhook, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, createdAt }),
+      redirect: 'follow',
+    })
+    if (!res.ok) throw new Error(`Google Sheet webhook failed (${res.status})`)
+    return { isNew: true, rows: [{ email, createdAt }] }
+  }
+
+  const res = await fetch(config.formAction, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: googleFormBody(email, config.emailEntry),
+    redirect: 'follow',
+  })
+  if (!res.ok && res.status >= 400) {
+    throw new Error(`Google Form subscribe failed (${res.status})`)
+  }
+  return { isNew: true, rows: [{ email, createdAt }] }
+}
+
 export async function saveSubscriber(env: SubscriberEnv, email: string): Promise<SaveResult | null> {
+  const google = await saveToGoogleSheet(env, email)
+  if (google) return google
+
   const saved: SaveResult[] = []
   if (env.SUBSCRIBERS) saved.push(await saveToKv(env.SUBSCRIBERS, email))
   if (canUsePagesStore(env)) {
@@ -293,6 +326,14 @@ export async function handleSubscribersExport(context: { request: Request; env: 
   const expected = context.env.SUBSCRIBE_EXPORT_KEY || DEFAULT_EXPORT_KEY
   if (!isAuthorizedExport(provided, expected)) {
     return json({ error: 'Unauthorized' }, 401)
+  }
+
+  const google = googleSubscribeConfig(context.env)
+  if (google.enabled) {
+    return json({
+      error: 'Subscribers are stored in the Google Sheet',
+      sheet: google.sheetUrl || undefined,
+    })
   }
 
   try {
