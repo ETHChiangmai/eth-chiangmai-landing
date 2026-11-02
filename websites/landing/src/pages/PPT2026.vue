@@ -181,10 +181,10 @@ carouselIndex.value = SLIDE_COUNT
 
 const timeline = [
   { period: 'Nov 1, 2026', event: 'Application Start', detail: '', multiDay: false, dotColor: '#DCA524' },
-  { period: 'Nov 11, 2026', event: 'Opening / Coliving', detail: 'Unconference & Coliving begins', multiDay: false, dotColor: '#C8366B' },
-  { period: 'Nov 14 – 15, 2026', event: 'Nomad Market Ⅰ', detail: '4Seas Nimman', multiDay: true, dotColor: '#7632C8', gradient: 'linear-gradient(180deg,#7632C8,#C8366B)' },
-  { period: 'Dec 25 – 26, 2026', event: 'Nomad Market Ⅱ', detail: '4Seas Nimman', multiDay: true, dotColor: '#C8366B', gradient: 'linear-gradient(180deg,#C8366B,#7632C8)' },
-  { period: 'Dec 26 – 27, 2026', event: 'Hackathon', detail: '$10,000+ prize pool', multiDay: true, dotColor: '#F0A030', gradient: 'linear-gradient(180deg,#F0A030,#C8366B)' },
+  { period: 'Nov 11, 2026', event: 'Opening / Coliving', detail: 'Unconference & Coliving begins', multiDay: false, dotColor: '#C8366B', link: { href: 'https://4seas.xyz/coliving', label: 'Coliving details' } },
+  { period: 'Nov 14 – 15, 2026', event: 'Nomad Market Ⅰ', detail: '4Seas Nimman', multiDay: true, dotColor: '#7632C8', gradient: 'linear-gradient(180deg,#7632C8,#C8366B)', link: { href: '/nomad-market', label: 'Nomad Market' } },
+  { period: 'Dec 25 – 26, 2026', event: 'Nomad Market Ⅱ', detail: '4Seas Nimman', multiDay: true, dotColor: '#C8366B', gradient: 'linear-gradient(180deg,#C8366B,#7632C8)', link: { href: '/nomad-market', label: 'Nomad Market' } },
+  { period: 'Dec 26 – 27, 2026', event: 'Hackathon', detail: '$10,000+ prize pool', multiDay: true, dotColor: '#F0A030', gradient: 'linear-gradient(180deg,#F0A030,#C8366B)', link: { href: 'https://chiangmai.devfolio.co/overview', label: 'Hackathon on Devfolio' } },
   { period: 'Dec 27, 2026', event: 'CROPS Summit', detail: 'Chiang Mai, Thailand', multiDay: false, dotColor: '#DCA524' },
 ]
 
@@ -581,10 +581,10 @@ onUnmounted(() => {
             A multi-month gathering in Chiang Mai for builders who hold Ethereum's core values — censorship resistance, opensource and free, privacy, and security — as non-negotiable.
           </p>
           <p class="text-xs mb-8 inline-flex items-center gap-1.5 uppercase tracking-widest" style="color: #c8650a"><i class="fa-solid fa-location-dot"></i> 4Seas Nimman, Chiang Mai</p>
-          <div class="flex flex-wrap justify-center gap-4">
-            <a href="https://4seas.xyz/coliving" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-white text-sm font-semibold px-7 py-3.5 rounded-full hover:opacity-90 transition-opacity" style="background: #D9731A; box-shadow: 0 4px 24px #D9731A44"><i class="fa-solid fa-house text-xs"></i> Co-living</a>
-            <RouterLink to="/nomad-market" class="inline-flex items-center gap-2 text-white text-sm font-semibold px-7 py-3.5 rounded-full hover:opacity-90 transition-opacity" style="background: #C8366B; box-shadow: 0 4px 24px #C8366B44"><i class="fa-solid fa-store text-xs"></i> Nomad Market</RouterLink>
-            <RouterLink to="/participate" class="inline-flex items-center gap-2 text-white text-sm font-semibold px-7 py-3.5 rounded-full hover:opacity-90 transition-opacity" style="background: #7632C8; box-shadow: 0 4px 24px #7632C844">Participate →</RouterLink>
+          <div class="flex flex-wrap justify-center gap-2.5">
+            <a href="https://4seas.xyz/coliving" target="_blank" rel="noopener noreferrer" class="hero-btn hero-btn-coliving"><i class="fa-solid fa-house text-[10px]"></i> Co-living</a>
+            <RouterLink to="/nomad-market" class="hero-btn hero-btn-market"><i class="fa-solid fa-store text-[10px]"></i> Nomad Market</RouterLink>
+            <RouterLink to="/participate" class="hero-btn hero-btn-participate">Participate →</RouterLink>
           </div>
         </div>
       </div>
@@ -686,6 +686,12 @@ onUnmounted(() => {
                   <p v-if="item.detail" class="text-sm leading-relaxed text-[#0d0918]/50">{{ item.detail }}</p>
                   <span v-if="item.multiDay" class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2 py-0.5 rounded-full"
                     :style="{ background: `${item.dotColor}18`, color: item.dotColor, border: `1px solid ${item.dotColor}30` }">multi-day</span>
+                  <div v-if="item.link" class="mt-2.5">
+                    <RouterLink v-if="item.link.href.startsWith('/')" :to="item.link.href"
+                      class="timeline-link" :style="{ color: item.dotColor }">{{ item.link.label }} →</RouterLink>
+                    <a v-else :href="item.link.href" target="_blank" rel="noopener noreferrer"
+                      class="timeline-link" :style="{ color: item.dotColor }">{{ item.link.label }} ↗</a>
+                  </div>
                 </div>
               </div>
               <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 z-10 items-center justify-center" :style="{ top: item.multiDay ? '1rem' : '1.5rem' }">
@@ -1017,6 +1023,50 @@ onUnmounted(() => {
   mix-blend-mode: multiply;
   opacity: 0.85;
 }
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  height: 2.25rem;
+  padding: 0 1rem;
+  border-radius: 0.375rem;
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+  background-size: 200% 100%;
+  background-position: 0% 50%;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  transition:
+    background-position 0.45s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.hero-btn:hover {
+  background-position: 100% 50%;
+  transform: translateY(-1px);
+}
+.hero-btn:active {
+  transform: translateY(0);
+}
+.hero-btn-coliving {
+  background-image: linear-gradient(110deg, #f0a030 0%, #d9731a 50%, #c8366b 100%);
+}
+.hero-btn-coliving:hover {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 6px 16px -6px #d9731aaa;
+}
+.hero-btn-market {
+  background-image: linear-gradient(110deg, #e0457b 0%, #c8366b 50%, #7632c8 100%);
+}
+.hero-btn-market:hover {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 6px 16px -6px #c8366baa;
+}
+.hero-btn-participate {
+  background-image: linear-gradient(110deg, #9b5ce0 0%, #7632c8 50%, #c8366b 100%);
+}
+.hero-btn-participate:hover {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 6px 16px -6px #7632c8aa;
+}
 .carousel-btn {
   position: absolute;
   top: 50%;
@@ -1035,6 +1085,20 @@ onUnmounted(() => {
   backdrop-filter: blur(8px);
 }
 .carousel-btn:hover { transform: translateY(-50%) scale(1.1); }
+.timeline-link {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.2s ease, opacity 0.2s ease;
+  opacity: 0.85;
+}
+.timeline-link:hover {
+  opacity: 1;
+  text-decoration-color: currentColor;
+}
 .timeline-card {
   background: rgba(255, 255, 255, 0.78);
   backdrop-filter: blur(10px);
