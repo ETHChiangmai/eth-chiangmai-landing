@@ -52,6 +52,7 @@ import ImgSpeakerAndrej from '@/assets/speakers/speaker-andrej-sanctuary.png'
 import ImgSpeakerSachin from '@/assets/speakers/speaker-sachin.png'
 import ImgSpeakerClement from '@/assets/speakers/speaker-clement.png'
 import ImgSpeakerMichel from '@/assets/speakers/speaker-michel-bauwens.png'
+import ImgSpeakerKoss from '@/assets/speakers/speaker-koss.jpg'
 import ImgLookbackVitalik from '@/assets/lookback-2025/01-vitalik.jpg'
 import ImgLookbackVitalikCowork from '@/assets/lookback-2025/02-vitalik-cowork.jpg'
 import ImgLookbackCommunity from '@/assets/lookback-2025/03-community-session.jpg'
@@ -194,6 +195,7 @@ const speakers = [
   { name: '0xSachin', role: 'Co-founder of Peer', tag: '', img: ImgSpeakerSachin },
   { name: 'Andrej', role: 'Organizational Designer at Sanctuary', tag: '', img: ImgSpeakerAndrej },
   { name: 'Clément Lesaege', role: 'Co-Founder and CTO, Kleros', tag: '', img: ImgSpeakerClement },
+  { name: 'Koss', role: 'ETHSwarm', tag: '', img: ImgSpeakerKoss },
   { name: 'TBA', role: 'Speaker', tag: 'Soon', img: '' },
 ]
 
