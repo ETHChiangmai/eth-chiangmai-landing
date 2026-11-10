@@ -52,6 +52,7 @@ import ImgSpeakerAndrej from '@/assets/speakers/speaker-andrej-sanctuary.png'
 import ImgSpeakerSachin from '@/assets/speakers/speaker-sachin.png'
 import ImgSpeakerClement from '@/assets/speakers/speaker-clement.png'
 import ImgSpeakerMichel from '@/assets/speakers/speaker-michel-bauwens.png'
+import ImgSpeakerKoss from '@/assets/speakers/speaker-koss.jpg'
 import ImgLookbackVitalik from '@/assets/lookback-2025/01-vitalik.jpg'
 import ImgLookbackVitalikCowork from '@/assets/lookback-2025/02-vitalik-cowork.jpg'
 import ImgLookbackCommunity from '@/assets/lookback-2025/03-community-session.jpg'
@@ -194,6 +195,7 @@ const speakers = [
   { name: '0xSachin', role: 'Co-founder of Peer', tag: '', img: ImgSpeakerSachin },
   { name: 'Andrej', role: 'Organizational Designer at Sanctuary', tag: '', img: ImgSpeakerAndrej },
   { name: 'Clément Lesaege', role: 'Co-Founder and CTO, Kleros', tag: '', img: ImgSpeakerClement },
+  { name: 'Koss', role: 'ETHSwarm', tag: '', img: ImgSpeakerKoss },
   { name: 'TBA', role: 'Speaker', tag: 'Soon', img: '' },
 ]
 
@@ -233,6 +235,10 @@ const majorPartners: Array<{ name: string; logo: string; url?: string; scale?: n
 
 const paymentPartner = { name: 'Peer', logo: LogoPeer, url: 'https://peer.xyz' }
 
+const supportingPartners: Array<{ name: string; logo: string; url?: string; scale?: number }> = [
+  { name: 'Kleros', logo: LogoKleros, url: 'https://kleros.io' },
+]
+
 const communityPartners: Array<{ name: string; logo: string; scale?: number }> = [
   { name: 'Zucity', logo: LogoZucity },
   { name: 'ECF Network', logo: LogoEcfNetwork },
@@ -240,7 +246,6 @@ const communityPartners: Array<{ name: string; logo: string; scale?: number }> =
   { name: 'Devfolio', logo: LogoDevfolio },
   { name: 'Zuitzerland', logo: LogoZuitz },
   { name: 'SNZ', logo: LogoSNZ, scale: 0.65 },
-  { name: 'Kleros', logo: LogoKleros },
   { name: 'NEAR', logo: LogoNear },
   { name: 'Tangem', logo: LogoTangem, scale: 0.6 },
   { name: 'ZuCity Japan', logo: LogoZucityJapan },
@@ -809,20 +814,43 @@ onUnmounted(() => {
           </a>
         </div>
 
-        <!-- Payment partner -->
-        <div class="text-center mb-10 mt-16">
-          <p class="text-xs font-bold tracking-[0.22em] uppercase mb-3 gradient-text-cool inline-block">✦ Nomad Market Co-Host</p>
-          <h2 class="font-display text-2xl md:text-3xl text-[#0d0918]">Official Payment Partner</h2>
-        </div>
-        <div class="flex justify-center mb-12">
-          <a
-            :href="paymentPartner.url"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="w-[calc((100%-2rem)/3)] aspect-[4/3] rounded-2xl flex items-center justify-center cursor-pointer transition-all hover:scale-105 border p-5 partner-tile-major"
-            :title="paymentPartner.name">
-            <img :src="paymentPartner.logo" :alt="paymentPartner.name" class="w-full h-full object-contain" />
-          </a>
+        <!-- Payment partner + Supporting Partners (one row) -->
+        <div class="grid grid-cols-2 gap-4 mt-16 mb-12">
+          <div class="flex flex-col items-center h-full">
+            <div class="text-center mb-6 flex-1 flex flex-col justify-end">
+              <p class="text-[10px] md:text-xs font-bold tracking-[0.22em] uppercase mb-3 gradient-text-cool inline-block">✦ Nomad Market Co-Host</p>
+              <h2 class="font-display text-lg md:text-3xl text-[#0d0918]">Official Payment Partner</h2>
+            </div>
+            <a
+              :href="paymentPartner.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="w-[calc((200%-1rem)/3)] aspect-[4/3] overflow-hidden rounded-2xl flex items-center justify-center cursor-pointer transition-all hover:scale-105 border p-5 partner-tile-major"
+              :title="paymentPartner.name">
+              <img :src="paymentPartner.logo" :alt="paymentPartner.name" class="w-full h-full object-contain" />
+            </a>
+          </div>
+          <div class="flex flex-col items-center h-full">
+            <div class="text-center mb-6 flex-1 flex flex-col justify-end">
+              <p class="text-[10px] md:text-xs font-bold tracking-[0.22em] uppercase mb-3 gradient-text-cool inline-block">✦ Backed By</p>
+              <h2 class="font-display text-lg md:text-3xl text-[#0d0918]">Supporting Partners</h2>
+            </div>
+            <div class="w-full flex flex-col items-center gap-4">
+              <a v-for="p in supportingPartners" :key="p.name"
+                :href="p.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="w-[calc((200%-1rem)/3)] aspect-[4/3] overflow-hidden rounded-2xl flex items-center justify-center cursor-pointer transition-all hover:scale-105 border p-5 partner-tile-major"
+                :title="p.name">
+                <img
+                  :src="p.logo"
+                  :alt="p.name"
+                  class="w-full h-full object-contain"
+                  :style="p.scale ? { transform: `scale(${p.scale})` } : undefined"
+                />
+              </a>
+            </div>
+          </div>
         </div>
 
         <!-- Community Partners -->
