@@ -233,6 +233,10 @@ const majorPartners: Array<{ name: string; logo: string; url?: string; scale?: n
 
 const paymentPartner = { name: 'Peer', logo: LogoPeer, url: 'https://peer.xyz' }
 
+const supportingPartners: Array<{ name: string; logo: string; url?: string; scale?: number }> = [
+  { name: 'Kleros', logo: LogoKleros, url: 'https://kleros.io' },
+]
+
 const communityPartners: Array<{ name: string; logo: string; scale?: number }> = [
   { name: 'Zucity', logo: LogoZucity },
   { name: 'ECF Network', logo: LogoEcfNetwork },
@@ -240,7 +244,6 @@ const communityPartners: Array<{ name: string; logo: string; scale?: number }> =
   { name: 'Devfolio', logo: LogoDevfolio },
   { name: 'Zuitzerland', logo: LogoZuitz },
   { name: 'SNZ', logo: LogoSNZ, scale: 0.65 },
-  { name: 'Kleros', logo: LogoKleros },
   { name: 'NEAR', logo: LogoNear },
   { name: 'Tangem', logo: LogoTangem, scale: 0.6 },
   { name: 'ZuCity Japan', logo: LogoZucityJapan },
@@ -822,6 +825,27 @@ onUnmounted(() => {
             class="w-[calc((100%-2rem)/3)] aspect-[4/3] rounded-2xl flex items-center justify-center cursor-pointer transition-all hover:scale-105 border p-5 partner-tile-major"
             :title="paymentPartner.name">
             <img :src="paymentPartner.logo" :alt="paymentPartner.name" class="w-full h-full object-contain" />
+          </a>
+        </div>
+
+        <!-- Supporting Partners -->
+        <div class="text-center mb-10 mt-16">
+          <p class="text-xs font-bold tracking-[0.22em] uppercase mb-3 gradient-text-cool inline-block">✦ Backed By</p>
+          <h2 class="font-display text-2xl md:text-3xl text-[#0d0918]">Supporting Partners</h2>
+        </div>
+        <div class="flex flex-wrap justify-center gap-4 mb-12">
+          <a v-for="p in supportingPartners" :key="p.name"
+            :href="p.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-[calc((100%-2rem)/3)] sm:w-[calc((100%-3rem)/4)] aspect-[4/3] rounded-2xl flex items-center justify-center cursor-pointer transition-all hover:scale-105 border p-5 partner-tile-major"
+            :title="p.name">
+            <img
+              :src="p.logo"
+              :alt="p.name"
+              class="w-full h-full object-contain"
+              :style="p.scale ? { transform: `scale(${p.scale})` } : undefined"
+            />
           </a>
         </div>
 
