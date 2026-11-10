@@ -814,8 +814,8 @@ onUnmounted(() => {
 
         <!-- Payment partner + Supporting Partners (one row) -->
         <div class="grid grid-cols-2 gap-4 md:gap-8 mt-16 mb-12">
-          <div class="flex flex-col items-center">
-            <div class="text-center mb-6">
+          <div class="flex flex-col items-center h-full">
+            <div class="text-center mb-6 flex-1 flex flex-col justify-end">
               <p class="text-[10px] md:text-xs font-bold tracking-[0.22em] uppercase mb-3 gradient-text-cool inline-block">✦ Nomad Market Co-Host</p>
               <h2 class="font-display text-lg md:text-3xl text-[#0d0918]">Official Payment Partner</h2>
             </div>
@@ -823,27 +823,27 @@ onUnmounted(() => {
               :href="paymentPartner.url"
               target="_blank"
               rel="noopener noreferrer"
-              class="w-full max-w-[18rem] aspect-[4/3] rounded-2xl flex items-center justify-center cursor-pointer transition-all hover:scale-105 border p-5 partner-tile-major"
+              class="w-full max-w-[18rem] aspect-[4/3] overflow-hidden rounded-2xl flex items-center justify-center cursor-pointer transition-all hover:scale-105 border p-5 partner-tile-major"
               :title="paymentPartner.name">
-              <img :src="paymentPartner.logo" :alt="paymentPartner.name" class="w-full h-full object-contain" />
+              <img :src="paymentPartner.logo" :alt="paymentPartner.name" class="max-w-full max-h-full object-contain" />
             </a>
           </div>
-          <div class="flex flex-col items-center">
-            <div class="text-center mb-6">
+          <div class="flex flex-col items-center h-full">
+            <div class="text-center mb-6 flex-1 flex flex-col justify-end">
               <p class="text-[10px] md:text-xs font-bold tracking-[0.22em] uppercase mb-3 gradient-text-cool inline-block">✦ Backed By</p>
               <h2 class="font-display text-lg md:text-3xl text-[#0d0918]">Supporting Partners</h2>
             </div>
-            <div class="w-full flex flex-wrap justify-center gap-4">
+            <div class="w-full flex flex-col items-center gap-4">
               <a v-for="p in supportingPartners" :key="p.name"
                 :href="p.url"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="w-full max-w-[18rem] aspect-[4/3] rounded-2xl flex items-center justify-center cursor-pointer transition-all hover:scale-105 border p-5 partner-tile-major"
+                class="w-full max-w-[18rem] aspect-[4/3] overflow-hidden rounded-2xl flex items-center justify-center cursor-pointer transition-all hover:scale-105 border p-5 partner-tile-major"
                 :title="p.name">
                 <img
                   :src="p.logo"
                   :alt="p.name"
-                  class="w-full h-full object-contain"
+                  class="max-w-full max-h-full object-contain"
                   :style="p.scale ? { transform: `scale(${p.scale})` } : undefined"
                 />
               </a>
