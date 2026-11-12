@@ -53,6 +53,20 @@ import ImgSpeakerSachin from '@/assets/speakers/speaker-sachin.png'
 import ImgSpeakerClement from '@/assets/speakers/speaker-clement.png'
 import ImgSpeakerMichel from '@/assets/speakers/speaker-michel-bauwens.png'
 import ImgSpeakerKoss from '@/assets/speakers/speaker-koss.jpg'
+import ImgSpeakerJasonRyer from '@/assets/speakers/speaker-jason-ryer.png'
+import ImgSpeakerRayNg from '@/assets/speakers/speaker-ray-ng.jpg'
+import ImgSpeakerNathan from '@/assets/speakers/speaker-nathan.jpg'
+import ImgSpeakerMhok from '@/assets/speakers/speaker-mhok.jpg'
+import ImgSpeakerFey from '@/assets/speakers/speaker-fey.jpg'
+import ImgSpeakerWillo from '@/assets/speakers/speaker-willo.jpg'
+import ImgSpeakerMarvin from '@/assets/speakers/speaker-marvin.jpg'
+import ImgSpeakerNat from '@/assets/speakers/speaker-nat.jpg'
+import ImgSpeakerTin from '@/assets/speakers/speaker-tin.jpg'
+import ImgSpeakerDev from '@/assets/speakers/speaker-dev.jpg'
+import ImgSpeakerAunya from '@/assets/speakers/speaker-aunya.jpg'
+import ImgSpeakerCha from '@/assets/speakers/speaker-cha.jpg'
+import ImgSpeakerDebby from '@/assets/speakers/speaker-debby.jpg'
+import ImgSpeakerJohn from '@/assets/speakers/speaker-john.jpg'
 import ImgLookbackVitalik from '@/assets/lookback-2025/01-vitalik.jpg'
 import ImgLookbackVitalikCowork from '@/assets/lookback-2025/02-vitalik-cowork.jpg'
 import ImgLookbackCommunity from '@/assets/lookback-2025/03-community-session.jpg'
@@ -196,6 +210,20 @@ const speakers = [
   { name: 'Andrej', role: 'Organizational Designer at Sanctuary', tag: '', img: ImgSpeakerAndrej },
   { name: 'Clément Lesaege', role: 'Co-Founder and CTO, Kleros', tag: '', img: ImgSpeakerClement },
   { name: 'Koss', role: 'ETHSwarm', tag: '', img: ImgSpeakerKoss },
+  { name: 'Jason Ryer', role: 'Zen Strength', tag: '', img: ImgSpeakerJasonRyer },
+  { name: 'Ray Ng', role: 'Alt Tab Capital', tag: '', img: ImgSpeakerRayNg },
+  { name: 'Nathan', role: 'Psychotherapist', tag: '', img: ImgSpeakerNathan },
+  { name: 'Nat', role: 'Pudgy Penguins APAC', tag: '', img: ImgSpeakerNat },
+  { name: 'Tin', role: 'ETHPH', tag: '', img: ImgSpeakerTin },
+  { name: 'Mhok', role: 'Team1 Chiangmai', tag: '', img: ImgSpeakerMhok },
+  { name: 'Fey', role: 'AI Goddesses', tag: '', img: ImgSpeakerFey },
+  { name: 'Willo', role: 'AI Goddesses', tag: '', img: ImgSpeakerWillo },
+  { name: 'Dev', role: 'DigiCNX', tag: '', img: ImgSpeakerDev },
+  { name: 'Aunya', role: 'Attika', tag: '', img: ImgSpeakerAunya },
+  { name: 'Marvin', role: 'Yellow', tag: '', img: ImgSpeakerMarvin },
+  { name: 'Cha', role: 'Chiang Mai Original', tag: '', img: ImgSpeakerCha },
+  { name: 'Debby', role: 'Xenoria City', tag: '', img: ImgSpeakerDebby },
+  { name: 'John', role: 'Alt Coliving', tag: '', img: ImgSpeakerJohn },
   { name: 'TBA', role: 'Speaker', tag: 'Soon', img: '' },
 ]
 
@@ -589,6 +617,7 @@ onUnmounted(() => {
           <div class="flex flex-wrap justify-center gap-2.5">
             <a href="https://4seas.xyz/coliving" target="_blank" rel="noopener noreferrer" class="hero-btn hero-btn-coliving"><i class="fa-solid fa-house text-[10px]"></i> Co-living</a>
             <RouterLink to="/nomad-market" class="hero-btn hero-btn-market"><i class="fa-solid fa-store text-[10px]"></i> Nomad Market</RouterLink>
+            <a href="https://chiangmai.devfolio.co/overview" target="_blank" rel="noopener noreferrer" class="hero-btn hero-btn-hackathon"><i class="fa-solid fa-code text-[10px]"></i> Hackathon</a>
             <RouterLink to="/participate" class="hero-btn hero-btn-participate">Participate →</RouterLink>
           </div>
         </div>
@@ -724,16 +753,16 @@ onUnmounted(() => {
           <h2 class="font-display text-4xl md:text-5xl text-[#0d0918]">Featured Speakers</h2>
           <p class="mt-4 text-sm text-[#0d0918]/60 max-w-md mx-auto">More announcements coming as we get closer to November.</p>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
+        <div class="grid grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
           <div v-for="(person, i) in speakers" :key="i" class="person-card">
             <div class="aspect-square relative" :class="!person.img || person.name === 'TBA' ? 'bg-[#0d0918]/5' : ''">
               <div v-if="!person.img || person.name === 'TBA'" class="w-full h-full flex items-center justify-center"><span class="text-4xl opacity-10">◇</span></div>
               <img v-else :src="person.img" :alt="person.name" class="w-full h-full object-cover" :style="person.imgPosition ? { objectPosition: person.imgPosition } : undefined" />
               <span v-if="person.tag" class="absolute top-3 right-3 text-[9px] font-bold tracking-widest uppercase px-2 py-0.5 rounded-full text-white" style="background: #C8366B">{{ person.tag }}</span>
             </div>
-            <div class="p-4">
-              <p class="font-semibold text-sm text-[#0d0918] font-display">{{ person.name }}</p>
-              <p class="text-xs mt-0.5 text-[#0d0918]/50">{{ person.role }}</p>
+            <div class="p-2.5 sm:p-3 lg:p-4">
+              <p class="font-semibold text-[11px] sm:text-xs lg:text-sm text-[#0d0918] font-display leading-tight">{{ person.name }}</p>
+              <p class="text-[10px] sm:text-[11px] lg:text-xs mt-0.5 text-[#0d0918]/50 leading-tight">{{ person.role }}</p>
             </div>
           </div>
         </div>
@@ -1088,6 +1117,12 @@ onUnmounted(() => {
 }
 .hero-btn-market:hover {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 6px 16px -6px #c8366baa;
+}
+.hero-btn-hackathon {
+  background-image: linear-gradient(110deg, #dca524 0%, #f0a030 50%, #d9731a 100%);
+}
+.hero-btn-hackathon:hover {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 6px 16px -6px #f0a030aa;
 }
 .hero-btn-participate {
   background-image: linear-gradient(110deg, #9b5ce0 0%, #7632c8 50%, #c8366b 100%);
