@@ -40,7 +40,7 @@ import LogoTangem from '@/assets/partners/tangem.png'
 import LogoChiangMaiOriginal from '@/assets/partners/chiang-mai-original.png'
 import LogoZenStrength from '@/assets/partners/zen-strength.png'
 import LogoPreserve from '@/assets/partners/preserve.png'
-import LogoPudgyMedia from '@/assets/partners/pudgy-media.png'
+import LogoPudgyPenguins from '@/assets/partners/pudgy-penguins.webp'
 import LogoNico from '@/assets/partners/nico.webp'
 import LogoOpenBuild from '@/assets/partners/openbuild.png'
 import LogoTheMu from '@/assets/partners/the-mu.png'
@@ -297,7 +297,7 @@ const communityPartners: Array<{ name: string; logo: string; scale?: number }> =
   { name: 'Chiang Mai Original', logo: LogoChiangMaiOriginal, scale: 0.85 },
   { name: 'Zen Strength', logo: LogoZenStrength, scale: 0.8 },
   { name: 'Preserve Integrative Mental Health', logo: LogoPreserve },
-  { name: 'Pudgy Media', logo: LogoPudgyMedia },
+  { name: 'Pudgy Penguins', logo: LogoPudgyPenguins },
   { name: 'Nico', logo: LogoNico, scale: 0.9 },
   { name: 'OpenBuild', logo: LogoOpenBuild },
   { name: 'The Mu', logo: LogoTheMu },
