@@ -42,6 +42,10 @@ import LogoZenStrength from '@/assets/partners/zen-strength.png'
 import LogoPreserve from '@/assets/partners/preserve.png'
 import LogoPudgyMedia from '@/assets/partners/pudgy-media.png'
 import LogoNico from '@/assets/partners/nico.webp'
+import LogoOpenBuild from '@/assets/partners/openbuild.png'
+import LogoTheMu from '@/assets/partners/the-mu.png'
+import LogoSpiderPool from '@/assets/partners/spider-pool.png'
+import LogoSocialLayer from '@/assets/partners/social-layer.png'
 import IconX from '@/assets/social/social-twitter.svg'
 import IconTelegram from '@/assets/social/social-telegram.svg'
 import IconLinkedIn from '@/assets/social/social-linkedin.svg'
@@ -295,6 +299,10 @@ const communityPartners: Array<{ name: string; logo: string; scale?: number }> =
   { name: 'Preserve Integrative Mental Health', logo: LogoPreserve },
   { name: 'Pudgy Media', logo: LogoPudgyMedia },
   { name: 'Nico', logo: LogoNico, scale: 0.9 },
+  { name: 'OpenBuild', logo: LogoOpenBuild },
+  { name: 'The Mu', logo: LogoTheMu },
+  { name: 'Spider Pool', logo: LogoSpiderPool },
+  { name: 'Social Layer', logo: LogoSocialLayer },
 ]
 
 const team: Array<{
