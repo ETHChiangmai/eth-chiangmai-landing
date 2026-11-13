@@ -37,6 +37,11 @@ import LogoKleros from '@/assets/partners/kleros.svg'
 import LogoLogos from '@/assets/partners/logos.png'
 import LogoDevfolio from '@/assets/partners/devfolio.png'
 import LogoTangem from '@/assets/partners/tangem.png'
+import LogoChiangMaiOriginal from '@/assets/partners/chiang-mai-original.png'
+import LogoZenStrength from '@/assets/partners/zen-strength.png'
+import LogoPreserve from '@/assets/partners/preserve.png'
+import LogoPudgyMedia from '@/assets/partners/pudgy-media.png'
+import LogoNico from '@/assets/partners/nico.webp'
 import IconX from '@/assets/social/social-twitter.svg'
 import IconTelegram from '@/assets/social/social-telegram.svg'
 import IconLinkedIn from '@/assets/social/social-linkedin.svg'
@@ -285,6 +290,11 @@ const communityPartners: Array<{ name: string; logo: string; scale?: number }> =
   { name: 'ETH Tokyo', logo: LogoEthTokyo },
   { name: 'ETH Singapore', logo: LogoEthSingapore },
   { name: 'ETH Shenzhen', logo: LogoEthShenzhen },
+  { name: 'Chiang Mai Original', logo: LogoChiangMaiOriginal, scale: 0.85 },
+  { name: 'Zen Strength', logo: LogoZenStrength, scale: 0.8 },
+  { name: 'Preserve Integrative Mental Health', logo: LogoPreserve },
+  { name: 'Pudgy Media', logo: LogoPudgyMedia },
+  { name: 'Nico', logo: LogoNico, scale: 0.9 },
 ]
 
 const team: Array<{
@@ -753,16 +763,16 @@ onUnmounted(() => {
           <h2 class="font-display text-4xl md:text-5xl text-[#0d0918]">Featured Speakers</h2>
           <p class="mt-4 text-sm text-[#0d0918]/60 max-w-md mx-auto">More announcements coming as we get closer to November.</p>
         </div>
-        <div class="grid grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
+        <div class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 lg:gap-4">
           <div v-for="(person, i) in speakers" :key="i" class="person-card">
             <div class="aspect-square relative" :class="!person.img || person.name === 'TBA' ? 'bg-[#0d0918]/5' : ''">
               <div v-if="!person.img || person.name === 'TBA'" class="w-full h-full flex items-center justify-center"><span class="text-4xl opacity-10">◇</span></div>
               <img v-else :src="person.img" :alt="person.name" class="w-full h-full object-cover" :style="person.imgPosition ? { objectPosition: person.imgPosition } : undefined" />
-              <span v-if="person.tag" class="absolute top-3 right-3 text-[9px] font-bold tracking-widest uppercase px-2 py-0.5 rounded-full text-white" style="background: #C8366B">{{ person.tag }}</span>
+              <span v-if="person.tag" class="absolute top-2 right-2 text-[8px] font-bold tracking-widest uppercase px-2 py-0.5 rounded-full text-white" style="background: #C8366B">{{ person.tag }}</span>
             </div>
-            <div class="p-2.5 sm:p-3 lg:p-4">
-              <p class="font-semibold text-[11px] sm:text-xs lg:text-sm text-[#0d0918] font-display leading-tight">{{ person.name }}</p>
-              <p class="text-[10px] sm:text-[11px] lg:text-xs mt-0.5 text-[#0d0918]/50 leading-tight">{{ person.role }}</p>
+            <div class="p-2.5 sm:p-3">
+              <p class="font-semibold text-[11px] sm:text-xs text-[#0d0918] font-display leading-tight">{{ person.name }}</p>
+              <p class="text-[10px] sm:text-[11px] mt-0.5 text-[#0d0918]/50 leading-tight">{{ person.role }}</p>
             </div>
           </div>
         </div>
