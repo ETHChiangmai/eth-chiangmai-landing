@@ -11,19 +11,6 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 
 const cards = [
   {
-    id: 'resident',
-    accent: '#c8366b',
-    accentBg: 'rgba(200,54,107,0.07)',
-    accentBorder: 'rgba(200,54,107,0.18)',
-    icon: 'fa-solid fa-house',
-    label: 'Resident',
-    tagline: 'Stay for the season',
-    desc: 'Immerse yourself for weeks or months. Live, work, and build alongside the Ethereum community in Chiang Mai. Full access to the Unconference, Bootcamp, and all community spaces.',
-    cta: 'Apply as Resident',
-    to: '/participate/resident',
-    disabled: false,
-  },
-  {
     id: 'speaker',
     accent: '#7632c8',
     accentBg: 'rgba(118,50,200,0.07)',
@@ -112,7 +99,7 @@ const cards = [
 
     <!-- CARDS GRID -->
     <section class="py-20 px-6">
-      <div class="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
+      <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
         <div
           v-for="card in cards"
           :key="card.id"
