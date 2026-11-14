@@ -92,7 +92,7 @@ const cards = [
           Ways to Participate
         </h1>
         <p class="text-base md:text-lg text-white/55 leading-relaxed max-w-xl mx-auto">
-          Choose how you want to show up. Every role matters — from long-term residents to sponsors who make it all possible.
+          Choose how you want to show up. Every role matters — from speakers and makers to sponsors who make it all possible.
         </p>
       </div>
     </section>
