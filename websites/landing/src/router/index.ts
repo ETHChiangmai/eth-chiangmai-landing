@@ -4,7 +4,6 @@ import Media2026 from '@/pages/Media2026.vue'
 import NomadMarket from '@/pages/NomadMarket.vue'
 import PPT2026 from '@/pages/PPT2026.vue'
 import Participate from '@/pages/Participate.vue'
-import ResidentForm from '@/pages/ResidentForm.vue'
 import SpeakerForm from '@/pages/SpeakerForm.vue'
 import SponsorForm from '@/pages/SponsorForm.vue'
 
@@ -16,7 +15,7 @@ const router = createRouter({
     { path: '/media/2026', component: Media2026 },
     { path: '/nomad-market', component: NomadMarket },
     { path: '/participate', component: Participate },
-    { path: '/participate/resident', component: ResidentForm },
+    { path: '/participate/resident', redirect: '/participate' },
     { path: '/participate/speaker', component: SpeakerForm },
     { path: '/participate/sponsor', component: SponsorForm },
   ],
