@@ -275,7 +275,7 @@ const paymentPartner = { name: 'Peer', logo: LogoPeer, url: 'https://peer.xyz' }
 
 const supportingPartners: Array<{ name: string; logo: string; url?: string; scale?: number; bg?: string }> = [
   { name: 'Kleros', logo: LogoKleros, url: 'https://kleros.io' },
-  { name: 'SNOWMOON', logo: LogoSnowmoon, bg: '#000' },
+  { name: 'SNOWMOON', logo: LogoSnowmoon, url: 'https://snowmoon.pro/' },
 ]
 
 const communityPartners: Array<{ name: string; logo: string; scale?: number }> = [
