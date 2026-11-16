@@ -34,6 +34,7 @@ import LogoPeer from '@/assets/partners/peer.png'
 import LogoSNZ from '@/assets/partners/snz.svg'
 import LogoNear from '@/assets/partners/near.png'
 import LogoKleros from '@/assets/partners/kleros.svg'
+import LogoSnowmoon from '@/assets/partners/snowmoon.webp'
 import LogoLogos from '@/assets/partners/logos.png'
 import LogoDevfolio from '@/assets/partners/devfolio.png'
 import LogoTangem from '@/assets/partners/tangem.png'
@@ -207,7 +208,7 @@ const timeline = [
   { period: 'Nov 1, 2026', event: 'Application Start', detail: '', multiDay: false, dotColor: '#DCA524' },
   { period: 'Nov 11, 2026', event: 'Opening / Coliving', detail: 'Unconference & Coliving begins', multiDay: false, dotColor: '#C8366B', link: { href: 'https://4seas.xyz/coliving', label: 'Coliving details' } },
   { period: 'Nov 14 – 15, 2026', event: 'Nomad Market Ⅰ', detail: '4Seas Nimman', multiDay: true, dotColor: '#7632C8', gradient: 'linear-gradient(180deg,#7632C8,#C8366B)', link: { href: '/nomad-market', label: 'Nomad Market' } },
-  { period: 'Dec 25 – 26, 2026', event: 'Nomad Market Ⅱ', detail: '4Seas Nimman', multiDay: true, dotColor: '#C8366B', gradient: 'linear-gradient(180deg,#C8366B,#7632C8)', link: { href: '/nomad-market', label: 'Nomad Market' } },
+  { period: 'Dec 18 – 19, 2026', event: 'Nomad Market Ⅱ', detail: '4Seas Nimman', multiDay: true, dotColor: '#C8366B', gradient: 'linear-gradient(180deg,#C8366B,#7632C8)', link: { href: '/nomad-market', label: 'Nomad Market' } },
   { period: 'Dec 26 – 27, 2026', event: 'Hackathon', detail: '$10,000+ prize pool', multiDay: true, dotColor: '#F0A030', gradient: 'linear-gradient(180deg,#F0A030,#C8366B)', link: { href: 'https://chiangmai.devfolio.co/overview', label: 'Hackathon on Devfolio' } },
   { period: 'Dec 27, 2026', event: 'CROPS Summit', detail: 'Chiang Mai, Thailand', multiDay: false, dotColor: '#DCA524' },
 ]
@@ -272,8 +273,9 @@ const majorPartners: Array<{ name: string; logo: string; url?: string; scale?: n
 
 const paymentPartner = { name: 'Peer', logo: LogoPeer, url: 'https://peer.xyz' }
 
-const supportingPartners: Array<{ name: string; logo: string; url?: string; scale?: number }> = [
+const supportingPartners: Array<{ name: string; logo: string; url?: string; scale?: number; bg?: string }> = [
   { name: 'Kleros', logo: LogoKleros, url: 'https://kleros.io' },
+  { name: 'SNOWMOON', logo: LogoSnowmoon, bg: '#000' },
 ]
 
 const communityPartners: Array<{ name: string; logo: string; scale?: number }> = [
@@ -861,33 +863,35 @@ onUnmounted(() => {
           </a>
         </div>
 
-        <!-- Payment partner + Supporting Partners (one row) -->
-        <div class="grid grid-cols-2 gap-4 mt-16 mb-12">
-          <div class="flex flex-col items-center h-full">
+        <!-- Payment partner + Supporting Partners (one row, same tile grid as Major Partners) -->
+        <div class="grid grid-cols-3 gap-4 mt-16 mb-12">
+          <div class="flex flex-col h-full">
             <div class="text-center mb-6 flex-1 flex flex-col justify-end">
-              <p class="text-[10px] md:text-xs font-bold tracking-[0.22em] uppercase mb-3 gradient-text-cool inline-block">✦ Nomad Market Co-Host</p>
-              <h2 class="font-display text-lg md:text-3xl text-[#0d0918]">Official Payment Partner</h2>
+              <p class="text-[9px] md:text-xs font-bold tracking-[0.18em] md:tracking-[0.22em] uppercase mb-3 gradient-text-cool inline-block">✦ Nomad Market Co-Host</p>
+              <h2 class="font-display text-base md:text-3xl text-[#0d0918]">Official Payment Partner</h2>
             </div>
             <a
               :href="paymentPartner.url"
               target="_blank"
               rel="noopener noreferrer"
-              class="w-[calc((200%-1rem)/3)] aspect-[4/3] overflow-hidden rounded-2xl flex items-center justify-center cursor-pointer transition-all hover:scale-105 border p-5 partner-tile-major"
+              class="w-full aspect-[4/3] overflow-hidden rounded-2xl flex items-center justify-center cursor-pointer transition-all hover:scale-105 border p-5 partner-tile-major"
               :title="paymentPartner.name">
               <img :src="paymentPartner.logo" :alt="paymentPartner.name" class="w-full h-full object-contain" />
             </a>
           </div>
-          <div class="flex flex-col items-center h-full">
+          <div class="col-span-2 flex flex-col h-full">
             <div class="text-center mb-6 flex-1 flex flex-col justify-end">
-              <p class="text-[10px] md:text-xs font-bold tracking-[0.22em] uppercase mb-3 gradient-text-cool inline-block">✦ Backed By</p>
-              <h2 class="font-display text-lg md:text-3xl text-[#0d0918]">Supporting Partners</h2>
+              <p class="text-[9px] md:text-xs font-bold tracking-[0.18em] md:tracking-[0.22em] uppercase mb-3 gradient-text-cool inline-block">✦ Backed By</p>
+              <h2 class="font-display text-base md:text-3xl text-[#0d0918]">Supporting Partners</h2>
             </div>
-            <div class="w-full flex flex-col items-center gap-4">
-              <a v-for="p in supportingPartners" :key="p.name"
+            <div class="grid grid-cols-2 gap-4">
+              <component :is="p.url ? 'a' : 'div'" v-for="p in supportingPartners" :key="p.name"
                 :href="p.url"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="w-[calc((200%-1rem)/3)] aspect-[4/3] overflow-hidden rounded-2xl flex items-center justify-center cursor-pointer transition-all hover:scale-105 border p-5 partner-tile-major"
+                :target="p.url ? '_blank' : undefined"
+                :rel="p.url ? 'noopener noreferrer' : undefined"
+                class="w-full aspect-[4/3] overflow-hidden rounded-2xl flex items-center justify-center transition-all hover:scale-105 border partner-tile-major"
+                :class="[p.url ? 'cursor-pointer' : '', p.bg ? 'p-2' : 'p-5']"
+                :style="p.bg ? { background: p.bg } : undefined"
                 :title="p.name">
                 <img
                   :src="p.logo"
@@ -895,7 +899,7 @@ onUnmounted(() => {
                   class="w-full h-full object-contain"
                   :style="p.scale ? { transform: `scale(${p.scale})` } : undefined"
                 />
-              </a>
+              </component>
             </div>
           </div>
         </div>
