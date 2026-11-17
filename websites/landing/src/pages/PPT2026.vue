@@ -34,7 +34,6 @@ import LogoPeer from '@/assets/partners/peer.png'
 import LogoSNZ from '@/assets/partners/snz.svg'
 import LogoNear from '@/assets/partners/near.png'
 import LogoKleros from '@/assets/partners/kleros.svg'
-import LogoSnowmoon from '@/assets/partners/snowmoon.webp'
 import LogoLogos from '@/assets/partners/logos.png'
 import LogoDevfolio from '@/assets/partners/devfolio.png'
 import LogoTangem from '@/assets/partners/tangem.png'
@@ -275,7 +274,6 @@ const paymentPartner = { name: 'Peer', logo: LogoPeer, url: 'https://peer.xyz' }
 
 const supportingPartners: Array<{ name: string; logo: string; url?: string; scale?: number; bg?: string }> = [
   { name: 'Kleros', logo: LogoKleros, url: 'https://kleros.io' },
-  { name: 'SNOWMOON', logo: LogoSnowmoon, url: 'https://snowmoon.pro/' },
 ]
 
 const communityPartners: Array<{ name: string; logo: string; scale?: number }> = [
@@ -863,43 +861,45 @@ onUnmounted(() => {
           </a>
         </div>
 
-        <!-- Official Payment Sponsor -->
-        <div class="text-center mb-10 mt-16">
-          <p class="text-xs font-bold tracking-[0.22em] uppercase mb-3 gradient-text-cool inline-block">✦ Nomad Market Co-Host</p>
-          <h2 class="font-display text-2xl md:text-3xl text-[#0d0918]">Official Payment Sponsor</h2>
-        </div>
-        <div class="flex justify-center gap-4">
-          <a
-            :href="paymentPartner.url"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="w-[calc((100%-2rem)/3)] aspect-[4/3] overflow-hidden rounded-2xl flex items-center justify-center transition-all hover:scale-105 border p-5 partner-tile-major cursor-pointer"
-            :title="paymentPartner.name">
-            <img :src="paymentPartner.logo" :alt="paymentPartner.name" class="w-full h-full object-contain" />
-          </a>
-        </div>
-
-        <!-- Supporting Sponsors -->
-        <div class="text-center mb-10 mt-16">
-          <p class="text-xs font-bold tracking-[0.22em] uppercase mb-3 gradient-text-cool inline-block">✦ Backed By</p>
-          <h2 class="font-display text-2xl md:text-3xl text-[#0d0918]">Supporting Sponsors</h2>
-        </div>
-        <div class="flex flex-wrap justify-center gap-4 mb-12">
-          <component :is="p.url ? 'a' : 'div'" v-for="p in supportingPartners" :key="p.name"
-            :href="p.url"
-            :target="p.url ? '_blank' : undefined"
-            :rel="p.url ? 'noopener noreferrer' : undefined"
-            class="w-[calc((100%-2rem)/3)] aspect-[4/3] overflow-hidden rounded-2xl flex items-center justify-center transition-all hover:scale-105 border p-5 partner-tile-major"
-            :class="p.url ? 'cursor-pointer' : ''"
-            :style="p.bg ? { background: p.bg } : undefined"
-            :title="p.name">
-            <img
-              :src="p.logo"
-              :alt="p.name"
-              class="w-full h-full object-contain"
-              :style="p.scale ? { transform: `scale(${p.scale})` } : undefined"
-            />
-          </component>
+        <!-- Official Payment Sponsor + Supporting Sponsors (one row; tiles match Major Sponsors size) -->
+        <div class="grid grid-cols-2 gap-4 mt-16 mb-12">
+          <div class="flex flex-col items-center h-full">
+            <div class="text-center mb-6 flex-1 flex flex-col justify-end">
+              <p class="text-[10px] md:text-xs font-bold tracking-[0.22em] uppercase mb-3 gradient-text-cool inline-block">✦ Nomad Market Co-Host</p>
+              <h2 class="font-display text-lg md:text-3xl text-[#0d0918]">Official Payment Sponsor</h2>
+            </div>
+            <a
+              :href="paymentPartner.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="w-[calc((200%-1rem)/3)] aspect-[4/3] overflow-hidden rounded-2xl flex items-center justify-center transition-all hover:scale-105 border p-5 partner-tile-major cursor-pointer"
+              :title="paymentPartner.name">
+              <img :src="paymentPartner.logo" :alt="paymentPartner.name" class="w-full h-full object-contain" />
+            </a>
+          </div>
+          <div class="flex flex-col items-center h-full">
+            <div class="text-center mb-6 flex-1 flex flex-col justify-end">
+              <p class="text-[10px] md:text-xs font-bold tracking-[0.22em] uppercase mb-3 gradient-text-cool inline-block">✦ Backed By</p>
+              <h2 class="font-display text-lg md:text-3xl text-[#0d0918]">Supporting Sponsors</h2>
+            </div>
+            <div class="w-full flex flex-col items-center gap-4">
+              <component :is="p.url ? 'a' : 'div'" v-for="p in supportingPartners" :key="p.name"
+                :href="p.url"
+                :target="p.url ? '_blank' : undefined"
+                :rel="p.url ? 'noopener noreferrer' : undefined"
+                class="w-[calc((200%-1rem)/3)] aspect-[4/3] overflow-hidden rounded-2xl flex items-center justify-center transition-all hover:scale-105 border p-5 partner-tile-major"
+                :class="p.url ? 'cursor-pointer' : ''"
+                :style="p.bg ? { background: p.bg } : undefined"
+                :title="p.name">
+                <img
+                  :src="p.logo"
+                  :alt="p.name"
+                  class="w-full h-full object-contain"
+                  :style="p.scale ? { transform: `scale(${p.scale})` } : undefined"
+                />
+              </component>
+            </div>
+          </div>
         </div>
 
         <!-- Community Partners -->
