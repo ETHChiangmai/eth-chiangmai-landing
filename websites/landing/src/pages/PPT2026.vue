@@ -370,7 +370,7 @@ const team: Array<{
     linkedin: 'https://www.linkedin.com/in/seher-deng-b959a442a/',
   },
   {
-    name: 'Khachirawut Pinlert',
+    name: 'Atom',
     role: 'Contributor of ETHChiangmai',
     img: ImgTeamKhachirawut,
     x: '',
