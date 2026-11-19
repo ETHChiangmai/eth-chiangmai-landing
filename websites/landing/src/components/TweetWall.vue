@@ -169,6 +169,6 @@ onBeforeUnmount(() => {
   text-decoration: none;
 }
 .tweet-slot :deep(.twitter-tweet-rendered) {
-  margin: 0 !important;
+  margin: 0 auto !important;
 }
 </style>
