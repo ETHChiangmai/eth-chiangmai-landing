@@ -72,7 +72,7 @@ function hold(ms: number) {
 function tick(now: number) {
   raf = requestAnimationFrame(tick)
   const el = trackRef.value
-  const dt = last ? Math.min(now - last, 100) : 0
+  const dt = last ? Math.min(now - last, 250) : 0
   last = now
   if (!el || reducedMotion || hovering || !onScreen || now < holdUntil) {
     if (el) pos = el.scrollLeft
