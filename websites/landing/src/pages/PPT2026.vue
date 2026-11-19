@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import TweetWall from '@/components/TweetWall.vue'
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { RouterLink } from 'vue-router'
 import LogoDark from '@/assets/logo-figma.png'
@@ -681,6 +682,9 @@ onUnmounted(() => {
         <button class="carousel-btn right-[calc(12vw-22px)]" aria-label="Next" @click="nextSlide">→</button>
       </div>
     </section>
+
+    <!-- 2026 TWEETS -->
+    <TweetWall />
 
     <!-- TIMELINE -->
     <section
