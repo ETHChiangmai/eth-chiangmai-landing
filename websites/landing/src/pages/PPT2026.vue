@@ -46,6 +46,7 @@ import LogoOpenBuild from '@/assets/partners/openbuild.png'
 import LogoTheMu from '@/assets/partners/the-mu.png'
 import LogoSpiderPool from '@/assets/partners/spider-pool.png'
 import LogoSocialLayer from '@/assets/partners/social-layer.png'
+import LogoSnowmoon from '@/assets/partners/snowmoon.webp'
 import IconX from '@/assets/social/social-twitter.svg'
 import IconTelegram from '@/assets/social/social-telegram.svg'
 import IconLinkedIn from '@/assets/social/social-linkedin.svg'
@@ -303,6 +304,7 @@ const communityPartners: Array<{ name: string; logo: string; scale?: number }> =
   { name: 'The Mu', logo: LogoTheMu },
   { name: 'Spider Pool', logo: LogoSpiderPool },
   { name: 'Social Layer', logo: LogoSocialLayer },
+  { name: 'SNOWMOON', logo: LogoSnowmoon },
 ]
 
 const team: Array<{
