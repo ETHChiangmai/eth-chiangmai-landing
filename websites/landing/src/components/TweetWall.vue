@@ -9,10 +9,10 @@ import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
  */
 const tweets = [
   // Shown first (INITIAL_COUNT)
-  'https://x.com/ETHChiangmai/status/2122541538924167538', // Nomad Market Vol.02 recap
-  'https://x.com/Yellow/status/2120862331613892683', // Yellow opening stage talk
-  'https://x.com/mbauwens/status/2120493999735935470', // Michel Bauwens on the gathering
   'https://x.com/ETHChiangmai/status/2121131485575123224', // Opening day, 4 photos (Vitalik)
+  'https://x.com/mbauwens/status/2120493999735935470', // Michel Bauwens on the gathering
+  'https://x.com/Yellow/status/2120862331613892683', // Yellow opening stage talk
+  'https://x.com/ETHChiangmai/status/2122541538924167538', // Nomad Market Vol.02 recap
   'https://x.com/pudgythailand/status/2120853030568620540', // Pudgy Thailand opening photos
   'https://x.com/ETHChiangmai/status/2122937980264579402', // Peer at Vol.02, video
   // Behind "Show more"
