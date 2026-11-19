@@ -1,55 +1,64 @@
 <script setup lang="ts">
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 
 /**
- * 2026 tweet wall: official X embeds.
- * The first INITIAL_COUNT tweets show up front, the rest behind "Show more".
- * X's widgets.js is only loaded once the section scrolls near the viewport.
- * If X can't load (blocked region, script blocked), each tweet stays a plain link card.
+ * 2026 tweet wall: official X embeds, each wrapped in a colourful speech bubble with a topic chip,
+ * in one horizontal row that scrolls by itself, slowly ("a conversation drifting past").
+ * - Pauses while the pointer is over the row, while someone touches / drags / wheels it, and when it is off screen.
+ * - At the end it waits a moment, glides back to the start and carries on.
+ * - X's widgets.js only loads once the section nears the viewport. If X can't load, each tweet stays a link card.
+ * - Respects prefers-reduced-motion (no auto-scroll, no tilt; arrows and manual scroll still work).
  */
-const tweets = [
-  // Shown first (INITIAL_COUNT)
-  'https://x.com/ETHChiangmai/status/2121131485575123224', // Opening day, 4 photos (Vitalik)
-  'https://x.com/mbauwens/status/2120493999735935470', // Michel Bauwens on the gathering
-  'https://x.com/Yellow/status/2120862331613892683', // Yellow opening stage talk
-  'https://x.com/ETHChiangmai/status/2122541538924167538', // Nomad Market Vol.02 recap
-  'https://x.com/pudgythailand/status/2120853030568620540', // Pudgy Thailand opening photos
-  'https://x.com/ETHChiangmai/status/2122937980264579402', // Peer at Vol.02, video
-  // Behind "Show more"
-  'https://x.com/ETHChiangmai/status/2121928247894294562', // Market music jam, video
-  'https://x.com/ETHChiangmai/status/2121569105761448388', // Market "Busyyyyyy"
-  'https://x.com/ETHChiangmai/status/2121861576324194430', // Peer booth: browse, scan, pay
-  'https://x.com/ETHChiangmai/status/2115748283335262538', // First Nomad Market recap
-  'https://x.com/ETHChiangmai/status/2122956743462576557', // Opening day recap video
-  'https://x.com/ETHChiangmai/status/2120476497333092388', // Longevity Month panel
-  'https://x.com/ETHChiangmai/status/2120865307837497632', // Chiangmai Original / SUTHEP Band
+type Topic = 'opening' | 'market' | 'voices' | 'longevity'
+const topicColor: Record<Topic, { a: string; b: string }> = {
+  opening: { a: '#F7C6D9', b: '#E9B8F0' }, // pink -> lilac
+  market: { a: '#FFD9A8', b: '#F7C6D9' }, // apricot -> pink
+  voices: { a: '#D9CCFF', b: '#BFD3FF' }, // lavender -> periwinkle
+  longevity: { a: '#C9F0DC', b: '#BFD3FF' }, // mint -> periwinkle
+}
+const topicInk: Record<Topic, string> = {
+  opening: '#C8366B',
+  market: '#C9661A',
+  voices: '#7632C8',
+  longevity: '#2E8A63',
+}
+
+const tweets: { url: string; label: string; topic: Topic }[] = [
+  { url: 'https://x.com/ETHChiangmai/status/2121131485575123224', label: 'Opening Day', topic: 'opening' },
+  { url: 'https://x.com/mbauwens/status/2120493999735935470', label: 'Community Voice', topic: 'voices' },
+  { url: 'https://x.com/Yellow/status/2120862331613892683', label: 'On Stage', topic: 'voices' },
+  { url: 'https://x.com/ETHChiangmai/status/2122541538924167538', label: 'Nomad Market Vol.02', topic: 'market' },
+  { url: 'https://x.com/pudgythailand/status/2120853030568620540', label: 'Opening Day', topic: 'opening' },
+  { url: 'https://x.com/ETHChiangmai/status/2122937980264579402', label: 'Nomad Market · Peer', topic: 'market' },
+  { url: 'https://x.com/ETHChiangmai/status/2121928247894294562', label: 'Market Music Jam', topic: 'market' },
+  { url: 'https://x.com/ETHChiangmai/status/2121569105761448388', label: 'Nomad Market Vol.02', topic: 'market' },
+  { url: 'https://x.com/ETHChiangmai/status/2121861576324194430', label: 'Nomad Market · Peer', topic: 'market' },
+  { url: 'https://x.com/ETHChiangmai/status/2115748283335262538', label: 'Nomad Market Vol.01', topic: 'market' },
+  { url: 'https://x.com/ETHChiangmai/status/2122956743462576557', label: 'Opening Day', topic: 'opening' },
+  { url: 'https://x.com/ETHChiangmai/status/2120476497333092388', label: 'Longevity Month', topic: 'longevity' },
+  { url: 'https://x.com/ETHChiangmai/status/2120865307837497632', label: 'Opening Night', topic: 'opening' },
 ]
 
-const INITIAL_COUNT = 6
-
-const expanded = ref(false)
-const visible = computed(() => (expanded.value ? tweets : tweets.slice(0, INITIAL_COUNT)))
-
-// 3 independent column stacks on md+ (so cards don't reshuffle while embeds load), 1 column on phones.
-// Only one set of embeds is ever rendered, so each tweet loads once.
-const colCount = ref(3)
-let mq: MediaQueryList | null = null
-const onMq = () => (colCount.value = mq?.matches ? 3 : 1)
-const columns = computed(() => {
-  const cols: { url: string; i: number }[][] = Array.from({ length: colCount.value }, () => [])
-  visible.value.forEach((url, i) => cols[i % colCount.value]!.push({ url, i }))
-  return cols
-})
+/** Auto-scroll speed in pixels per second (slow on purpose). */
+const SPEED = 44
+/** How long to wait after someone interacts before auto-scroll resumes. */
+const RESUME_AFTER_MS = 4000
+/** Pause at the end of the row before gliding back to the start. */
+const END_PAUSE_MS = 2500
 
 function handleOf(url: string) {
   return '@' + (url.split('/')[3] ?? '')
 }
+function bubbleStyle(topic: Topic) {
+  const c = topicColor[topic]
+  return { '--bubble-a': c.a, '--bubble-b': c.b, '--chip-ink': topicInk[topic] } as Record<string, string>
+}
 
 type Twttr = { widgets: { load: (el?: Element) => Promise<unknown> } }
 const sectionRef = ref<HTMLElement | null>(null)
-let observer: IntersectionObserver | null = null
-let scriptPromise: Promise<Twttr | null> | null = null
+const trackRef = ref<HTMLElement | null>(null)
 
+let scriptPromise: Promise<Twttr | null> | null = null
 function loadWidgets(): Promise<Twttr | null> {
   const w = window as unknown as { twttr?: Twttr }
   if (w.twttr?.widgets) return Promise.resolve(w.twttr)
@@ -66,107 +75,250 @@ function loadWidgets(): Promise<Twttr | null> {
   return scriptPromise
 }
 
-async function renderEmbeds() {
-  const twttr = await loadWidgets()
-  if (twttr && sectionRef.value) twttr.widgets.load(sectionRef.value)
+// ---- auto-scroll ----
+let raf = 0
+let last = 0
+let pos = 0 // fractional scroll position we drive
+let hovering = false
+let onScreen = false
+let holdUntil = 0 // paused until this timestamp (after interaction / at the end)
+let reducedMotion = false
+
+function hold(ms: number) {
+  holdUntil = Math.max(holdUntil, performance.now() + ms)
 }
 
-// If the layout switches between 1 and 3 columns after embeds were drawn, redraw them.
-watch(colCount, async () => {
-  if (!scriptPromise) return
-  await nextTick()
-  renderEmbeds()
-})
-
-async function showMore() {
-  expanded.value = true
-  await nextTick()
-  renderEmbeds()
-}
-
-onMounted(() => {
-  mq = window.matchMedia('(min-width: 768px)')
-  onMq()
-  mq.addEventListener('change', onMq)
-  if (!sectionRef.value) return
-  if (!('IntersectionObserver' in window)) {
-    renderEmbeds()
+function tick(now: number) {
+  raf = requestAnimationFrame(tick)
+  const el = trackRef.value
+  const dt = last ? Math.min(now - last, 250) : 0
+  last = now
+  if (!el || reducedMotion || hovering || !onScreen || now < holdUntil) {
+    if (el) pos = el.scrollLeft
     return
   }
+  const max = el.scrollWidth - el.clientWidth
+  if (max <= 0) return
+  if (el.scrollLeft >= max - 1) {
+    // Reached the end: wait, then glide back to the start.
+    hold(END_PAUSE_MS + 1500)
+    setTimeout(() => {
+      el.scrollTo({ left: 0, behavior: 'smooth' })
+      pos = 0
+    }, END_PAUSE_MS)
+    return
+  }
+  pos += (SPEED * dt) / 1000
+  el.scrollLeft = pos
+}
+
+function onUserInteract() {
+  hold(RESUME_AFTER_MS)
+}
+
+function setHover(v: boolean) {
+  hovering = v
+  if (!v) hold(1000)
+}
+
+function scrollByCards(dir: 1 | -1) {
+  const el = trackRef.value
+  if (!el) return
+  const card = el.querySelector<HTMLElement>('.bubble')
+  const step = card ? card.offsetWidth + 28 : 380
+  hold(RESUME_AFTER_MS)
+  el.scrollBy({ left: dir * step, behavior: 'smooth' })
+}
+
+let observer: IntersectionObserver | null = null
+let embedsRequested = false
+
+onMounted(() => {
+  reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  if (!sectionRef.value) return
   observer = new IntersectionObserver(
     (entries) => {
-      if (entries.some((e) => e.isIntersecting)) {
-        observer?.disconnect()
-        observer = null
-        renderEmbeds()
+      const e = entries[0]
+      if (!e) return
+      if (!embedsRequested && e.isIntersecting) {
+        embedsRequested = true
+        loadWidgets().then((twttr) => {
+          if (twttr && trackRef.value) twttr.widgets.load(trackRef.value)
+        })
       }
+      onScreen = e.intersectionRatio > 0.15
     },
-    { rootMargin: '600px 0px' },
+    { rootMargin: '600px 0px', threshold: [0, 0.15, 0.5] },
   )
   observer.observe(sectionRef.value)
+  // Give embeds a moment to start appearing before the row starts moving.
+  hold(3000)
+  raf = requestAnimationFrame(tick)
 })
 
 onBeforeUnmount(() => {
+  cancelAnimationFrame(raf)
   observer?.disconnect()
-  mq?.removeEventListener('change', onMq)
 })
 </script>
 
 <template>
-  <section id="tweets" ref="sectionRef" class="py-24 bg-white">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6">
-      <div class="text-center mb-12">
+  <section
+    id="tweets"
+    ref="sectionRef"
+    class="relative py-20 md:py-24 overflow-hidden"
+    style="background: linear-gradient(180deg, #F5EBE0 0%, #F3E2EA 45%, #DCCEEF 100%)"
+  >
+    <!-- soft glows -->
+    <div aria-hidden="true" class="pointer-events-none absolute -top-24 left-[8%] w-80 h-80 rounded-full blur-3xl opacity-50" style="background:#FFD9A8" />
+    <div aria-hidden="true" class="pointer-events-none absolute bottom-0 right-[6%] w-96 h-96 rounded-full blur-3xl opacity-40" style="background:#D9CCFF" />
+
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-10 md:mb-14">
         <p class="text-xs font-bold tracking-[0.22em] uppercase mb-3 gradient-text-cool inline-block">✦ 2026 So Far</p>
         <h2 class="font-display text-4xl md:text-5xl text-[#0d0918]">From the Timeline</h2>
-        <p class="mt-3 text-sm md:text-base text-[#0d0918]/55">Moments from the season, as they happened on X.</p>
+        <p class="mt-3 text-sm md:text-base text-[#0d0918]/55">What people are saying about the season, live from X.</p>
       </div>
+    </div>
 
-      <div class="grid gap-5 items-start" :class="colCount === 3 ? 'grid-cols-3' : 'grid-cols-1'">
-        <div v-for="(col, c) in columns" :key="c" class="flex flex-col gap-5 min-w-0">
-          <div v-for="t in col" :key="t.url" class="tweet-slot">
-            <blockquote class="twitter-tweet" data-dnt="true" data-theme="light" data-conversation="none">
-              <a :href="t.url" target="_blank" rel="noopener noreferrer">View {{ handleOf(t.url) }}'s post on X →</a>
-            </blockquote>
-          </div>
+    <div
+      ref="trackRef"
+      class="tweet-track relative flex items-start gap-7 overflow-x-auto px-6 md:px-16 pt-4 pb-14"
+      @mouseenter="setHover(true)"
+      @mouseleave="setHover(false)"
+      @pointerdown="onUserInteract"
+      @touchstart.passive="onUserInteract"
+      @wheel.passive="onUserInteract"
+      @focusin="onUserInteract"
+    >
+      <div
+        v-for="(t, i) in tweets"
+        :key="t.url"
+        class="bubble shrink-0 w-[300px] sm:w-[340px]"
+        :class="i % 2 === 1 ? 'bubble--low' : ''"
+        :style="bubbleStyle(t.topic)"
+      >
+        <span class="bubble-chip">✦ {{ t.label }}</span>
+        <div class="bubble-body">
+          <blockquote class="twitter-tweet" data-dnt="true" data-theme="light" data-conversation="none">
+            <a :href="t.url" target="_blank" rel="noopener noreferrer">View {{ handleOf(t.url) }}'s post on X →</a>
+          </blockquote>
         </div>
+        <span class="bubble-tail" aria-hidden="true" />
       </div>
+    </div>
 
-      <div class="mt-10 flex flex-wrap justify-center gap-3">
-        <button
-          v-if="!expanded && tweets.length > INITIAL_COUNT"
-          type="button"
-          class="px-6 py-3 rounded-full border border-[#0d0918]/15 text-sm font-semibold text-[#0d0918] hover:bg-[#0d0918]/5 transition-colors cursor-pointer"
-          @click="showMore">
-          Show more ({{ tweets.length - INITIAL_COUNT }})
-        </button>
-        <a
-          href="https://x.com/ETHChiangmai"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="px-6 py-3 rounded-full bg-[#0d0918] text-white text-sm font-semibold hover:opacity-90 transition-opacity">
-          Follow @ETHChiangmai on X →
-        </a>
-      </div>
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 mt-2 flex flex-wrap items-center justify-center gap-3">
+      <button
+        type="button"
+        aria-label="Previous posts"
+        class="w-11 h-11 rounded-full bg-white/70 backdrop-blur border border-white text-[#0d0918] shadow-sm hover:bg-white transition-colors cursor-pointer"
+        @click="scrollByCards(-1)">←</button>
+      <a
+        href="https://x.com/ETHChiangmai"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="px-6 py-3 rounded-full bg-[#0d0918] text-white text-sm font-semibold hover:opacity-90 transition-opacity">
+        Follow @ETHChiangmai on X →
+      </a>
+      <button
+        type="button"
+        aria-label="Next posts"
+        class="w-11 h-11 rounded-full bg-white/70 backdrop-blur border border-white text-[#0d0918] shadow-sm hover:bg-white transition-colors cursor-pointer"
+        @click="scrollByCards(1)">→</button>
     </div>
   </section>
 </template>
 
 <style scoped>
+.tweet-track {
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  /* fade the row out at both edges, whatever the background behind it */
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+}
+.tweet-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* Speech bubble frame around each tweet */
+.bubble {
+  position: relative;
+  padding: 14px 12px 12px;
+  border-radius: 30px;
+  background: linear-gradient(150deg, var(--bubble-a), var(--bubble-b));
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 22px 40px -22px rgba(118, 50, 200, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  transform: rotate(-1.2deg);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.bubble--low {
+  margin-top: 36px;
+  transform: rotate(1.1deg);
+}
+.bubble:hover {
+  transform: rotate(0deg) translateY(-4px);
+  box-shadow:
+    0 28px 48px -22px rgba(118, 50, 200, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+.bubble-chip {
+  display: inline-block;
+  margin: 0 0 10px 6px;
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.75);
+  color: var(--chip-ink);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.bubble-body {
+  border-radius: 20px;
+  overflow: hidden;
+  background: #fff;
+}
+/* tail: a small "speech" tail at the bottom-left (bottom-right on the low ones) */
+.bubble-tail {
+  position: absolute;
+  bottom: -16px;
+  left: 34px;
+  width: 30px;
+  height: 22px;
+  background: var(--bubble-b);
+  clip-path: polygon(0 0, 100% 0, 30% 100%);
+}
+.bubble--low .bubble-tail {
+  left: auto;
+  right: 34px;
+  clip-path: polygon(0 0, 100% 0, 70% 100%);
+}
+
 /* Fallback look before / without X's script: a simple link card. X replaces the blockquote once it loads. */
-.tweet-slot :deep(blockquote.twitter-tweet) {
+.bubble-body :deep(blockquote.twitter-tweet) {
   margin: 0;
-  padding: 20px;
-  border: 1px solid rgba(13, 9, 24, 0.08);
-  border-radius: 16px;
-  background: #faf0e8;
+  padding: 22px 20px;
   font-size: 14px;
 }
-.tweet-slot :deep(blockquote.twitter-tweet a) {
+.bubble-body :deep(blockquote.twitter-tweet a) {
   color: #c8366b;
   font-weight: 600;
   text-decoration: none;
 }
-.tweet-slot :deep(.twitter-tweet-rendered) {
-  margin: 0 auto !important;
+.bubble-body :deep(.twitter-tweet-rendered) {
+  margin: 0 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bubble,
+  .bubble--low,
+  .bubble:hover {
+    transform: none;
+    transition: none;
+  }
 }
 </style>
