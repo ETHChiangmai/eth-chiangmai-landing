@@ -40,7 +40,7 @@ const tweets: { url: string; label: string; topic: Topic }[] = [
 ]
 
 /** Auto-scroll speed in pixels per second (slow on purpose). */
-const SPEED = 22
+const SPEED = 44
 /** How long to wait after someone interacts before auto-scroll resumes. */
 const RESUME_AFTER_MS = 4000
 /** Pause at the end of the row before gliding back to the start. */
