@@ -690,7 +690,7 @@ onUnmounted(() => {
     <section
       id="schedule"
       ref="timelineRef"
-      class="relative overflow-hidden py-20 md:py-28"
+      class="relative overflow-hidden py-16 md:py-20"
       style="background: linear-gradient(180deg, #DCCEEF 0%, #E8D4E4 28%, #F5E8EE 55%, #FAF6F8 78%, #FFFFFF 100%)"
     >
       <img
@@ -722,7 +722,7 @@ onUnmounted(() => {
         :style="{ transform: `translate3d(0, ${lanternY * 1.35}px, 0)`, transition: 'transform 0.08s linear' }"
       />
       <div class="max-w-4xl mx-auto px-6 relative z-10">
-        <div class="text-center mb-12 md:mb-16">
+        <div class="text-center mb-10 md:mb-12">
           <p class="text-xs font-bold tracking-[0.22em] uppercase mb-3 gradient-text-cool inline-block">✦ Save the Date</p>
           <h2 class="font-display text-4xl md:text-5xl text-[#0d0918]">2026 ETHChiangMai<br />Timeline</h2>
         </div>
@@ -730,21 +730,21 @@ onUnmounted(() => {
           <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 md:-translate-x-px hidden md:block"
             style="background: linear-gradient(180deg,#C2A8E088,#C8366B55,#FAF0E8AA)" />
           <div class="absolute left-4 top-0 bottom-0 w-0.5 md:hidden" style="background: linear-gradient(180deg,#C2A8E088,#C8366B44)" />
-          <div class="space-y-5 md:space-y-6">
+          <div class="space-y-3">
             <div v-for="(item, i) in timeline" :key="i"
               class="relative flex items-start"
-              :class="i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'">
+              :class="[i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse', i > 0 ? 'md:!mt-[-2.75rem]' : '']">
               <div class="md:w-[calc(50%-1.5rem)] pl-12 md:pl-0" :class="i % 2 === 0 ? 'md:pr-10' : 'md:pl-10'">
                 <div
-                  class="rounded-2xl p-5 md:p-6 border timeline-card"
+                  class="rounded-2xl px-5 py-4 border timeline-card"
                   :style="{ '--timeline-accent': item.dotColor }"
                 >
-                  <p class="text-xs font-bold tracking-widest uppercase mb-1.5" :style="{ color: item.dotColor }">{{ item.period }}</p>
-                  <h3 class="text-lg md:text-xl text-[#0d0918] mb-1.5 font-display">{{ item.event }}</h3>
+                  <p class="text-xs font-bold tracking-widest uppercase mb-1" :style="{ color: item.dotColor }">{{ item.period }}</p>
+                  <h3 class="text-lg md:text-xl text-[#0d0918] mb-1 font-display">{{ item.event }}</h3>
                   <p v-if="item.detail" class="text-sm leading-relaxed text-[#0d0918]/50">{{ item.detail }}</p>
-                  <span v-if="item.multiDay" class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2 py-0.5 rounded-full"
+                  <span v-if="item.multiDay" class="inline-block mt-1.5 text-[9px] font-bold tracking-widest uppercase px-2 py-0.5 rounded-full"
                     :style="{ background: `${item.dotColor}18`, color: item.dotColor, border: `1px solid ${item.dotColor}30` }">multi-day</span>
-                  <div v-if="item.link" class="mt-2.5">
+                  <div v-if="item.link" class="mt-2">
                     <RouterLink v-if="item.link.href.startsWith('/')" :to="item.link.href"
                       class="timeline-link" :style="{ color: item.dotColor }">{{ item.link.label }} →</RouterLink>
                     <a v-else :href="item.link.href" target="_blank" rel="noopener noreferrer"
