@@ -8,22 +8,20 @@ import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
  * If X can't load (blocked region, script blocked), each tweet stays a plain link card.
  */
 const tweets = [
-  // Shown first: 4 official + 2 from others
+  // Shown first (INITIAL_COUNT)
   'https://x.com/ETHChiangmai/status/2122541538924167538', // Nomad Market Vol.02 recap
   'https://x.com/Yellow/status/2120862331613892683', // Yellow opening stage talk
+  'https://x.com/mbauwens/status/2120493999735935470', // Michel Bauwens on the gathering
   'https://x.com/ETHChiangmai/status/2121131485575123224', // Opening day, 4 photos (Vitalik)
   'https://x.com/pudgythailand/status/2120853030568620540', // Pudgy Thailand opening photos
   'https://x.com/ETHChiangmai/status/2122937980264579402', // Peer at Vol.02, video
-  'https://x.com/ETHChiangmai/status/2121928247894294562', // Market music jam, video
   // Behind "Show more"
+  'https://x.com/ETHChiangmai/status/2121928247894294562', // Market music jam, video
   'https://x.com/ETHChiangmai/status/2121569105761448388', // Market "Busyyyyyy"
   'https://x.com/ETHChiangmai/status/2121861576324194430', // Peer booth: browse, scan, pay
   'https://x.com/ETHChiangmai/status/2115748283335262538', // First Nomad Market recap
   'https://x.com/ETHChiangmai/status/2122956743462576557', // Opening day recap video
-  'https://x.com/ETHChiangmai/status/2120426988938973679', // Opening begins
-  'https://x.com/ETHChiangmai/status/2120427846611108028', // Vitalik on stage
   'https://x.com/ETHChiangmai/status/2120476497333092388', // Longevity Month panel
-  'https://x.com/ETHChiangmai/status/2120454984349503508', // Michel Bauwens keynote
   'https://x.com/ETHChiangmai/status/2120865307837497632', // Chiangmai Original / SUTHEP Band
 ]
 
