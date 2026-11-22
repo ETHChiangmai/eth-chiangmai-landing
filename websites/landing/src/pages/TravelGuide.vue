@@ -2,6 +2,7 @@
 import { onMounted, onUnmounted, ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import LogoLight from '@/assets/logo-long.svg'
+import LogoKokio from '@/assets/partners/kokio.png'
 import ImgLantern from '@/assets/小元素/无白边/灯笼元素3.webp'
 import ImgLotus1 from '@/assets/小元素/无白边/荷花元素1.png'
 
@@ -312,6 +313,7 @@ const emergency = [
         <div class="mt-8 rounded-3xl p-6 md:p-8 border border-[#0d0918]/10" style="background: linear-gradient(135deg, #E4F4EC, #E8EEFF)">
           <div class="flex flex-col md:flex-row gap-6 md:items-start justify-between">
             <div class="max-w-xl">
+              <img :src="LogoKokio" alt="Kokio" class="h-7 md:h-8 w-auto mb-4" />
               <p class="text-[10px] font-bold tracking-[0.2em] uppercase text-[#2E8A63]">✦ Recommended eSIM · Kokio</p>
               <p class="mt-1 font-display text-2xl md:text-3xl">A privacy-friendly eSIM you can pay for in crypto</p>
               <p class="body mt-3">
