@@ -309,10 +309,10 @@ const emergency = [
       <section id="connectivity" class="scroll-mt-28">
         <p class="kicker">✦ Connectivity</p>
         <h2 class="h2 font-display">Stay online from the moment you land</h2>
-        <div class="mt-8 feature feature--lg">
+        <div class="mt-8 rounded-3xl p-6 md:p-8 border border-[#0d0918]/10" style="background: linear-gradient(135deg, #E4F4EC, #E8EEFF)">
           <div class="flex flex-col md:flex-row gap-6 md:items-start justify-between">
             <div class="max-w-xl">
-              <p class="f-kicker">✦ Recommended eSIM · Kokio</p>
+              <p class="text-[10px] font-bold tracking-[0.2em] uppercase text-[#2E8A63]">✦ Recommended eSIM · Kokio</p>
               <p class="mt-1 font-display text-2xl md:text-3xl">A privacy-friendly eSIM you can pay for in crypto</p>
               <p class="body mt-3">
                 Data plans for 200+ destinations, starting from $2. No name, email or ID needed. Pay by card,
@@ -321,16 +321,10 @@ const emergency = [
             </div>
             <div class="shrink-0 self-start flex flex-col items-start md:items-end gap-2">
               <span class="text-[10px] font-bold tracking-[0.2em] uppercase text-[#0d0918]/50">Coupon code</span>
-              <span class="font-mono font-bold tracking-wider px-4 py-2 rounded-xl bg-white border-2 border-dashed border-[#C8366B]/50 text-[#C8366B]">ETHCM</span>
+              <span class="font-mono font-bold tracking-wider px-4 py-2 rounded-xl bg-white border-2 border-dashed border-[#2E8A63]/50 text-[#2E8A63]">ETHCM</span>
               <a href="https://kokio.app/esim/thailand" target="_blank" rel="noopener noreferrer" class="mt-1 px-5 py-2.5 rounded-full bg-[#0d0918] text-white text-sm font-semibold hover:opacity-90">Get a Thailand eSIM →</a>
             </div>
           </div>
-          <ol class="mt-6 grid sm:grid-cols-4 gap-3 text-sm">
-            <li class="step"><span>1</span>Check your phone supports eSIM</li>
-            <li class="step"><span>2</span>Download the Kokio app</li>
-            <li class="step"><span>3</span>Pick a Thailand plan, enter code <b>ETHCM</b>, pay</li>
-            <li class="step"><span>4</span>Install on Wi-Fi at home, switch on when you land</li>
-          </ol>
         </div>
       </section>
 
@@ -521,12 +515,6 @@ const emergency = [
 .feature--rev {
   background: linear-gradient(120deg, #e4daf7, #f3e2ea 45%, #ffe8cc);
 }
-.feature--lg {
-  padding: 1.6rem 1.6rem;
-}
-@media (min-width: 768px) {
-  .feature--lg { padding: 2rem; }
-}
 .feature--link {
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
@@ -555,26 +543,5 @@ const emergency = [
   place-items: center;
   background: linear-gradient(135deg, #f7c6d9, #d9ccff);
   color: #7632c8;
-}
-.step {
-  display: flex;
-  gap: 0.6rem;
-  align-items: flex-start;
-  background: rgba(255, 255, 255, 0.75);
-  border-radius: 1rem;
-  padding: 0.8rem 0.9rem;
-  line-height: 1.45;
-}
-.step span {
-  flex: none;
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 999px;
-  display: grid;
-  place-items: center;
-  background: #0d0918;
-  color: #fff;
-  font-size: 0.75rem;
-  font-weight: 700;
 }
 </style>
