@@ -101,28 +101,28 @@ const emergency = [
     </header>
 
     <!-- HERO -->
-    <section class="relative overflow-hidden gradient-dark text-[#faf0e8] pt-32 pb-20 md:pt-40 md:pb-24 px-6">
-      <img :src="ImgLantern" alt="" aria-hidden="true" class="absolute top-24 right-[8%] w-20 md:w-32 opacity-80 pointer-events-none select-none" />
-      <img :src="ImgLantern" alt="" aria-hidden="true" class="absolute top-52 right-[24%] w-12 md:w-20 opacity-60 pointer-events-none select-none" />
+    <section class="relative overflow-hidden gradient-dark text-[#faf0e8] pt-24 pb-12 md:pt-28 md:pb-14 px-6">
+      <img :src="ImgLantern" alt="" aria-hidden="true" class="absolute top-16 right-[8%] w-16 md:w-24 opacity-80 pointer-events-none select-none" />
+      <img :src="ImgLantern" alt="" aria-hidden="true" class="absolute top-36 right-[22%] w-10 md:w-16 opacity-60 pointer-events-none select-none" />
       <div class="relative max-w-4xl mx-auto">
-        <p class="text-xs font-bold tracking-[0.22em] uppercase mb-4 text-[#F0A030]">✦ Travel Guide</p>
-        <h1 class="font-display text-5xl md:text-7xl leading-[1.05]">Welcome to<br />Chiang Mai</h1>
-        <p class="mt-6 max-w-2xl text-base md:text-lg text-[#faf0e8]/70 leading-relaxed">
+        <p class="text-xs font-bold tracking-[0.22em] uppercase mb-3 text-[#F0A030]">✦ Travel Guide</p>
+        <h1 class="font-display text-4xl md:text-6xl leading-[1.05]">Welcome to Chiang Mai</h1>
+        <p class="mt-4 max-w-2xl text-base text-[#faf0e8]/70 leading-relaxed">
           Everything you need for a season in the Rose of the North: getting here, visas, where to stay,
           staying connected, paying, and making the most of the city.
         </p>
-        <div class="mt-10 grid sm:grid-cols-3 gap-3 max-w-3xl">
-          <div class="rounded-2xl bg-white/8 border border-white/12 px-5 py-4">
+        <div class="mt-7 grid sm:grid-cols-3 gap-3 max-w-3xl">
+          <div class="rounded-2xl bg-white/8 border border-white/12 px-4 py-3">
             <p class="text-[10px] tracking-[0.2em] uppercase text-[#faf0e8]/45 font-bold">Venue</p>
             <p class="mt-1 font-semibold">4Seas Nimman</p>
             <a href="https://maps.google.com/?q=4Seas+Nimman+Chiang+Mai" target="_blank" rel="noopener noreferrer" class="text-xs text-[#F0A030] hover:underline">View on map →</a>
           </div>
-          <div class="rounded-2xl bg-white/8 border border-white/12 px-5 py-4">
+          <div class="rounded-2xl bg-white/8 border border-white/12 px-4 py-3">
             <p class="text-[10px] tracking-[0.2em] uppercase text-[#faf0e8]/45 font-bold">Season</p>
             <p class="mt-1 font-semibold">Nov 11 – Dec 28, 2026</p>
             <RouterLink to="/#schedule" class="text-xs text-[#F0A030] hover:underline">See the timeline →</RouterLink>
           </div>
-          <div class="rounded-2xl bg-white/8 border border-white/12 px-5 py-4">
+          <div class="rounded-2xl bg-white/8 border border-white/12 px-4 py-3">
             <p class="text-[10px] tracking-[0.2em] uppercase text-[#faf0e8]/45 font-bold">Questions?</p>
             <p class="mt-1 font-semibold">Ask the community</p>
             <a href="https://t.me/ethchiangmai" target="_blank" rel="noopener noreferrer" class="text-xs text-[#F0A030] hover:underline">Telegram →</a>
