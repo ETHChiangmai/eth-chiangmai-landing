@@ -173,8 +173,9 @@ const emergency = [
         <p class="kicker">✦ Getting There</p>
         <h2 class="h2 font-display">Arriving in Chiang Mai</h2>
         <div class="mt-8 space-y-3">
-          <div class="card">
-            <h3 class="h3"><i class="fa-solid fa-plane-arrival mr-2 text-[#C8366B]"></i>By air · Chiang Mai International (CNX)</h3>
+          <div class="feature">
+            <p class="f-kicker">✦ Most people fly in · CNX</p>
+            <p class="f-title font-display">By air, 15–20 minutes from Nimman</p>
             <p class="body">
               The airport sits right next to the city: about 15–20 minutes by car to Nimman. There are frequent
               flights from Bangkok (Suvarnabhumi BKK and Don Mueang DMK, about 1h 15m) plus direct regional routes.
@@ -203,10 +204,14 @@ const emergency = [
       <section id="visa" class="scroll-mt-28">
         <p class="kicker">✦ Visa & Entry</p>
         <h2 class="h2 font-display">Before you fly</h2>
-        <div class="mt-6 rounded-2xl border-2 border-[#C8366B]/25 bg-[#C8366B]/5 px-5 py-4 text-sm leading-relaxed">
-          <b>Rules changed in September 2026.</b> Thailand's 60-day visa exemption ended on 15 September 2026.
-          Most visa-exempt nationalities now get <b>30 days</b>; a few get 15 days or visa on arrival.
-          Always confirm your own nationality's rules on the official sites below before booking.
+        <div class="mt-8 feature">
+          <p class="f-kicker">✦ Rules changed · 15 Sep 2026</p>
+          <p class="f-title font-display">Visa-free stays are now 30 days, not 60</p>
+          <p class="body">
+            Thailand's 60-day visa exemption ended on 15 September 2026. Most visa-exempt nationalities now get
+            <b>30 days</b>; a few get 15 days or visa on arrival. Always confirm your own nationality's rules on the
+            official sites below before booking.
+          </p>
         </div>
         <div class="mt-3 space-y-3">
           <div class="card">
@@ -253,12 +258,13 @@ const emergency = [
           </div>
         </div>
 
-        <div class="mt-4 card flex flex-col sm:flex-row sm:items-center gap-4 justify-between">
+        <div class="mt-4 feature feature--rev flex flex-col sm:flex-row sm:items-center gap-4 justify-between">
           <div>
-            <h3 class="h3">Stay with the community at 4Seas Coliving</h3>
+            <p class="f-kicker">✦ Live on site · 4Seas Coliving</p>
+            <p class="f-title font-display">Stay with the community</p>
             <p class="body">Live where the season happens: rooms upstairs from the sessions, the market and the hackathon.</p>
           </div>
-          <a href="https://4seas.xyz/coliving" target="_blank" rel="noopener noreferrer" class="shrink-0 px-5 py-2.5 rounded-full border border-[#0d0918]/15 text-sm font-semibold hover:bg-[#0d0918]/5">Coliving details →</a>
+          <a href="https://4seas.xyz/coliving" target="_blank" rel="noopener noreferrer" class="shrink-0 px-5 py-2.5 rounded-full bg-[#0d0918] text-white text-sm font-semibold hover:opacity-90">Coliving details →</a>
         </div>
 
         <h3 class="h3 mt-10">Neighbourhoods</h3>
@@ -279,9 +285,10 @@ const emergency = [
         <p class="kicker">✦ Getting Around</p>
         <h2 class="h2 font-display">Moving around the city</h2>
         <div class="mt-8 grid sm:grid-cols-2 gap-3">
-          <div class="card">
-            <h3 class="h3"><i class="fa-solid fa-mobile-screen mr-2 text-[#C9661A]"></i>Grab & Bolt</h3>
-            <p class="body">The easiest option: cars and motorbike taxis with the price shown up front. Bolt is often cheaper.</p>
+          <div class="feature sm:col-span-2">
+            <p class="f-kicker">✦ Easiest option · Grab & Bolt</p>
+            <p class="f-title font-display">Tap, ride, pay the price you saw</p>
+            <p class="body">Cars and motorbike taxis with the price shown up front. Bolt is often cheaper. Download both before you land.</p>
           </div>
           <div class="card">
             <h3 class="h3"><i class="fa-solid fa-van-shuttle mr-2 text-[#C9661A]"></i>Red trucks (songthaew)</h3>
@@ -302,10 +309,10 @@ const emergency = [
       <section id="connectivity" class="scroll-mt-28">
         <p class="kicker">✦ Connectivity</p>
         <h2 class="h2 font-display">Stay online from the moment you land</h2>
-        <div class="mt-8 rounded-3xl p-6 md:p-8 border border-[#0d0918]/10" style="background: linear-gradient(135deg, #E4F4EC, #E8EEFF)">
+        <div class="mt-8 feature feature--lg">
           <div class="flex flex-col md:flex-row gap-6 md:items-start justify-between">
             <div class="max-w-xl">
-              <p class="text-[10px] font-bold tracking-[0.2em] uppercase text-[#2E8A63]">✦ Recommended eSIM · Kokio</p>
+              <p class="f-kicker">✦ Recommended eSIM · Kokio</p>
               <p class="mt-1 font-display text-2xl md:text-3xl">A privacy-friendly eSIM you can pay for in crypto</p>
               <p class="body mt-3">
                 Data plans for 200+ destinations, starting from $2. No name, email or ID needed. Pay by card,
@@ -314,7 +321,7 @@ const emergency = [
             </div>
             <div class="shrink-0 self-start flex flex-col items-start md:items-end gap-2">
               <span class="text-[10px] font-bold tracking-[0.2em] uppercase text-[#0d0918]/50">Coupon code</span>
-              <span class="font-mono font-bold tracking-wider px-4 py-2 rounded-xl bg-white border-2 border-dashed border-[#2E8A63]/50 text-[#2E8A63]">ETHCM</span>
+              <span class="font-mono font-bold tracking-wider px-4 py-2 rounded-xl bg-white border-2 border-dashed border-[#C8366B]/50 text-[#C8366B]">ETHCM</span>
               <a href="https://kokio.app/esim/thailand" target="_blank" rel="noopener noreferrer" class="mt-1 px-5 py-2.5 rounded-full bg-[#0d0918] text-white text-sm font-semibold hover:opacity-90">Get a Thailand eSIM →</a>
             </div>
           </div>
@@ -355,7 +362,10 @@ const emergency = [
           Chiang Mai is one of the most relaxed cities in Southeast Asia. The biggest everyday risk is traffic, so
           wear a helmet on any bike. Travel insurance is strongly recommended.
         </p>
-        <div class="mt-8 card p-0 overflow-hidden">
+        <div class="mt-8 feature">
+          <p class="f-kicker">✦ Save these numbers</p>
+          <p class="f-title font-display">Emergency contacts</p>
+          <div class="mt-4 rounded-2xl bg-white/80 overflow-hidden">
           <table class="w-full text-sm">
             <tbody>
               <tr v-for="e in emergency" :key="e.number" class="border-b last:border-b-0 border-[#0d0918]/8">
@@ -366,6 +376,7 @@ const emergency = [
               </tr>
             </tbody>
           </table>
+          </div>
         </div>
         <div class="mt-3 grid sm:grid-cols-2 gap-3">
           <div class="card">
@@ -392,9 +403,10 @@ const emergency = [
             <h3 class="h3">Respect & manners</h3>
             <p class="body">Thailand's monarchy is deeply respected and protected by strict laws. Stay calm and polite: raising your voice causes loss of face. Avoid touching people's heads.</p>
           </div>
-          <div class="card">
-            <h3 class="h3">Lantern season</h3>
-            <p class="body">November brings Loy Krathong and Yi Peng, when thousands of lanterns light up the sky. Only release lanterns at official events and times.</p>
+          <div class="feature feature--rev sm:col-span-2 sm:order-first">
+            <p class="f-kicker">✦ Lantern season · November</p>
+            <p class="f-title font-display">Loy Krathong & Yi Peng</p>
+            <p class="body">Thousands of lanterns light up the sky over Chiang Mai. Only release lanterns at official events and times.</p>
           </div>
           <div class="card">
             <h3 class="h3">Don't miss</h3>
@@ -408,17 +420,17 @@ const emergency = [
         <p class="kicker">✦ Events</p>
         <h2 class="h2 font-display">Make the most of the season</h2>
         <div class="mt-8 grid sm:grid-cols-3 gap-3">
-          <RouterLink to="/#schedule" class="card hover:-translate-y-1 transition-transform">
+          <RouterLink to="/#schedule" class="feature feature--link block">
             <i class="fa-solid fa-calendar-days text-[#7632C8] text-xl"></i>
             <h3 class="h3 mt-3">Season timeline</h3>
             <p class="body">Opening, Nomad Markets, Hackathon and the CROPS Summit.</p>
           </RouterLink>
-          <RouterLink to="/nomad-market" class="card hover:-translate-y-1 transition-transform">
+          <RouterLink to="/nomad-market" class="feature feature--link block">
             <i class="fa-solid fa-store text-[#C9661A] text-xl"></i>
             <h3 class="h3 mt-3">Nomad Market</h3>
             <p class="body">Two weekends of makers, food, music and builders.</p>
           </RouterLink>
-          <RouterLink to="/participate" class="card hover:-translate-y-1 transition-transform">
+          <RouterLink to="/participate" class="feature feature--link block">
             <i class="fa-solid fa-hand-sparkles text-[#C8366B] text-xl"></i>
             <h3 class="h3 mt-3">Get involved</h3>
             <p class="body">Speak, sponsor or run a booth.</p>
@@ -492,11 +504,47 @@ const emergency = [
   text-decoration: underline;
 }
 .card {
-  display: block;
   background: #fff;
   border: 1px solid rgba(13, 9, 24, 0.08);
   border-radius: 1.25rem;
   padding: 1.25rem 1.4rem;
+}
+/* Gradient "feature" cards: same look as the Flyfi offer banner */
+.feature {
+  position: relative;
+  border-radius: 1.5rem;
+  padding: 1.4rem 1.5rem;
+  background: linear-gradient(120deg, #ffe8cc, #f3e2ea 55%, #e4daf7);
+  border: 1px solid rgba(13, 9, 24, 0.08);
+  box-shadow: 0 20px 50px -30px rgba(118, 50, 200, 0.5);
+}
+.feature--rev {
+  background: linear-gradient(120deg, #e4daf7, #f3e2ea 45%, #ffe8cc);
+}
+.feature--lg {
+  padding: 1.6rem 1.6rem;
+}
+@media (min-width: 768px) {
+  .feature--lg { padding: 2rem; }
+}
+.feature--link {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.feature--link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 26px 56px -28px rgba(118, 50, 200, 0.6);
+}
+.f-kicker {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #c8366b;
+}
+.f-title {
+  margin-top: 0.25rem;
+  font-size: 1.5rem;
+  line-height: 1.2;
 }
 .icon {
   flex: none;
