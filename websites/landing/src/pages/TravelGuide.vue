@@ -3,6 +3,7 @@ import { onMounted, onUnmounted, ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import LogoLight from '@/assets/logo-long.svg'
 import LogoKokio from '@/assets/partners/kokio.png'
+import LogoFlyfi from '@/assets/partners/flyfi.svg'
 import ImgLantern from '@/assets/小元素/无白边/灯笼元素3.webp'
 import ImgLotus1 from '@/assets/小元素/无白边/荷花元素1.png'
 
@@ -248,6 +249,7 @@ const emergency = [
         <div class="mt-8 rounded-3xl overflow-hidden border border-[#0d0918]/10 bg-white shadow-[0_20px_50px_-30px_rgba(118,50,200,0.5)]">
           <div class="px-6 py-5 flex flex-col md:flex-row md:items-center gap-4 justify-between" style="background: linear-gradient(120deg, #FFE8CC, #F3E2EA 55%, #E4DAF7)">
             <div>
+              <img :src="LogoFlyfi" alt="Flyfi" class="h-9 md:h-10 w-auto mb-3" />
               <p class="text-[10px] font-bold tracking-[0.2em] uppercase text-[#C8366B]">✦ Partner offer · Flyfi</p>
               <p class="mt-1 font-display text-2xl">$150 off your stay, pay in crypto or card</p>
               <p class="mt-1 text-sm text-[#0d0918]/60">Hand-picked stays near 4Seas Nimman. Code works on a first Flyfi booking of $750+.</p>
