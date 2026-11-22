@@ -4,7 +4,6 @@ import { RouterLink } from 'vue-router'
 import LogoLight from '@/assets/logo-long.svg'
 import ImgLantern from '@/assets/小元素/无白边/灯笼元素3.webp'
 import ImgLotus1 from '@/assets/小元素/无白边/荷花元素1.png'
-import LogoPeer from '@/assets/partners/peer.png'
 
 let prevTitle = ''
 
@@ -350,15 +349,6 @@ const emergency = [
             <h3 class="h3"><i class="fa-solid fa-credit-card mr-2 text-[#C8366B]"></i>Cards & QR</h3>
             <p class="body">Cards work in malls, cafés and most restaurants. Thai QR (PromptPay) is everywhere, but it usually needs a Thai bank account.</p>
           </div>
-        </div>
-        <div class="mt-3 card flex flex-col sm:flex-row gap-5 sm:items-center">
-          <img :src="LogoPeer" alt="Peer" class="h-10 w-auto object-contain self-start sm:self-center" />
-          <div class="flex-1">
-            <p class="text-[10px] font-bold tracking-[0.2em] uppercase text-[#C8366B]">Official Payment Sponsor</p>
-            <h3 class="h3 mt-1">Bring crypto, spend baht, with Peer</h3>
-            <p class="body">Peer helps you move between stablecoins and everyday payment apps peer to peer. Find the Peer team at 4Seas and the Nomad Market.</p>
-          </div>
-          <a href="https://peer.xyz" target="_blank" rel="noopener noreferrer" class="shrink-0 px-5 py-2.5 rounded-full border border-[#0d0918]/15 text-sm font-semibold hover:bg-[#0d0918]/5">peer.xyz →</a>
         </div>
         <p class="mt-3 text-xs text-[#0d0918]/50 leading-relaxed">
           Note: Thai rules restrict businesses from accepting crypto as payment, so most places expect baht. This is
