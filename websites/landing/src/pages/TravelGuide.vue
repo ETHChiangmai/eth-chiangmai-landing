@@ -408,7 +408,7 @@ const emergency = [
             <p class="f-title font-display">Loy Krathong & Yi Peng</p>
             <p class="body">Thousands of lanterns light up the sky over Chiang Mai. Only release lanterns at official events and times.</p>
           </div>
-          <div class="card">
+          <div class="card sm:col-span-2">
             <h3 class="h3">Don't miss</h3>
             <p class="body">Doi Suthep temple above the city, the Sunday Walking Street in the Old City, and khao soi, Chiang Mai's signature curry noodle soup.</p>
           </div>
