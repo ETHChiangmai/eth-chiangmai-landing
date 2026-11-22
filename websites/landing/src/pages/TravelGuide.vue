@@ -21,17 +21,6 @@ const sections = [
   { id: 'events', label: 'Events' },
 ]
 const active = ref('chiangmai')
-const mainRef = ref<HTMLElement | null>(null)
-let revealObserver: IntersectionObserver | null = null
-
-/** Cards bounce a little when pressed or clicked. */
-function pop(e: PointerEvent) {
-  const card = (e.target as HTMLElement | null)?.closest<HTMLElement>('.card')
-  if (!card || card.classList.contains('card-plain')) return
-  card.classList.remove('is-pop')
-  void card.offsetWidth // restart the animation
-  card.classList.add('is-pop')
-}
 const tabsRef = ref<HTMLElement | null>(null)
 let observer: IntersectionObserver | null = null
 
@@ -60,41 +49,20 @@ onMounted(() => {
     const el = document.getElementById(s.id)
     if (el) observer?.observe(el)
   })
-
-  // Cards fade and rise in as they scroll into view, a little staggered within each group.
-  const cards = mainRef.value ? Array.from(mainRef.value.querySelectorAll<HTMLElement>('.card')) : []
-  cards.forEach((c) => {
-    const siblings = c.parentElement ? Array.from(c.parentElement.children) : [c]
-    c.style.setProperty('--reveal-delay', `${Math.min(siblings.indexOf(c), 5) * 70}ms`)
-    c.classList.add('reveal')
-  })
-  revealObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          e.target.classList.add('is-in')
-          revealObserver?.unobserve(e.target)
-        }
-      })
-    },
-    { rootMargin: '0px 0px -8% 0px' },
-  )
-  cards.forEach((c) => revealObserver?.observe(c))
 })
 onUnmounted(() => {
   document.title = prevTitle
   observer?.disconnect()
-  revealObserver?.disconnect()
 })
 
 /* ---------- content ---------- */
 const goodToKnow = [
-  { icon: 'fa-clock', label: 'Time zone', value: 'UTC+7 (ICT)', tone: 'tone-pink' },
-  { icon: 'fa-coins', label: 'Currency', value: 'Thai Baht (฿ / THB)', tone: 'tone-apricot' },
-  { icon: 'fa-language', label: 'Language', value: 'Thai; English is common around Nimman and the Old City', tone: 'tone-lavender' },
-  { icon: 'fa-cloud-sun', label: 'Weather (Nov–Dec)', value: 'Cool & dry season: crisp mornings, warm sunny afternoons. Bring a light jacket.', tone: 'tone-sky' },
-  { icon: 'fa-bottle-water', label: 'Water', value: "Don't drink tap water. Bottled water and refill stations are everywhere.", tone: 'tone-mint' },
-  { icon: 'fa-plug', label: 'Power', value: '220V. Plugs are mostly type A / C (two flat or two round pins).', tone: 'tone-lilac' },
+  { icon: 'fa-clock', label: 'Time zone', value: 'UTC+7 (ICT)' },
+  { icon: 'fa-coins', label: 'Currency', value: 'Thai Baht (฿ / THB)' },
+  { icon: 'fa-language', label: 'Language', value: 'Thai; English is common around Nimman and the Old City' },
+  { icon: 'fa-cloud-sun', label: 'Weather (Nov–Dec)', value: 'Cool & dry season: crisp mornings, warm sunny afternoons. Bring a light jacket.' },
+  { icon: 'fa-bottle-water', label: 'Water', value: "Don't drink tap water. Bottled water and refill stations are everywhere." },
+  { icon: 'fa-plug', label: 'Power', value: '220V. Plugs are mostly type A / C (two flat or two round pins).' },
 ]
 
 const flyfiUrl = 'https://flyfi.io/promo/ethchiangmai2026/'
@@ -178,7 +146,7 @@ const emergency = [
       </div>
     </nav>
 
-    <main ref="mainRef" class="max-w-4xl mx-auto px-6 py-14 md:py-20 space-y-20 md:space-y-24" @pointerdown="pop">
+    <main class="max-w-4xl mx-auto px-6 py-14 md:py-20 space-y-20 md:space-y-24">
 
       <!-- CHIANG MAI -->
       <section id="chiangmai" class="scroll-mt-28">
@@ -189,18 +157,19 @@ const emergency = [
           and one of the world's best-known digital-nomad scenes in between. Nimman, where the season lives,
           is the city's café-and-coworking neighbourhood.
         </p>
-        <div class="mt-8 grid grid-cols-2 md:grid-cols-3 gap-3">
-          <div v-for="g in goodToKnow" :key="g.label" class="card tile" :class="g.tone">
-            <i class="fa-solid tile-mark" :class="g.icon" aria-hidden="true"></i>
+        <div class="mt-8 grid sm:grid-cols-2 gap-3">
+          <div v-for="g in goodToKnow" :key="g.label" class="card flex gap-4 items-start">
             <span class="icon"><i class="fa-solid" :class="g.icon"></i></span>
-            <p class="mt-4 text-[11px] font-bold tracking-[0.16em] uppercase tone-ink">{{ g.label }}</p>
-            <p class="mt-1 text-sm leading-relaxed">{{ g.value }}</p>
+            <div>
+              <p class="text-xs font-bold tracking-[0.14em] uppercase text-[#0d0918]/45">{{ g.label }}</p>
+              <p class="mt-1 text-sm leading-relaxed">{{ g.value }}</p>
+            </div>
           </div>
         </div>
       </section>
 
       <!-- GETTING THERE -->
-      <section id="getting-there" class="scroll-mt-28 tone-pink">
+      <section id="getting-there" class="scroll-mt-28">
         <p class="kicker">✦ Getting There</p>
         <h2 class="h2 font-display">Arriving in Chiang Mai</h2>
         <div class="mt-8 space-y-3">
@@ -231,7 +200,7 @@ const emergency = [
       </section>
 
       <!-- VISA -->
-      <section id="visa" class="scroll-mt-28 tone-lavender">
+      <section id="visa" class="scroll-mt-28">
         <p class="kicker">✦ Visa & Entry</p>
         <h2 class="h2 font-display">Before you fly</h2>
         <div class="mt-6 rounded-2xl border-2 border-[#C8366B]/25 bg-[#C8366B]/5 px-5 py-4 text-sm leading-relaxed">
@@ -261,7 +230,7 @@ const emergency = [
       </section>
 
       <!-- WHERE TO STAY -->
-      <section id="stay" class="scroll-mt-28 tone-apricot">
+      <section id="stay" class="scroll-mt-28">
         <p class="kicker">✦ Where to Stay</p>
         <h2 class="h2 font-display">Find your base for the season</h2>
         <p class="lead">
@@ -306,7 +275,7 @@ const emergency = [
       </section>
 
       <!-- GETTING AROUND -->
-      <section id="getting-around" class="scroll-mt-28 tone-sky">
+      <section id="getting-around" class="scroll-mt-28">
         <p class="kicker">✦ Getting Around</p>
         <h2 class="h2 font-display">Moving around the city</h2>
         <div class="mt-8 grid sm:grid-cols-2 gap-3">
@@ -359,7 +328,7 @@ const emergency = [
       </section>
 
       <!-- PAYMENTS -->
-      <section id="payments" class="scroll-mt-28 tone-pink">
+      <section id="payments" class="scroll-mt-28">
         <p class="kicker">✦ Payments</p>
         <h2 class="h2 font-display">Paying for things</h2>
         <div class="mt-8 grid sm:grid-cols-2 gap-3">
@@ -379,14 +348,14 @@ const emergency = [
       </section>
 
       <!-- SAFETY -->
-      <section id="safety" class="scroll-mt-28 tone-mint">
+      <section id="safety" class="scroll-mt-28">
         <p class="kicker">✦ Safety</p>
         <h2 class="h2 font-display">Staying safe & healthy</h2>
         <p class="lead">
           Chiang Mai is one of the most relaxed cities in Southeast Asia. The biggest everyday risk is traffic, so
           wear a helmet on any bike. Travel insurance is strongly recommended.
         </p>
-        <div class="mt-8 card card-plain p-0 overflow-hidden">
+        <div class="mt-8 card p-0 overflow-hidden">
           <table class="w-full text-sm">
             <tbody>
               <tr v-for="e in emergency" :key="e.number" class="border-b last:border-b-0 border-[#0d0918]/8">
@@ -411,7 +380,7 @@ const emergency = [
       </section>
 
       <!-- CULTURE -->
-      <section id="culture" class="scroll-mt-28 tone-lilac">
+      <section id="culture" class="scroll-mt-28">
         <p class="kicker">✦ Culture</p>
         <h2 class="h2 font-display">Local etiquette</h2>
         <div class="mt-8 grid sm:grid-cols-2 gap-3">
@@ -439,17 +408,17 @@ const emergency = [
         <p class="kicker">✦ Events</p>
         <h2 class="h2 font-display">Make the most of the season</h2>
         <div class="mt-8 grid sm:grid-cols-3 gap-3">
-          <RouterLink to="/#schedule" class="card block tone-lavender">
+          <RouterLink to="/#schedule" class="card hover:-translate-y-1 transition-transform">
             <i class="fa-solid fa-calendar-days text-[#7632C8] text-xl"></i>
             <h3 class="h3 mt-3">Season timeline</h3>
             <p class="body">Opening, Nomad Markets, Hackathon and the CROPS Summit.</p>
           </RouterLink>
-          <RouterLink to="/nomad-market" class="card block tone-apricot">
+          <RouterLink to="/nomad-market" class="card hover:-translate-y-1 transition-transform">
             <i class="fa-solid fa-store text-[#C9661A] text-xl"></i>
             <h3 class="h3 mt-3">Nomad Market</h3>
             <p class="body">Two weekends of makers, food, music and builders.</p>
           </RouterLink>
-          <RouterLink to="/participate" class="card block tone-pink">
+          <RouterLink to="/participate" class="card hover:-translate-y-1 transition-transform">
             <i class="fa-solid fa-hand-sparkles text-[#C8366B] text-xl"></i>
             <h3 class="h3 mt-3">Get involved</h3>
             <p class="body">Speak, sponsor or run a booth.</p>
@@ -522,100 +491,22 @@ const emergency = [
 .link:hover {
   text-decoration: underline;
 }
-/* ---------- tones ---------- */
-.tone-pink { --ta: #fde4ee; --tb: #f7c6d9; --ink: #c8366b; }
-.tone-apricot { --ta: #fff0dc; --tb: #ffd9a8; --ink: #c9661a; }
-.tone-lavender { --ta: #efe9ff; --tb: #d9ccff; --ink: #7632c8; }
-.tone-sky { --ta: #e8efff; --tb: #bfd3ff; --ink: #3a5fd0; }
-.tone-mint { --ta: #e3f7ec; --tb: #c9f0dc; --ink: #2e8a63; }
-.tone-lilac { --ta: #f8e6fa; --tb: #e9b8f0; --ink: #a13bb0; }
-.tone-ink { color: var(--ink, rgba(13, 9, 24, 0.45)); }
-
-/* ---------- cards ---------- */
 .card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 1.4rem;
-  padding: 1.3rem 1.4rem;
-  background:
-    radial-gradient(120% 90% at 100% 0%, var(--tb, #f3e2ea) 0%, transparent 55%),
-    linear-gradient(160deg, var(--ta, #fff) 0%, #fff 70%);
-  border: 1.5px solid rgba(255, 255, 255, 0.9);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.8) inset,
-    0 18px 36px -26px color-mix(in srgb, var(--ink, #7632c8) 70%, transparent);
-  transition:
-    transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow 0.35s ease;
-  cursor: default;
-}
-a.card { cursor: pointer; }
-.card:hover {
-  transform: translateY(-5px) rotate(-0.4deg);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.8) inset,
-    0 26px 44px -24px color-mix(in srgb, var(--ink, #7632c8) 80%, transparent);
-}
-.card:nth-child(even):hover { transform: translateY(-5px) rotate(0.4deg); }
-.card :is(.h3 i, .icon) { transition: transform 0.4s cubic-bezier(0.3, 1.6, 0.5, 1); }
-.card:hover :is(.h3 i, .icon) { transform: rotate(-10deg) scale(1.12); }
-.card-plain {
+  display: block;
   background: #fff;
-  border-color: rgba(13, 9, 24, 0.08);
+  border: 1px solid rgba(13, 9, 24, 0.08);
+  border-radius: 1.25rem;
+  padding: 1.25rem 1.4rem;
 }
-.card-plain:hover { transform: none; }
-
-/* press / click: a quick jelly bounce */
-.card.is-pop { animation: pop 0.45s cubic-bezier(0.3, 1.5, 0.5, 1); }
-@keyframes pop {
-  0% { transform: scale(1); }
-  30% { transform: scale(0.95, 0.97); }
-  60% { transform: scale(1.025, 1.01); }
-  100% { transform: scale(1); }
-}
-
-/* scroll reveal */
-.card.reveal { opacity: 0; translate: 0 18px; }
-.card.reveal.is-in {
-  opacity: 1;
-  translate: 0 0;
-  transition:
-    opacity 0.6s ease var(--reveal-delay, 0ms),
-    translate 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) var(--reveal-delay, 0ms),
-    transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow 0.35s ease;
-}
-
-/* "Good to know" tiles */
-.tile { min-height: 9.5rem; }
-.tile-mark {
-  position: absolute;
-  right: -0.6rem;
-  bottom: -0.9rem;
-  font-size: 5.5rem;
-  color: var(--tb);
-  opacity: 0.55;
-  transform: rotate(-12deg);
-  pointer-events: none;
-  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-.tile:hover .tile-mark { transform: rotate(0deg) scale(1.08); }
 .icon {
-  position: relative;
-  width: 2.6rem;
-  height: 2.6rem;
-  border-radius: 0.9rem;
+  flex: none;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 0.8rem;
   display: grid;
   place-items: center;
-  background: #fff;
-  color: var(--ink, #7632c8);
-  box-shadow: 0 6px 14px -8px var(--ink, #7632c8);
-}
-.h3 i { display: inline-block; color: var(--ink) !important; }
-
-@media (prefers-reduced-motion: reduce) {
-  .card, .card:hover, .card.is-pop, .tile-mark { transition: none; animation: none; transform: none; }
-  .card.reveal { opacity: 1; translate: none; }
+  background: linear-gradient(135deg, #f7c6d9, #d9ccff);
+  color: #7632c8;
 }
 .step {
   display: flex;
