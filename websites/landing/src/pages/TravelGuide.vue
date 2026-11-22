@@ -66,7 +66,6 @@ const goodToKnow = [
 ]
 
 const flyfiUrl = 'https://flyfi.io/promo/ethchiangmai2026/'
-const showFlyfi = ref(true)
 
 const neighborhoods = [
   { name: 'Nimman', time: 'Walk to 4Seas', vibe: 'Cafés, coworking, restaurants and malls. The easiest base for the whole season.', map: 'https://maps.google.com/?q=Nimmanhaemin+Road+Chiang+Mai' },
@@ -241,7 +240,7 @@ const emergency = [
 
         <!-- Flyfi partner offer -->
         <div class="mt-8 rounded-3xl overflow-hidden border border-[#0d0918]/10 bg-white shadow-[0_20px_50px_-30px_rgba(118,50,200,0.5)]">
-          <div class="px-6 py-5 flex flex-col md:flex-row md:items-center gap-4 justify-between border-b border-[#0d0918]/8" style="background: linear-gradient(120deg, #FFE8CC, #F3E2EA 55%, #E4DAF7)">
+          <div class="px-6 py-5 flex flex-col md:flex-row md:items-center gap-4 justify-between" style="background: linear-gradient(120deg, #FFE8CC, #F3E2EA 55%, #E4DAF7)">
             <div>
               <p class="text-[10px] font-bold tracking-[0.2em] uppercase text-[#C8366B]">✦ Partner offer · Flyfi</p>
               <p class="mt-1 font-display text-2xl">$150 off your stay, pay in crypto or card</p>
@@ -252,14 +251,6 @@ const emergency = [
               <a :href="flyfiUrl" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-full bg-[#0d0918] text-white text-sm font-semibold hover:opacity-90">Open Flyfi →</a>
             </div>
           </div>
-          <iframe
-            v-if="showFlyfi"
-            :src="flyfiUrl"
-            title="Flyfi: stays for ETHChiangmai 2026"
-            class="w-full h-[720px] md:h-[820px] block bg-white"
-            loading="lazy"
-            referrerpolicy="strict-origin-when-cross-origin"
-          ></iframe>
         </div>
 
         <div class="mt-4 card flex flex-col sm:flex-row sm:items-center gap-4 justify-between">
