@@ -322,12 +322,16 @@ const emergency = [
                 Apple Pay / Google Pay, or stablecoins (USDC, USDT, DAI on Base) and other crypto.
               </p>
             </div>
-            <a href="https://kokio.app/" target="_blank" rel="noopener noreferrer" class="shrink-0 self-start px-5 py-2.5 rounded-full bg-[#0d0918] text-white text-sm font-semibold hover:opacity-90">Get Kokio →</a>
+            <div class="shrink-0 self-start flex flex-col items-start md:items-end gap-2">
+              <span class="text-[10px] font-bold tracking-[0.2em] uppercase text-[#0d0918]/50">Coupon code</span>
+              <span class="font-mono font-bold tracking-wider px-4 py-2 rounded-xl bg-white border-2 border-dashed border-[#2E8A63]/50 text-[#2E8A63]">ETHCM</span>
+              <a href="https://kokio.app/esim/thailand" target="_blank" rel="noopener noreferrer" class="mt-1 px-5 py-2.5 rounded-full bg-[#0d0918] text-white text-sm font-semibold hover:opacity-90">Get a Thailand eSIM →</a>
+            </div>
           </div>
           <ol class="mt-6 grid sm:grid-cols-4 gap-3 text-sm">
             <li class="step"><span>1</span>Check your phone supports eSIM</li>
             <li class="step"><span>2</span>Download the Kokio app</li>
-            <li class="step"><span>3</span>Pick a Thailand plan and pay</li>
+            <li class="step"><span>3</span>Pick a Thailand plan, enter code <b>ETHCM</b>, pay</li>
             <li class="step"><span>4</span>Install on Wi-Fi at home, switch on when you land</li>
           </ol>
         </div>
