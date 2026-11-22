@@ -326,6 +326,16 @@ const emergency = [
             </div>
           </div>
         </div>
+        <div class="mt-3 card flex gap-4 items-start">
+          <span class="icon"><i class="fa-solid fa-store"></i></span>
+          <div>
+            <h3 class="h3">Prefer a physical SIM? Pick one up at 7-Eleven</h3>
+            <p class="body">
+              Tourist SIMs from AIS, TrueMove H and dtac are sold at 7-Eleven stores all over the city (and at the
+              airport). Bring your passport: SIM cards in Thailand have to be registered to your ID.
+            </p>
+          </div>
+        </div>
       </section>
 
       <!-- PAYMENTS -->
