@@ -587,15 +587,14 @@ a.card { cursor: pointer; }
 }
 
 /* "Good to know" tiles */
-.tile { min-height: 9.5rem; padding-right: 2.2rem; }
-.tile > p { position: relative; }
+.tile { min-height: 9.5rem; }
 .tile-mark {
   position: absolute;
   right: -0.6rem;
   bottom: -0.9rem;
-  font-size: 4.5rem;
+  font-size: 5.5rem;
   color: var(--tb);
-  opacity: 0.4;
+  opacity: 0.55;
   transform: rotate(-12deg);
   pointer-events: none;
   transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
