@@ -4,6 +4,7 @@ import { RouterLink } from 'vue-router'
 import LogoLight from '@/assets/logo-long.svg'
 import LogoKokio from '@/assets/partners/kokio.png'
 import LogoFlyfi from '@/assets/partners/flyfi.svg'
+import Logo4Seas from '@/assets/partners/4seas-wordmark.png'
 import ImgLantern from '@/assets/小元素/无白边/灯笼元素3.webp'
 import ImgLotus1 from '@/assets/小元素/无白边/荷花元素1.png'
 
@@ -263,6 +264,7 @@ const emergency = [
 
         <div class="mt-4 feature feature--rev flex flex-col sm:flex-row sm:items-center gap-4 justify-between">
           <div>
+            <img :src="Logo4Seas" alt="4Seas" class="h-6 md:h-7 w-auto mb-3" />
             <p class="f-kicker">✦ Live on site · 4Seas Coliving</p>
             <p class="f-title font-display">Stay with the community</p>
             <p class="body">Live where the season happens: rooms upstairs from the sessions, the market and the hackathon.</p>
