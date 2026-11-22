@@ -50,6 +50,7 @@ import LogoSocialLayer from '@/assets/partners/social-layer.png'
 import LogoSnowmoon from '@/assets/partners/snowmoon.webp'
 import LogoUncommons from '@/assets/partners/uncommons.png'
 import LogoCoset from '@/assets/partners/coset.png'
+import LogoKokio from '@/assets/partners/kokio.png'
 import IconX from '@/assets/social/social-twitter.svg'
 import IconTelegram from '@/assets/social/social-telegram.svg'
 import IconLinkedIn from '@/assets/social/social-linkedin.svg'
@@ -311,6 +312,7 @@ const communityPartners: Array<{ name: string; logo: string; scale?: number }> =
   { name: 'SNOWMOON', logo: LogoSnowmoon },
   { name: 'Uncommons', logo: LogoUncommons },
   { name: 'Coset', logo: LogoCoset },
+  { name: 'Kokio', logo: LogoKokio },
 ]
 
 const team: Array<{
