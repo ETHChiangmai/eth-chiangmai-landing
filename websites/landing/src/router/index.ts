@@ -6,6 +6,7 @@ import PPT2026 from '@/pages/PPT2026.vue'
 import Participate from '@/pages/Participate.vue'
 import SpeakerForm from '@/pages/SpeakerForm.vue'
 import SponsorForm from '@/pages/SponsorForm.vue'
+import TravelGuide from '@/pages/TravelGuide.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -18,6 +19,7 @@ const router = createRouter({
     { path: '/participate/resident', redirect: '/participate' },
     { path: '/participate/speaker', component: SpeakerForm },
     { path: '/participate/sponsor', component: SponsorForm },
+    { path: '/travel', component: TravelGuide },
   ],
   scrollBehavior(to) {
     if (to.hash) {

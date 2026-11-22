@@ -117,6 +117,7 @@ const navLinks = [
   { label: 'CROPS', href: '#crops' },
   { label: 'Chiang Mai', href: '#chiangmai' },
   { label: 'Partners', href: '#partners' },
+  { label: 'Travel', href: '/travel' },
   { label: 'Media', href: '/media/2026' },
 ]
 
