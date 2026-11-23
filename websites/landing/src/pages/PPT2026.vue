@@ -51,6 +51,7 @@ import LogoSnowmoon from '@/assets/partners/snowmoon.webp'
 import LogoUncommons from '@/assets/partners/uncommons.png'
 import LogoCoset from '@/assets/partners/coset.png'
 import LogoKokio from '@/assets/partners/kokio.png'
+import LogoFlyfi from '@/assets/partners/flyfi.svg'
 import IconX from '@/assets/social/social-twitter.svg'
 import IconTelegram from '@/assets/social/social-telegram.svg'
 import IconLinkedIn from '@/assets/social/social-linkedin.svg'
@@ -313,6 +314,7 @@ const communityPartners: Array<{ name: string; logo: string; scale?: number }> =
   { name: 'Uncommons', logo: LogoUncommons },
   { name: 'Coset', logo: LogoCoset },
   { name: 'Kokio', logo: LogoKokio },
+  { name: 'Flyfi', logo: LogoFlyfi },
 ]
 
 const team: Array<{
