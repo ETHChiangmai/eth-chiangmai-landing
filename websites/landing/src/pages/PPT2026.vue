@@ -50,6 +50,8 @@ import LogoSocialLayer from '@/assets/partners/social-layer.png'
 import LogoSnowmoon from '@/assets/partners/snowmoon.webp'
 import LogoUncommons from '@/assets/partners/uncommons.png'
 import LogoCoset from '@/assets/partners/coset.png'
+import LogoKokio from '@/assets/partners/kokio.png'
+import LogoFlyfi from '@/assets/partners/flyfi.svg'
 import IconX from '@/assets/social/social-twitter.svg'
 import IconTelegram from '@/assets/social/social-telegram.svg'
 import IconLinkedIn from '@/assets/social/social-linkedin.svg'
@@ -117,6 +119,7 @@ const navLinks = [
   { label: 'CROPS', href: '#crops' },
   { label: 'Chiang Mai', href: '#chiangmai' },
   { label: 'Partners', href: '#partners' },
+  { label: 'Travel', href: '/travel' },
   { label: 'Media', href: '/media/2026' },
 ]
 
@@ -310,6 +313,8 @@ const communityPartners: Array<{ name: string; logo: string; scale?: number }> =
   { name: 'SNOWMOON', logo: LogoSnowmoon },
   { name: 'Uncommons', logo: LogoUncommons },
   { name: 'Coset', logo: LogoCoset },
+  { name: 'Kokio', logo: LogoKokio },
+  { name: 'Flyfi', logo: LogoFlyfi },
 ]
 
 const team: Array<{
