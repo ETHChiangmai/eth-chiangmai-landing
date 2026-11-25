@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home2025 from '@/pages/Home2025.vue'
 import Media2026 from '@/pages/Media2026.vue'
+import MediaHackathon2026 from '@/pages/MediaHackathon2026.vue'
+import MediaIndex from '@/pages/MediaIndex.vue'
 import NomadMarket from '@/pages/NomadMarket.vue'
 import PPT2026 from '@/pages/PPT2026.vue'
 import Participate from '@/pages/Participate.vue'
@@ -13,7 +15,9 @@ const router = createRouter({
   routes: [
     { path: '/', component: PPT2026 },
     { path: '/2025', component: Home2025 },
+    { path: '/media', component: MediaIndex },
     { path: '/media/2026', component: Media2026 },
+    { path: '/media/2026/hackathon', component: MediaHackathon2026 },
     { path: '/nomad-market', component: NomadMarket },
     { path: '/participate', component: Participate },
     { path: '/participate/resident', redirect: '/participate' },
