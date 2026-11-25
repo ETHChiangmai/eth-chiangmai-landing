@@ -231,6 +231,11 @@ const activities = [
           class="inline-flex items-center gap-2 rounded-full text-sm font-semibold px-6 py-3 border border-[#0d0918]/20 text-[#0d0918] hover:bg-[#0d0918] hover:text-white transition-colors"
         ><i class="fa-brands fa-x-twitter"></i> Read on X</a>
       </div>
+
+      <RouterLink to="/media/2026/hackathon" class="not-prose mt-10 block rounded-2xl px-5 py-4 border border-[#0d0918]/10 hover:bg-white/70 transition-colors">
+        <span class="block text-[10px] font-bold tracking-[0.2em] uppercase text-[#c8366b]">✦ Next article</span>
+        <span class="block mt-1 font-display text-lg">ETHChiangmai &amp; Longevity Hackathon 2026: Privacy and Localism →</span>
+      </RouterLink>
     </article>
 
     <!-- FOOTER -->
