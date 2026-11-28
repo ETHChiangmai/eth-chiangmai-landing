@@ -19,6 +19,8 @@ onUnmounted(() => {
 })
 
 const sourceUrl = 'https://x.com/ETHChiangmai/status/2115121300930781243'
+/** Opens X's retweet dialog for this post (one click to repost). */
+const repostUrl = 'https://x.com/intent/retweet?tweet_id=2115121300930781243'
 
 const crops = [
   {
@@ -225,11 +227,11 @@ const activities = [
           style="background: linear-gradient(135deg, #c8366b 0%, #7632c8 100%); box-shadow: 0 4px 16px rgba(200,54,107,0.3)"
         >Participate <i class="fa-solid fa-arrow-right text-xs"></i></RouterLink>
         <a
-          :href="sourceUrl"
+          :href="repostUrl"
           target="_blank"
           rel="noopener noreferrer"
           class="inline-flex items-center gap-2 rounded-full text-sm font-semibold px-6 py-3 border border-[#0d0918]/20 text-[#0d0918] hover:bg-[#0d0918] hover:text-white transition-colors"
-        ><i class="fa-brands fa-x-twitter"></i> Read on X</a>
+        ><i class="fa-solid fa-retweet"></i> Repost on X</a>
       </div>
 
       <RouterLink to="/media/2026/hackathon" class="not-prose mt-10 block rounded-2xl px-5 py-4 border border-[#0d0918]/10 hover:bg-white/70 transition-colors">
